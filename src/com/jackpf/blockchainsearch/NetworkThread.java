@@ -29,7 +29,7 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
 	@Override
 	protected void onPreExecute()
 	{
-		
+		ui.preUpdate();
 	}
 
 	@Override

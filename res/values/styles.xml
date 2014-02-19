@@ -21,6 +21,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <color name="TableRow2">#f9f9f9</color>
+    <style name="TableRow2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/TableRow2</item>
+    </style>
     <style name="HeaderText">
         <item name="android:textColor">#000000</item>
         <item name="android:shadowColor">#AFFFFFFF</item>
@@ -49,5 +55,18 @@
         <item name="android:layout_weight">1</item>
         <item name="android:scrollHorizontally">false</item>
     </style>
+    
+    <style name="GenericProgressBackground" parent="android:Theme">
+	    <item name="android:layout_width">fill_parent</item>    
+	    <item name="android:layout_height">fill_parent</item>
+	    <item name="android:background">#DD111111</item>    
+	    <item name="android:gravity">center</item>  
+	</style>
+	<style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Small">
+	    <item name="android:layout_width">wrap_content</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:indeterminate">true</item>
+	    <item name="android:indeterminateDrawable">@drawable/loading_intermediate</item>
+	</style>
 
 </resources>

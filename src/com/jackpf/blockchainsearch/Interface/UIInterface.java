@@ -8,15 +8,14 @@ import android.view.View;
 public abstract class UIInterface
 {
 	protected Context context;
-	protected View rootView;
 	
-	public UIInterface(Context context, View rootView)
+	public UIInterface(Context context)
 	{
 		this.context = context;
-		this.rootView = rootView;
 	}
 	
 	public abstract void setVars(HashMap<String, Object> vars);
+	public abstract void preUpdate();
 	public abstract void update();
 	public abstract void error(Exception e);
 }

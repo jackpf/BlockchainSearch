@@ -1,18 +1,15 @@
 package com.jackpf.blockchainsearch.View;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Locale;
 
 import org.json.simple.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
@@ -21,10 +18,15 @@ import com.jackpf.blockchainsearch.Interface.UIInterface;
 public class AddressActionUI extends UIInterface
 {
 	private HashMap<String, Object> vars;
+	private Activity activity;
 	
-	public AddressActionUI(Context context, View rootView)
+	private View loadingView;
+	
+	public AddressActionUI(Context context)
 	{
-		super(context, rootView);
+		super(context);
+		
+		activity = (Activity) context;
 	}
 	
 	public void setVars(HashMap<String, Object> vars)
@@ -32,26 +34,31 @@ public class AddressActionUI extends UIInterface
 		this.vars = vars;
 	}
 	
+	public void preUpdate()
+	{
+		loadingView = activity.findViewById(R.id.loading);
+	}
+	
 	public void update()
 	{
-		final Activity activity			= (Activity) context;
-		final LinearLayout rootLayout	= (LinearLayout) rootView;
-		final LayoutInflater inflater	= activity.getLayoutInflater();
-		final JSONObject json			= (JSONObject) vars.get("response");
+		loadingView.setVisibility(View.GONE);
 		
-		View layout = inflater.inflate(R.layout._address, null);
+		final JSONObject json = (JSONObject) vars.get("response");
 		
-		TextView title = (TextView) layout.findViewById(R.id._address_title);
+		TextView title = (TextView) activity.findViewById(R.id._address_title);
 		title.setText(json.get("address").toString());
 		
-		int[]		keys	= {R.id._address_final_balance, R.id._address_total_received, R.id._address_total_sent, R.id._address_no_transactions};
-		String[]	values	= {"final_balance", "total_received", "total_sent", "n_tx"};
-
-		for (int i = 0; i < keys.length; i++) {
-			((TextView) layout.findViewById(keys[i])).setText(json.get(values[i]).toString());
-		}
+		((TextView) activity.findViewById(R.id._address_final_balance)).setText(btcFormat((Long) json.get("final_balance")));
+		((TextView) activity.findViewById(R.id._address_total_received)).setText(btcFormat((Long) json.get("total_received")));
+		((TextView) activity.findViewById(R.id._address_total_sent)).setText(btcFormat((Long) json.get("total_sent")));
+		((TextView) activity.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
 		
-		rootLayout.addView(layout);
+		((LinearLayout) activity.findViewById(R.id.content)).setVisibility(View.VISIBLE);
+	}
+	
+	private String btcFormat(Long i)
+	{
+		return String.format(Locale.getDefault(), "%s%.8f", "\u0E3F", i / Math.pow(8, 10));
 	}
 	
 	public void error(Exception e)

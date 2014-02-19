@@ -34,6 +34,10 @@ public class Blockchain
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(response.getEntity().getContent(), writer, "UTF-8");
 		
+		if (response.getStatusLine().getStatusCode() != 200) {
+			throw new IOException("Invalid request: " + writer.toString());
+		}
+		
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonResponse = (JSONObject) jsonParser.parse(writer.toString());
 		
