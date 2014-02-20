@@ -1,6 +1,6 @@
 package com.jackpf.blockchainsearch.Entity;
 
-import com.jackpf.blockchainsearch.Service.Blockchain;
+import com.jackpf.blockchainsearch.Data.BlockchainData;
 
 public class ApiPath
 {
@@ -9,7 +9,7 @@ public class ApiPath
 	public ApiPath(String url, Object ...params)
 	{
 		path = String.format(
-			Blockchain.BLOCKCHAIN_URL + "/" + url,
+			BlockchainData.BLOCKCHAIN_URL + "/" + url,
 			params
 		);
 	}

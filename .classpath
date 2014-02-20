@@ -8,5 +8,8 @@
 	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/httpclient-4.3.2.jar"/>
 	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/zxingorg-2.3.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/jack/workspace/BlockchainSearch/libs/zxingorg-3.0.0-20140213.214029-7-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

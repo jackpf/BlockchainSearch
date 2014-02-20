@@ -7,22 +7,23 @@ import org.json.simple.JSONObject;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.jackpf.blockchainsearch.Entity.ApiPath;
+import com.jackpf.blockchainsearch.Interface.RequestInterface;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
-import com.jackpf.blockchainsearch.Service.Blockchain;
 
 public class NetworkThread extends AsyncTask<String, Void, Void>
 {
 	private final static int ARGC = 2;
 	
 	private Context context;
+	private RequestInterface request;
 	private UIInterface ui;
 	HashMap<String, Object> vars = new HashMap<String, Object>();
 	Exception e = null;
 	
-	public NetworkThread(Context context, UIInterface ui)
+	public NetworkThread(Context context, RequestInterface request, UIInterface ui)
 	{
 		this.context = context;
+		this.request = request;
 		this.ui = ui;
 	}
 
@@ -35,17 +36,8 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
 	@Override
     protected Void doInBackground(String... params)
     {
-		if (params.length < ARGC) {
-			throw new IllegalArgumentException("Too few arguments");
-		}
-		
-		String	url		= params[0],
-				query	= params[1];
-		
-		Blockchain bc = new Blockchain();
-		
 		try {
-			JSONObject response = bc.request(new ApiPath(url, query));
+			JSONObject response = request.call().getResponse();
 			
 			vars.put("response", response);
 		} catch (Exception e) {

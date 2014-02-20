@@ -1,0 +1,25 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	style="@style/TableRow">
+
+	<TextView
+	    style="@style/BodyText"
+	    android:layout_width="0sp"
+	    android:layout_height="wrap_content"
+		android:id="@+id/id"
+	    android:layout_weight="0.3"
+		android:ellipsize="end"
+		android:singleLine="true"
+		android:color="#0000A0" />
+
+	<TextView
+		android:layout_width="0sp"
+		android:layout_height="wrap_content"
+		android:id="@+id/amount"
+		style="@style/BodyText"
+	    android:layout_weight="0.3"
+	    android:gravity="right" />
+
+</TableRow>

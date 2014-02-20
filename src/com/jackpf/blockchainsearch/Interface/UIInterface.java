@@ -8,13 +8,19 @@ import android.view.View;
 public abstract class UIInterface
 {
 	protected Context context;
+	protected HashMap<String, Object> vars;
 	
 	public UIInterface(Context context)
 	{
 		this.context = context;
 	}
 	
-	public abstract void setVars(HashMap<String, Object> vars);
+	public void setVars(HashMap<String, Object> vars)
+	{
+		this.vars = vars;
+	}
+	
+	public abstract void initialise();
 	public abstract void preUpdate();
 	public abstract void update();
 	public abstract void error(Exception e);

@@ -47,7 +47,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1.0</item>
         <item name="android:padding">5dp</item>
-        <item name="android:gravity">right</item>
+        <item name="android:gravity">left</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">fill_parent</item>
@@ -62,7 +62,7 @@
 	    <item name="android:background">#DD111111</item>    
 	    <item name="android:gravity">center</item>  
 	</style>
-	<style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Small">
+	<style name="GenericProgressIndicator" parent="@android:style/Widget.ProgressBar.Large">
 	    <item name="android:layout_width">wrap_content</item>
 	    <item name="android:layout_height">wrap_content</item>
 	    <item name="android:indeterminate">true</item>

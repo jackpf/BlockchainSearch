@@ -1,14 +1,15 @@
 package com.jackpf.blockchainsearch;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.Window;
 
-import com.jackpf.blockchainsearch.Service.Blockchain;
+import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
 
-public class AddressActivity extends Activity
+public class AddressActivity extends FragmentActivity
 {
 	public final static String EXTRA_SEARCH = "search";
 	
@@ -16,15 +17,21 @@ public class AddressActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_address);
+
+		AddressActionUI addressUI = new AddressActionUI(this);
+		
+		addressUI.initialise();
 		
 		Intent intent = getIntent();
 		String searchText = intent.getStringExtra(EXTRA_SEARCH);
 		
 		new NetworkThread(
 			this,
-			new AddressActionUI(this)
-		).execute(Blockchain.ADDRESS_URL, searchText);
+			new AddressRequest(searchText),
+			addressUI
+		).execute();
 	}
 
 	@Override
@@ -34,5 +41,4 @@ public class AddressActivity extends Activity
 		
 		return true;
 	}
-
 }

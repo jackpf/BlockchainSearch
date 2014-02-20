@@ -20,10 +20,6 @@ import com.jackpf.blockchainsearch.Entity.ApiPath;
 
 public class Blockchain
 {
-	public final static String BLOCKCHAIN_URL	= "https://blockchain.info";
-	public final static String ADDRESS_URL 		= "address/%s?format=json";
-	public final static String TRANSACTION_URL 	= "tx/%s?format=json";
-	
 	public JSONObject request(ApiPath path) throws ClientProtocolException, IOException, ParseException
 	{
 		HttpClient client = new DefaultHttpClient();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.Service.Blockchain;
@@ -16,6 +17,8 @@ public class MainActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+	    getActionBar().setTitle(getString(R.string.activity_main_title));
 		setContentView(R.layout.activity_main);
 	}
 

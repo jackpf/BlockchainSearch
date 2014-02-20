@@ -1,15 +1,26 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.util.HashMap;
 import java.util.Locale;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
@@ -17,10 +28,15 @@ import com.jackpf.blockchainsearch.Interface.UIInterface;
 
 public class AddressActionUI extends UIInterface
 {
-	private HashMap<String, Object> vars;
 	private Activity activity;
 	
 	private View loadingView;
+	
+	private ViewPager viewPager;
+	private TabsPagerAdapter tabAdapter;
+	private ActionBar actionBar;
+	Fragment[] tabs = {new OverviewFragment(), new TransactionsFragment()};
+	private final String[] tabTitles = {"Overview", "Transactions"};
 	
 	public AddressActionUI(Context context)
 	{
@@ -29,9 +45,21 @@ public class AddressActionUI extends UIInterface
 		activity = (Activity) context;
 	}
 	
-	public void setVars(HashMap<String, Object> vars)
+	public void initialise()
 	{
-		this.vars = vars;
+		// Initilization
+		viewPager = (ViewPager) activity.findViewById(R.id.content);
+		actionBar = activity.getActionBar();
+		tabAdapter = new TabsPagerAdapter(((FragmentActivity) context).getSupportFragmentManager());
+
+		viewPager.setAdapter(tabAdapter);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Adding Tabs
+		for (String tab : tabTitles) {
+			actionBar.addTab(actionBar.newTab().setText(tab).setTabListener(new TabListener()));
+		}
 	}
 	
 	public void preUpdate()
@@ -45,15 +73,53 @@ public class AddressActionUI extends UIInterface
 		
 		final JSONObject json = (JSONObject) vars.get("response");
 		
-		TextView title = (TextView) activity.findViewById(R.id._address_title);
-		title.setText(json.get("address").toString());
+		actionBar.setSubtitle(json.get("address").toString());
 		
-		((TextView) activity.findViewById(R.id._address_final_balance)).setText(btcFormat((Long) json.get("final_balance")));
-		((TextView) activity.findViewById(R.id._address_total_received)).setText(btcFormat((Long) json.get("total_received")));
-		((TextView) activity.findViewById(R.id._address_total_sent)).setText(btcFormat((Long) json.get("total_sent")));
-		((TextView) activity.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
+		// Overview fragment
+		View overviewFragment = activity.findViewById(R.id.content_overview);
 		
-		((LinearLayout) activity.findViewById(R.id.content)).setVisibility(View.VISIBLE);
+		((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(btcFormat((Long) json.get("final_balance")));
+		((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(btcFormat((Long) json.get("total_received")));
+		((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(btcFormat((Long) json.get("total_sent")));
+		((TextView) overviewFragment.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
+		
+		// Transactions fragment
+		View transactionsFragment = activity.findViewById(R.id.content_transactions);
+		JSONArray txs = (JSONArray) json.get("txs");
+		LayoutInflater inflater = activity.getLayoutInflater();
+		TableLayout transactionsTable = (TableLayout) transactionsFragment.findViewById(R.id._address_transactions);
+		
+		int i = 0;
+		for (Object o : txs) {
+			JSONObject tx = (JSONObject) o;
+			
+			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
+			
+			((TextView) tr.findViewById(R.id.id)).setText(tx.get("hash").toString());
+			
+			Object r = tx.get("result");
+			int result = Integer.parseInt(r.toString());
+			TextView resultTextView = (TextView) tr.findViewById(R.id.amount);
+			if (result > 0) {
+				resultTextView.setTextColor(Color.GREEN);
+			} else if (result < 0) {
+				resultTextView.setTextColor(Color.RED);
+			} else {
+				resultTextView.setTextColor(Color.BLACK);
+			}
+			resultTextView.setText(btcFormat((Long) r).replace("-", ""));
+			
+			if (i % 2 == 1) {
+				// This should be from style really
+				tr.setBackgroundColor(Color.parseColor("#f9f9f9"));
+			}
+			
+			transactionsTable.addView(tr);
+			
+			i++;
+		}
+		
+		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
 	}
 	
 	private String btcFormat(Long i)
@@ -63,6 +129,71 @@ public class AddressActionUI extends UIInterface
 	
 	public void error(Exception e)
 	{
+		e.printStackTrace();
+	}
+	
+	protected class TabListener implements android.app.ActionBar.TabListener
+	{
+		@Override
+		public void onTabReselected(Tab arg0, android.app.FragmentTransaction tx) { }
+
+		@Override
+		public void onTabSelected(Tab tab, android.app.FragmentTransaction arg1)
+		{
+			viewPager.setCurrentItem(tab.getPosition());
+		}
+
+		@Override
+		public void onTabUnselected(Tab arg0, android.app.FragmentTransaction tx) { }
+	}
+	
+	protected class TabsPagerAdapter extends FragmentPagerAdapter
+	{
+		public TabsPagerAdapter(FragmentManager fm)
+		{
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int index)
+		{
+			return tabs[index];
+		}
+
+		@Override
+		public int getCount()
+		{
+			return tabs.length;
+		}
+	}
+	
+	protected static class OverviewFragment extends Fragment
+	{
+		public OverviewFragment()
+		{
+			super();
+		}
 		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+		{
+			View rootView = inflater.inflate(R.layout._address_overview, container, false);
+			return rootView;
+		}
+	}
+	
+	protected static class TransactionsFragment extends Fragment
+	{
+		public TransactionsFragment()
+		{
+			super();
+		}
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+		{
+			View rootView = inflater.inflate(R.layout._address_transactions, container, false);
+			return rootView;
+		}
 	}
 }
