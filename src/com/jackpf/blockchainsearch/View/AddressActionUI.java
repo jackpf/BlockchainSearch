@@ -24,6 +24,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 
 public class AddressActionUI extends UIInterface
@@ -124,7 +125,7 @@ public class AddressActionUI extends UIInterface
 	
 	private String btcFormat(Long i)
 	{
-		return String.format(Locale.getDefault(), "%s%.8f", "\u0E3F", i / Math.pow(8, 10));
+		return String.format(Locale.getDefault(), "%s%.8f", "\u0E3F", i.doubleValue() / BlockchainData.CURRENCY_MULTIPLIER);
 	}
 	
 	public void error(Exception e)

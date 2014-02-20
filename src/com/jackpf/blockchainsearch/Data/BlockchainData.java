@@ -8,4 +8,8 @@ public class BlockchainData
 		TRANSACTION_URL	= "tx/%s?format=json",
 		BLOCKCOUNT_URL	= "https://blockchain.info/q/getblockcount"
 	;
+	
+	public static final Long
+		CURRENCY_MULTIPLIER	= 100000000L
+	;
 }
