@@ -56,6 +56,9 @@ public class AddressActivity extends FragmentActivity
 		    case android.R.id.home:
 		        finish();
 		        return true;
+		    case R.id.action_refresh:
+		    	finish();
+		    	startActivity(getIntent());
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }

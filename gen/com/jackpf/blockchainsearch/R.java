@@ -28,8 +28,9 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int ic_launcher_old=0x7f020001;
-        public static final int loading=0x7f020002;
-        public static final int loading_intermediate=0x7f020003;
+        public static final int ic_menu_refresh=0x7f020002;
+        public static final int loading=0x7f020003;
+        public static final int loading_intermediate=0x7f020004;
     }
     public static final class id {
         public static final int _address_final_balance=0x7f0a0002;
@@ -39,7 +40,8 @@ public final class R {
         public static final int _address_total_received=0x7f0a0003;
         public static final int _address_total_sent=0x7f0a0004;
         public static final int _address_transactions=0x7f0a0008;
-        public static final int action_settings=0x7f0a0010;
+        public static final int action_refresh=0x7f0a0010;
+        public static final int action_settings=0x7f0a0011;
         public static final int amount=0x7f0a000b;
         public static final int confirmations=0x7f0a0009;
         public static final int content=0x7f0a000c;
@@ -65,12 +67,13 @@ public final class R {
         public static final int transaction=0x7f090002;
     }
     public static final class string {
+        public static final int action_refresh=0x7f060002;
         public static final int action_settings=0x7f060001;
-        public static final int activity_address_title=0x7f060003;
-        public static final int activity_main_title=0x7f060002;
+        public static final int activity_address_title=0x7f060004;
+        public static final int activity_main_title=0x7f060003;
         public static final int app_name=0x7f060000;
-        public static final int hello_world=0x7f060005;
-        public static final int title_activity_transaction=0x7f060004;
+        public static final int hello_world=0x7f060006;
+        public static final int title_activity_transaction=0x7f060005;
     }
     public static final class style {
         /** 
