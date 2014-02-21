@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
@@ -20,6 +21,7 @@ public class AddressActivity extends FragmentActivity
 	
 	private UIInterface ui;
 	private String searchText;
+	private NetworkThread thread;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -36,18 +38,42 @@ public class AddressActivity extends FragmentActivity
 		
 		ui.initialise();
 		
-		new NetworkThread(
+		refresh();
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		
+		thread.cancel(true);
+	}
+	
+	/**
+	 * Runs the network thread and updates the UI
+	 * Sectioned off since it's called from onCreate and from the refresh button
+	 */
+	private void refresh()
+	{
+		thread = new NetworkThread(
 			this,
 			new AddressRequest(searchText),
 			ui
-		).execute();
+		);
+		
+		thread.execute();
+	}
+	
+	private void persistAddress()
+	{
+		PersistedAddresses addresses = new PersistedAddresses(this);
+		addresses.add(searchText);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.address, menu);
-		
 		return true;
 	}
 	
@@ -60,13 +86,11 @@ public class AddressActivity extends FragmentActivity
 		        return true;
 		    case R.id.action_refresh:
 		    	Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
-		    	//finish();
-		    	//startActivity(getIntent());
-		    	new NetworkThread(
-	    			this,
-	    			new AddressRequest(searchText),
-	    			ui
-	    		).execute();
+		    	refresh();
+		    	return true;
+		    case R.id.action_save:
+		    	Toast.makeText(getApplicationContext(), getString(R.string.text_saving), Toast.LENGTH_SHORT).show();
+		    	persistAddress();
 		    	return true;
 		    default:
 		        return super.onOptionsItemSelected(item);

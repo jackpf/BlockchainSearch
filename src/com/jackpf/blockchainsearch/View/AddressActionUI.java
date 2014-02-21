@@ -1,7 +1,11 @@
 package com.jackpf.blockchainsearch.View;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -111,6 +115,8 @@ public class AddressActionUI extends UIInterface
 			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
 
 			((TextView) tr.findViewById(R.id.hash)).setText(tx.get("hash").toString());
+			
+			((TextView) tr.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(tx.get("time").toString()) * 1000L)));
 
 			Object bc = vars.get("block_count"), bh = tx.get("block_height");
 			int blockCount = Integer.parseInt(bc.toString());
