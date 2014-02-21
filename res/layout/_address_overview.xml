@@ -4,92 +4,107 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
+	
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"
+        android:gravity="center">
 
-	<TableLayout
-		android:id="@+id/_address_table"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		
-		<TableRow
+		<TableLayout
+			android:id="@+id/_address_table"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			style="@style/TableRow">
-		
-			<TextView
-				android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:paddingBottom="20sp">
+			
+			<TableRow
+				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="Final Balance"
-				style="@style/HeaderText" />
-		
-			<TextView
-				android:layout_width="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Final Balance"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_address_final_balance"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:id="@+id/_address_final_balance"
-				style="@style/BodyText"
-				android:gravity="right" />
-		
-		</TableRow>
-		
-		<TableRow
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			style="@style/TableRow2">
-		
-			<TextView
-				android:layout_width="wrap_content"
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Total Received"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_address_total_received"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="Total Received"
-				style="@style/HeaderText" />
-		
-			<TextView
-				android:layout_width="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Total Sent"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_address_total_sent"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:id="@+id/_address_total_received"
-				style="@style/BodyText"
-				android:gravity="right" />
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="No. Transactions"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_address_no_transactions"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+		</TableLayout>
 		
-		</TableRow>
-		
-		<TableRow
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			style="@style/TableRow">
-		
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Total Sent"
-				style="@style/HeaderText" />
-		
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:id="@+id/_address_total_sent"
-				style="@style/BodyText"
-				android:gravity="right" />
-		
-		</TableRow>
-		
-		<TableRow
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			style="@style/TableRow2">
-		
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="No. Transactions"
-				style="@style/HeaderText" />
-		
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:id="@+id/_address_no_transactions"
-				style="@style/BodyText"
-				android:gravity="right" />
-		
-		</TableRow>
-		
-	</TableLayout>
+		<ImageView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    android:id="@+id/_address_qr_code" />
+	
+	</LinearLayout>
 
 </ScrollView>

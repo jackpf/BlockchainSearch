@@ -10,6 +10,7 @@ import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.jackpf.blockchainsearch.Service.QRCode;
 
 public class AddressActionUI extends UIInterface
 {
@@ -56,6 +59,11 @@ public class AddressActionUI extends UIInterface
 		viewPager.setAdapter(tabAdapter);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		    public void onPageSelected(int position) { actionBar.setSelectedNavigationItem(position); }
+		    public void onPageScrolled(int arg0, float arg1, int arg2) {}
+		    public void onPageScrollStateChanged(int arg0) {}
+		});
 
 		// Adding Tabs
 		for (String tab : tabTitles) {
@@ -83,6 +91,13 @@ public class AddressActionUI extends UIInterface
 		((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(btcFormat((Long) json.get("total_received")));
 		((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(btcFormat((Long) json.get("total_sent")));
 		((TextView) overviewFragment.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
+		
+		ImageView qrCode = (ImageView) overviewFragment.findViewById(R.id._address_qr_code);
+		try {
+		    qrCode.setImageDrawable(new BitmapDrawable(context.getResources(), QRCode.create(json.get("address").toString(), 256)));
+		} catch (Exception e) {
+		    error(e);
+		}
 		
 		// Transactions fragment
 		View transactionsFragment = activity.findViewById(R.id.content_transactions);

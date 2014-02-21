@@ -34,19 +34,20 @@ public final class R {
     public static final class id {
         public static final int _address_final_balance=0x7f0a0002;
         public static final int _address_no_transactions=0x7f0a0005;
+        public static final int _address_qr_code=0x7f0a0006;
         public static final int _address_table=0x7f0a0001;
         public static final int _address_total_received=0x7f0a0003;
         public static final int _address_total_sent=0x7f0a0004;
-        public static final int _address_transactions=0x7f0a0007;
-        public static final int action_settings=0x7f0a000e;
-        public static final int amount=0x7f0a0009;
-        public static final int content=0x7f0a000a;
+        public static final int _address_transactions=0x7f0a0008;
+        public static final int action_settings=0x7f0a000f;
+        public static final int amount=0x7f0a000a;
+        public static final int content=0x7f0a000b;
         public static final int content_overview=0x7f0a0000;
-        public static final int content_transactions=0x7f0a0006;
-        public static final int id=0x7f0a0008;
-        public static final int loading=0x7f0a000d;
-        public static final int search=0x7f0a000b;
-        public static final int submit=0x7f0a000c;
+        public static final int content_transactions=0x7f0a0007;
+        public static final int id=0x7f0a0009;
+        public static final int loading=0x7f0a000e;
+        public static final int search=0x7f0a000c;
+        public static final int submit=0x7f0a000d;
     }
     public static final class layout {
         public static final int _address_overview=0x7f030000;
