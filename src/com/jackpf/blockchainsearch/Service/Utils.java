@@ -1,5 +1,8 @@
 package com.jackpf.blockchainsearch.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
@@ -9,6 +12,8 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
 
 import com.jackpf.blockchainsearch.Data.BlockchainData;
+import com.jackpf.blockchainsearch.Lib.AddressFormatException;
+import com.jackpf.blockchainsearch.Lib.Base58;
 
 /**
  * Handy global utils class
@@ -61,5 +66,37 @@ public class Utils
 		canvas.drawArc(oval, -90 + deg, deg_r, true, paint);
 		
 		return image;
+	}
+	
+	public static boolean validAddress(String address)
+	{
+		byte[] decoded = new byte[]{};
+		
+		try {
+			decoded = Base58.decode(address);
+		} catch (AddressFormatException e) {
+			return false;
+		}
+		
+		if (decoded.length != 25) {
+			return false;
+		}
+
+		byte[] digest = Arrays.copyOfRange(decoded, 0, 21);
+		byte[] checksum = Arrays.copyOfRange(decoded, 21, 25);
+		
+		MessageDigest sha256 = null;
+		try {
+			sha256 = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) { /* Just let it fly, we're pretty f'ked here */ }
+		byte[] hash = sha256.digest(sha256.digest(digest));
+		
+		for (int i = 0; i < checksum.length; i++) {
+			if (checksum[i] != hash[i]) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

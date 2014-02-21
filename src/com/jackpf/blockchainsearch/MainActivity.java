@@ -8,8 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
+import com.jackpf.blockchainsearch.Service.Utils;
 import com.jackpf.blockchainsearch.View.MainActionUI;
 
 public class MainActivity extends Activity
@@ -61,6 +62,16 @@ public class MainActivity extends Activity
 	{
 		TextView searchTextView = (TextView) findViewById(R.id.search);
 		String searchText = searchTextView.getText().toString();
+		
+		if (!Utils.validAddress(searchText)) {
+			Toast.makeText(
+				getApplicationContext(),
+				getString(R.string.text_invalid_address),
+				Toast.LENGTH_SHORT
+			).show();
+			
+			return;
+		}
 		
 		Intent intent = new Intent(this, AddressActivity.class);
 		intent.putExtra(AddressActivity.EXTRA_SEARCH, searchText);

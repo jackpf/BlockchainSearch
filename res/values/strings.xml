@@ -8,6 +8,7 @@
     <string name="text_refreshing">Refreshing...</string>
     <string name="text_saving">Address saved</string>
     <string name="text_exception">An error has occurred: %s</string>
+    <string name="text_invalid_address">Please enter a valid address</string>
     <string name="activity_main_title">Search</string>
     <string name="activity_address_title">Address</string>
     <string name="title_activity_transaction">TransactionActivity</string>
