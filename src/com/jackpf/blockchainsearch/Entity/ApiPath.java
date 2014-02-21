@@ -29,7 +29,7 @@ public class ApiPath
 	/**
 	 * Get path
 	 * 
-	 * @return String
+	 * @return
 	 */
 	public String getPath()
 	{

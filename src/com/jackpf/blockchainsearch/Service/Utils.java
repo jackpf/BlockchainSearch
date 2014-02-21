@@ -13,7 +13,7 @@ public class Utils
 	 * Format given value into a bitcoin currency value
 	 * 
 	 * @param i
-	 * @return String
+	 * @return
 	 */
 	public static String btcFormat(Long i)
 	{

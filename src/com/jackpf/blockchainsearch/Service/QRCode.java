@@ -22,7 +22,7 @@ public class QRCode
 	 * 
 	 * @param qrCodeText
 	 * @param size
-	 * @return Bitmap
+	 * @return
 	 * @throws WriterException
 	 */
     public static Bitmap create(String qrCodeText, int size)

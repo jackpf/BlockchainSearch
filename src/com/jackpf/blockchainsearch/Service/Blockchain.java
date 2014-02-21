@@ -27,7 +27,7 @@ public class Blockchain
 	 * Perform an api request
 	 * 
 	 * @param path
-	 * @return JSONObject
+	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 * @throws ParseException
