@@ -30,6 +30,11 @@ public class MainActivity extends Activity
 		return true;
 	}
 	
+	/**
+	 * On search button click
+	 * 
+	 * @param v
+	 */
 	public void onSubmit(View v)
 	{
 		TextView searchTextView = (TextView) findViewById(R.id.search);

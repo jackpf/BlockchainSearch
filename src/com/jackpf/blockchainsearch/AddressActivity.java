@@ -45,6 +45,11 @@ public class AddressActivity extends FragmentActivity
 		return true;
 	}
 	
+	/**
+	 * On transaction table row click
+	 * 
+	 * @param v
+	 */
 	public void onClick(View v)
 	{
 		Intent intent = new Intent(this, TransactionActivity.class);

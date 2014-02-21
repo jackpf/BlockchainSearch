@@ -12,8 +12,19 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+/**
+ * QR code generator
+ */
 public class QRCode
 {
+	/**
+	 * Create a qrcode bitmap from string
+	 * 
+	 * @param qrCodeText
+	 * @param size
+	 * @return Bitmap
+	 * @throws WriterException
+	 */
     public static Bitmap create(String qrCodeText, int size)
             throws WriterException
     {

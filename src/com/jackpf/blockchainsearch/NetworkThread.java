@@ -10,16 +10,44 @@ import android.os.AsyncTask;
 import com.jackpf.blockchainsearch.Interface.RequestInterface;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 
+/**
+ * Network thread
+ * Performs all api requests
+ */
 public class NetworkThread extends AsyncTask<String, Void, Void>
 {
-	private final static int ARGC = 2;
-	
+	/**
+	 * Context called from
+	 */
 	private Context context;
+	
+	/**
+	 * Api request to call
+	 */
 	private RequestInterface request;
+	
+	/**
+	 * UI to pass data to
+	 */
 	private UIInterface ui;
+	
+	/**
+	 * UI vars
+	 */
 	HashMap<String, Object> vars = new HashMap<String, Object>();
+	
+	/**
+	 * Exception caused in the network thread
+	 */
 	Exception e = null;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param context
+	 * @param request
+	 * @param ui
+	 */
 	public NetworkThread(Context context, RequestInterface request, UIInterface ui)
 	{
 		this.context = context;
@@ -27,12 +55,21 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
 		this.ui = ui;
 	}
 
+	/**
+	 * Thread pre execute
+	 * Just call the UI's preExecute method
+	 */
 	@Override
 	protected void onPreExecute()
 	{
 		ui.preUpdate();
 	}
 
+	/**
+	 * Perform request
+	 * 
+	 * @param params
+	 */
 	@Override
     protected Void doInBackground(String... params)
     {
@@ -47,6 +84,12 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
 		return null;
     }
     
+	/**
+	 * Post execute
+	 * Pass vars to UI
+	 * 
+	 * @param _void
+	 */
 	@Override
     protected void onPostExecute(Void _void)
 	{

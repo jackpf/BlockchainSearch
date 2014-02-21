@@ -18,8 +18,20 @@ import android.util.Log;
 
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 
+/**
+ * Blockchain API service
+ */
 public class Blockchain
 {
+	/**
+	 * Perform an api request
+	 * 
+	 * @param path
+	 * @return JSONObject
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public JSONObject request(ApiPath path) throws ClientProtocolException, IOException, ParseException
 	{
 		HttpClient client = new DefaultHttpClient();
