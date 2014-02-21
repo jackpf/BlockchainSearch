@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -22,6 +23,9 @@ public class AddressActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_address);
+		
+		getActionBar().setHomeButtonEnabled(true);
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		UIInterface ui = new AddressActionUI(this);
 		
@@ -43,6 +47,18 @@ public class AddressActivity extends FragmentActivity
 		getMenuInflater().inflate(R.menu.address, menu);
 		
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+	    switch (item.getItemId()) {
+		    case android.R.id.home:
+		        finish();
+		        return true;
+		    default:
+		        return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	/**

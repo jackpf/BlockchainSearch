@@ -55,7 +55,6 @@ public class AddressActionUI extends UIInterface
 		tabAdapter = new TabsPagerAdapter(((FragmentActivity) context).getSupportFragmentManager());
 
 		viewPager.setAdapter(tabAdapter);
-		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 		    public void onPageSelected(int position) { actionBar.setSelectedNavigationItem(position); }

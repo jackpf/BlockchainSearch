@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 
 import com.jackpf.blockchainsearch.Interface.UIInterface;
@@ -20,6 +21,9 @@ public class TransactionActivity extends Activity
 		super.onCreate(savedInstanceState);
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_address);
+		
+		getActionBar().setHomeButtonEnabled(true);
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		UIInterface ui = new TransactionActionUI(this);
 		
@@ -41,5 +45,17 @@ public class TransactionActivity extends Activity
 		getMenuInflater().inflate(R.menu.address, menu);
 		
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+	    switch (item.getItemId()) {
+		    case android.R.id.home:
+		        finish();
+		        return true;
+		    default:
+		        return super.onOptionsItemSelected(item);
+	    }
 	}
 }
