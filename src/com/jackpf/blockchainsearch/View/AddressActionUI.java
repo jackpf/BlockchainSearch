@@ -1,7 +1,5 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.util.Locale;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -9,6 +7,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -26,9 +26,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
-import com.jackpf.blockchainsearch.Data.BlockchainData;
+import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
+import com.jackpf.blockchainsearch.Service.Utils;
 
 public class AddressActionUI extends UIInterface
 {
@@ -87,9 +88,9 @@ public class AddressActionUI extends UIInterface
 		// Overview fragment
 		View overviewFragment = activity.findViewById(R.id.content_overview);
 		
-		((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(btcFormat((Long) json.get("final_balance")));
-		((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(btcFormat((Long) json.get("total_received")));
-		((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(btcFormat((Long) json.get("total_sent")));
+		((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance")));
+		((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received")));
+		((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent")));
 		((TextView) overviewFragment.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
 		
 		ImageView qrCode = (ImageView) overviewFragment.findViewById(R.id._address_qr_code);
@@ -107,7 +108,7 @@ public class AddressActionUI extends UIInterface
 		
 		int i = 0;
 		for (Object o : txs) {
-			JSONObject tx = (JSONObject) o;
+			final JSONObject tx = (JSONObject) o;
 			
 			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
 			
@@ -123,7 +124,7 @@ public class AddressActionUI extends UIInterface
 			} else {
 				resultTextView.setTextColor(Color.BLACK);
 			}
-			resultTextView.setText(btcFormat((Long) r).replace("-", ""));
+			resultTextView.setText(Utils.btcFormat((Long) r).replace("-", ""));
 			
 			if (i % 2 == 1) {
 				// This should be from style really
@@ -136,11 +137,6 @@ public class AddressActionUI extends UIInterface
 		}
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
-	}
-	
-	private String btcFormat(Long i)
-	{
-		return String.format(Locale.getDefault(), "%s%.8f", "\u0E3F", i.doubleValue() / BlockchainData.CURRENCY_MULTIPLIER);
 	}
 	
 	public void error(Exception e)

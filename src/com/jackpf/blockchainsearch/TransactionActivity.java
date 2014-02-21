@@ -1,18 +1,16 @@
 package com.jackpf.blockchainsearch;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.view.View;
 import android.view.Window;
-import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.Interface.UIInterface;
-import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
-import com.jackpf.blockchainsearch.View.AddressActionUI;
+import com.jackpf.blockchainsearch.Service.Request.TransactionRequest;
+import com.jackpf.blockchainsearch.View.TransactionActionUI;
 
-public class AddressActivity extends FragmentActivity
+public class TransactionActivity extends Activity
 {
 	public final static String EXTRA_SEARCH = "search";
 	
@@ -23,7 +21,7 @@ public class AddressActivity extends FragmentActivity
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_address);
 
-		UIInterface ui = new AddressActionUI(this);
+		UIInterface ui = new TransactionActionUI(this);
 		
 		ui.initialise();
 		
@@ -32,7 +30,7 @@ public class AddressActivity extends FragmentActivity
 		
 		new NetworkThread(
 			this,
-			new AddressRequest(searchText),
+			new TransactionRequest(searchText),
 			ui
 		).execute();
 	}
@@ -43,12 +41,5 @@ public class AddressActivity extends FragmentActivity
 		getMenuInflater().inflate(R.menu.address, menu);
 		
 		return true;
-	}
-	
-	public void onClick(View v)
-	{
-		Intent intent = new Intent(this, TransactionActivity.class);
-		intent.putExtra(TransactionActivity.EXTRA_SEARCH, ((TextView) v.findViewById(R.id.id)).getText().toString());
-		startActivity(intent);
 	}
 }

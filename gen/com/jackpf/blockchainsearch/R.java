@@ -55,17 +55,21 @@ public final class R {
         public static final int _address_transactions_row=0x7f030002;
         public static final int activity_address=0x7f030003;
         public static final int activity_main=0x7f030004;
-        public static final int loading=0x7f030005;
+        public static final int activity_transaction=0x7f030005;
+        public static final int loading=0x7f030006;
     }
     public static final class menu {
         public static final int address=0x7f090000;
         public static final int main=0x7f090001;
+        public static final int transaction=0x7f090002;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int activity_address_title=0x7f060003;
         public static final int activity_main_title=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f060005;
+        public static final int title_activity_transaction=0x7f060004;
     }
     public static final class style {
         /** 
