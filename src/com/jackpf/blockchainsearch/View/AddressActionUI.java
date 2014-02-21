@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
@@ -103,6 +104,7 @@ public class AddressActionUI extends UIInterface
 		TableLayout transactionsTable = (TableLayout) transactionsFragment.findViewById(R.id._address_transactions);
 		
 		int i = 0;
+		transactionsTable.removeAllViews(); // Get rid of rows in case we're updating
 		for (Object o : txs) {
 			final JSONObject tx = (JSONObject) o;
 			
@@ -143,6 +145,12 @@ public class AddressActionUI extends UIInterface
 	public void error(Exception e)
 	{
 		e.printStackTrace();
+		
+		Toast.makeText(
+			context.getApplicationContext(),
+			context.getString(R.string.text_exception, e.getMessage()),
+			Toast.LENGTH_SHORT
+		).show();
 	}
 	
 	protected class TabListener implements android.app.ActionBar.TabListener

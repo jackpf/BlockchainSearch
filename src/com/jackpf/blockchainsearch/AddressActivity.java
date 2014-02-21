@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
@@ -16,6 +17,9 @@ import com.jackpf.blockchainsearch.View.AddressActionUI;
 public class AddressActivity extends FragmentActivity
 {
 	public final static String EXTRA_SEARCH = "search";
+	
+	private UIInterface ui;
+	private String searchText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -27,12 +31,10 @@ public class AddressActivity extends FragmentActivity
 		getActionBar().setHomeButtonEnabled(true);
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		UIInterface ui = new AddressActionUI(this);
+		ui = new AddressActionUI(this);
+		searchText = getIntent().getStringExtra(EXTRA_SEARCH);
 		
 		ui.initialise();
-		
-		Intent intent = getIntent();
-		String searchText = intent.getStringExtra(EXTRA_SEARCH);
 		
 		new NetworkThread(
 			this,
@@ -57,8 +59,15 @@ public class AddressActivity extends FragmentActivity
 		        finish();
 		        return true;
 		    case R.id.action_refresh:
-		    	finish();
-		    	startActivity(getIntent());
+		    	Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
+		    	//finish();
+		    	//startActivity(getIntent());
+		    	new NetworkThread(
+	    			this,
+	    			new AddressRequest(searchText),
+	    			ui
+	    		).execute();
+		    	return true;
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
