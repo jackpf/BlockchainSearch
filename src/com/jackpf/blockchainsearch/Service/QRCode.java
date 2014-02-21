@@ -1,6 +1,5 @@
 package com.jackpf.blockchainsearch.Service;
 
-import java.io.IOException;
 import java.util.Hashtable;
 
 import android.graphics.Bitmap;
@@ -16,7 +15,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class QRCode
 {
     public static Bitmap create(String qrCodeText, int size)
-            throws WriterException, IOException
+            throws WriterException
     {
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
@@ -29,11 +28,11 @@ public class QRCode
         
         for (int i = 0; i < matrixWidth; i++) {
             for (int j = 0; j < matrixWidth; j++) {
+                int c = Color.rgb(0xFF, 0xFF, 0xFF);
                 if (byteMatrix.get(i, j)) {
-                    image.setPixel(i, j, Color.rgb(0, 0, 0));
-                } else {
-                    image.setPixel(i, j, Color.rgb(0xFF, 0xFF, 0xFF));
+                    c = Color.rgb(0x0, 0x0, 0x0);
                 }
+                image.setPixel(i, j, c);
             }
         }
         
