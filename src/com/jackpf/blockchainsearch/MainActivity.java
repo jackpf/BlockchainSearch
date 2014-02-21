@@ -4,19 +4,33 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.jackpf.blockchainsearch.View.MainActionUI;
+
 public class MainActivity extends Activity
 {
+	private /*UIInterface*/ MainActionUI ui;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		
 	    getActionBar().setTitle(getString(R.string.activity_main_title));
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        
 		setContentView(R.layout.activity_main);
+		
+		ui = new MainActionUI(this);
+		ui.initialise();
 	}
 
 	@Override
@@ -26,6 +40,16 @@ public class MainActivity extends Activity
 		
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (ui.drawerToggle.onOptionsItemSelected(item)) {
+        	return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
+    }
 	
 	/**
 	 * On search button click

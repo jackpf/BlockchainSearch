@@ -11,4 +11,15 @@
     <string name="title_activity_transaction">TransactionActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <string-array name="drawer_list_titles">
+        <item>Search</item>
+        <item>Saved Addresses</item>
+    </string-array>
+    <string-array name="drawer_list_values">
+        <item>.MainActivity</item>
+        <item>saved_addresses</item>
+    </string-array>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    
 </resources>
