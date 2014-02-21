@@ -1,7 +1,5 @@
 package com.jackpf.blockchainsearch.Interface;
 
-import org.json.simple.JSONObject;
-
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
 import com.jackpf.blockchainsearch.Service.Blockchain;
 
@@ -36,5 +34,5 @@ public abstract class RequestInterface
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract RequestResponse<JSONObject> call() throws Exception;
+	public abstract RequestResponse call() throws Exception;
 }

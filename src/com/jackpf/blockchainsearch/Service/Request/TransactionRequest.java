@@ -16,13 +16,19 @@ public class TransactionRequest extends RequestInterface
 		super(params);
 	}
 	
-	public RequestResponse<JSONObject> call() throws Exception
+	public RequestResponse call() throws Exception
 	{
 		if (this.params.length < 1) {
 			throw new InvalidParameterException("No transaction specified");
 		}
 		
 		ApiPath path = new ApiPath(BlockchainData.TRANSACTION_URL, (String) this.params[0]);
-		return new RequestResponse<JSONObject>(this.blockchain.request(path));
+		JSONObject json = this.blockchain.request(path);
+		
+		RequestResponse response = new RequestResponse();
+		
+		response.put("response", json);
+		
+		return response;
 	}
 }

@@ -3,7 +3,6 @@ package com.jackpf.blockchainsearch.Interface;
 import java.util.HashMap;
 
 import android.content.Context;
-import android.view.View;
 
 /**
  * UI interface

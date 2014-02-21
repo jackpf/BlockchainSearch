@@ -7,7 +7,6 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -26,7 +24,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
-import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
 import com.jackpf.blockchainsearch.Service.Utils;
@@ -111,20 +108,25 @@ public class AddressActionUI extends UIInterface
 			final JSONObject tx = (JSONObject) o;
 			
 			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
+
+			((TextView) tr.findViewById(R.id.hash)).setText(tx.get("hash").toString());
+
+			Object bc = vars.get("block_count"), bh = tx.get("block_height");
+			int blockCount = Integer.parseInt(bc.toString());
+			int blockHeight = bh == null ? blockCount - 1 : Integer.parseInt(bh.toString());
 			
-			((TextView) tr.findViewById(R.id.id)).setText(tx.get("hash").toString());
+			int confirmations = blockCount - blockHeight + 1;
+			((ImageView) tr.findViewById(R.id.confirmations)).setImageDrawable(new BitmapDrawable(context.getResources(), Utils.drawConfirmationsArc(confirmations, 3, Color.parseColor("#F06699CC"), Color.parseColor("#60666666"), 24)));
 			
 			Object r = tx.get("result");
-			int result = Integer.parseInt(r.toString());
+			long result = Long.parseLong(r.toString());
 			TextView resultTextView = (TextView) tr.findViewById(R.id.amount);
 			if (result > 0) {
 				resultTextView.setTextColor(Color.GREEN);
 			} else if (result < 0) {
 				resultTextView.setTextColor(Color.RED);
-			} else {
-				resultTextView.setTextColor(Color.BLACK);
 			}
-			resultTextView.setText(Utils.btcFormat((Long) r).replace("-", ""));
+			resultTextView.setText(Utils.btcFormat(result).replace("-", ""));
 			
 			if (i % 2 == 1) {
 				// This should be from style really

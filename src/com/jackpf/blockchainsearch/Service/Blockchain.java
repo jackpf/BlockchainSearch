@@ -14,8 +14,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import android.util.Log;
-
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 
 /**
@@ -24,15 +22,14 @@ import com.jackpf.blockchainsearch.Entity.ApiPath;
 public class Blockchain
 {
 	/**
-	 * Perform an api request
+	 * Raw http request
 	 * 
 	 * @param path
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
-	 * @throws ParseException
 	 */
-	public JSONObject request(ApiPath path) throws ClientProtocolException, IOException, ParseException
+	public String rawRequest(ApiPath path) throws ClientProtocolException, IOException
 	{
 		HttpClient client = new DefaultHttpClient();
 		
@@ -46,8 +43,24 @@ public class Blockchain
 			throw new IOException("Invalid request: " + writer.toString());
 		}
 		
+		return writer.toString();
+	}
+	
+	/**
+	 * Perform an api request and parse the response json
+	 * 
+	 * @param path
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public JSONObject request(ApiPath path)  throws ClientProtocolException, IOException, ParseException
+	{
+		String response = rawRequest(path);
+		
 		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonResponse = (JSONObject) jsonParser.parse(writer.toString());
+		JSONObject jsonResponse = (JSONObject) jsonParser.parse(response);
 		
 		return jsonResponse;
 	}

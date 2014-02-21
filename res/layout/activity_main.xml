@@ -19,7 +19,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.7"
-	        android:text="18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp">
+	        android:text="1MHbEaWbF9nFPqpoecda2zu8kMTzR1FMTr">
 	
 	        <requestFocus />
 	    </EditText>

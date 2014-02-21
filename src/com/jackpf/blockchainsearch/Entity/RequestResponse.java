@@ -1,34 +1,11 @@
 package com.jackpf.blockchainsearch.Entity;
 
+import java.util.HashMap;
+
 /**
  * Request response
- * 
- * @param <T>
  */
-public class RequestResponse<T>
+public class RequestResponse extends HashMap<String, Object>
 {
-	/**
-	 * Response object
-	 */
-	private T response;
 	
-	/**
-	 * Constructor
-	 * 
-	 * @param response
-	 */
-	public RequestResponse(T response)
-	{
-		this.response = response;
-	}
-	
-	/**
-	 * Get response
-	 * 
-	 * @return
-	 */
-	public T getResponse()
-	{
-		return response;
-	}
 }

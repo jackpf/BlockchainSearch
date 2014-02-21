@@ -20,7 +20,7 @@
 			    android:layout_width="0sp"
 			    android:layout_height="wrap_content"
 			    android:text="ID"
-			    android:layout_weight="0.3"
+			    android:layout_weight="0.5"
 			    android:gravity="center" />
 		
 			<TextView
@@ -28,7 +28,7 @@
 				android:layout_height="wrap_content"
 				android:text="Amount"
 				style="@style/HeaderText"
-			    android:layout_weight="0.3"
+			    android:layout_weight="0.5"
 			    android:gravity="center" />
 		
 		</TableRow>

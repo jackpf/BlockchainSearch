@@ -53,7 +53,7 @@ public class AddressActivity extends FragmentActivity
 	public void onClick(View v)
 	{
 		Intent intent = new Intent(this, TransactionActivity.class);
-		intent.putExtra(TransactionActivity.EXTRA_SEARCH, ((TextView) v.findViewById(R.id.id)).getText().toString());
+		intent.putExtra(TransactionActivity.EXTRA_SEARCH, ((TextView) v.findViewById(R.id.hash)).getText().toString());
 		startActivity(intent);
 	}
 }

@@ -2,8 +2,6 @@ package com.jackpf.blockchainsearch;
 
 import java.util.HashMap;
 
-import org.json.simple.JSONObject;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -74,9 +72,8 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
     protected Void doInBackground(String... params)
     {
 		try {
-			JSONObject response = request.call().getResponse();
-			
-			vars.put("response", response);
+			// Just set the vars to the response
+			vars = request.call();
 		} catch (Exception e) {
 			this.e = e;
 		}

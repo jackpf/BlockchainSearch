@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.jackpf.blockchainsearch.Service.Blockchain;
-import com.jackpf.blockchainsearch.View.AddressActionUI;
-
 public class MainActivity extends Activity
 {
 	@Override
