@@ -68,6 +68,12 @@ public class Utils
 		return image;
 	}
 	
+	/**
+	 * Validate a bitcoin address
+	 * 
+	 * @param address
+	 * @return
+	 */
 	public static boolean validAddress(String address)
 	{
 		byte[] decoded = new byte[]{};
@@ -98,5 +104,16 @@ public class Utils
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Validate a transaction hash
+	 * 
+	 * @param hash
+	 * @return
+	 */
+	public static boolean validateTransaction(String hash)
+	{
+		return hash.getBytes().length == 64;
 	}
 }

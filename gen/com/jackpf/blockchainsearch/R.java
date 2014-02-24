@@ -106,7 +106,7 @@ public final class R {
         public static final int hello_world=0x7f06000b;
         public static final int search_hint_text=0x7f06000c;
         public static final int text_exception=0x7f060006;
-        public static final int text_invalid_address=0x7f060007;
+        public static final int text_invalid_input=0x7f060007;
         public static final int text_refreshing=0x7f060004;
         public static final int text_saving=0x7f060005;
         public static final int title_activity_transaction=0x7f06000a;

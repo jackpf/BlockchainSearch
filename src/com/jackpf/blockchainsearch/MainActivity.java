@@ -63,18 +63,22 @@ public class MainActivity extends Activity
 		TextView searchTextView = (TextView) findViewById(R.id.search);
 		String searchText = searchTextView.getText().toString();
 		
-		if (!Utils.validAddress(searchText)) {
+		if (Utils.validAddress(searchText)) {
+			Intent intent = new Intent(this, AddressActivity.class);
+			intent.putExtra(AddressActivity.EXTRA_SEARCH, searchText);
+			startActivity(intent);
+		} else if (Utils.validateTransaction(searchText)) {
+			Intent intent = new Intent(this, TransactionActivity.class);
+			intent.putExtra(TransactionActivity.EXTRA_SEARCH, searchText);
+			startActivity(intent);
+		} else {
 			Toast.makeText(
 				getApplicationContext(),
-				getString(R.string.text_invalid_address),
+				getString(R.string.text_invalid_input),
 				Toast.LENGTH_SHORT
 			).show();
 			
 			return;
 		}
-		
-		Intent intent = new Intent(this, AddressActivity.class);
-		intent.putExtra(AddressActivity.EXTRA_SEARCH, searchText);
-		startActivity(intent);
 	}
 }

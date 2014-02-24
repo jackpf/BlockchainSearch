@@ -8,10 +8,10 @@
     <string name="text_refreshing">Refreshing...</string>
     <string name="text_saving">Address saved</string>
     <string name="text_exception">An error has occurred: %s</string>
-    <string name="text_invalid_address">Please enter a valid address</string>
+    <string name="text_invalid_input">Please enter a valid address or tx hash</string>
     <string name="activity_main_title">Search</string>
     <string name="activity_address_title">Address</string>
-    <string name="title_activity_transaction">TransactionActivity</string>
+    <string name="title_activity_transaction">Transaction</string>
     <string name="hello_world">Hello world!</string>
     <string name="search_hint_text">Enter address...</string>
     

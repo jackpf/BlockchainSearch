@@ -32,6 +32,7 @@
 	            <action android:name="android.intent.action.VIEW" />
 	            <category android:name="android.intent.category.DEFAULT" />
 	            <category android:name="android.intent.category.BROWSABLE" />
+	            <data android:scheme="http" android:host="blockchain.info" android:pathPrefix="/address/" />
 	            <data android:scheme="https" android:host="blockchain.info" android:pathPrefix="/address/" />
 	        </intent-filter>
         </activity>
@@ -42,6 +43,7 @@
 	            <action android:name="android.intent.action.VIEW" />
 	            <category android:name="android.intent.category.DEFAULT" />
 	            <category android:name="android.intent.category.BROWSABLE" />
+	            <data android:scheme="http" android:host="blockchain.info" android:pathPrefix="/tx/" />
 	            <data android:scheme="https" android:host="blockchain.info" android:pathPrefix="/tx/" />
 	        </intent-filter>
         </activity>
