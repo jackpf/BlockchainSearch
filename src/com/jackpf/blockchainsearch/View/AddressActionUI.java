@@ -287,16 +287,19 @@ public class AddressActionUI extends UIInterface
 	    	((TextView) row.findViewById(R.id.hash)).setText(tx.get("addr").toString());
 			
 	    	//Date
-	    	JSONObject time = (JSONObject) tx.get("time");
+	    	Object time = tx.get("time");
 	    	if (time != null) {
 	    		((TextView) row.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(time.toString()) * 1000L)));
 	    	}
 	    	
 			//Confirmations image
 			Object bc = vars.get("block_count"), bh = tx.get("block_height");
-			int blockCount = Integer.parseInt(bc.toString());
-			int blockHeight = bh == null ? blockCount - 1 : Integer.parseInt(bh.toString());
-			int confirmations = blockCount - blockHeight + 1;
+			int confirmations = 0;
+			if (bh != null) {
+				int blockCount = Integer.parseInt(bc.toString());
+				int blockHeight = Integer.parseInt(bh.toString());
+				confirmations = blockCount - blockHeight + 1;
+			}
 			((ImageView) row.findViewById(R.id.confirmations)).setImageDrawable(new BitmapDrawable(context.getResources(), Utils.drawConfirmationsArc(confirmations, 3, Color.parseColor("#F06699CC"), Color.parseColor("#60666666"), 24)));
 			
 			// Amount
