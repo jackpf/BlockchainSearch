@@ -49,10 +49,20 @@ public final class R {
         public static final int _address_table=0x7f0b0001;
         public static final int _address_total_received=0x7f0b0003;
         public static final int _address_total_sent=0x7f0b0004;
-        public static final int action_refresh=0x7f0b0013;
-        public static final int action_save=0x7f0b0014;
-        public static final int action_settings=0x7f0b0015;
-        public static final int action_transaction_view=0x7f0b0012;
+        public static final int _transaction_confirmations=0x7f0b0018;
+        public static final int _transaction_date=0x7f0b0014;
+        public static final int _transaction_double_spend=0x7f0b0017;
+        public static final int _transaction_hash=0x7f0b0012;
+        public static final int _transaction_index=0x7f0b0013;
+        public static final int _transaction_inputs=0x7f0b0019;
+        public static final int _transaction_outputs=0x7f0b001a;
+        public static final int _transaction_relayed_by=0x7f0b0015;
+        public static final int _transaction_size=0x7f0b0016;
+        public static final int _transaction_table=0x7f0b0011;
+        public static final int action_refresh=0x7f0b001d;
+        public static final int action_save=0x7f0b001e;
+        public static final int action_settings=0x7f0b001f;
+        public static final int action_transaction_view=0x7f0b001c;
         public static final int amount=0x7f0b000b;
         public static final int confirmations=0x7f0b0008;
         public static final int content=0x7f0b000c;
@@ -62,7 +72,7 @@ public final class R {
         public static final int drawer=0x7f0b000e;
         public static final int drawer_layout=0x7f0b000d;
         public static final int hash=0x7f0b0009;
-        public static final int loading=0x7f0b0011;
+        public static final int loading=0x7f0b001b;
         public static final int search=0x7f0b000f;
         public static final int submit=0x7f0b0010;
     }

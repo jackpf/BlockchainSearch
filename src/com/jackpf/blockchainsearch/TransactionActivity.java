@@ -22,7 +22,7 @@ public class TransactionActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		setContentView(R.layout.activity_address);
+		setContentView(R.layout.activity_transaction);
 		
 		getActionBar().setHomeButtonEnabled(true);
 	    getActionBar().setDisplayHomeAsUpEnabled(true);

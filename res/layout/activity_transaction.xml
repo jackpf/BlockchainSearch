@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,11 +6,205 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".TransactionActivity" >
+    
+    <include layout="@layout/loading" />
+    
+    <ScrollView
+		android:id="@+id/content"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+	
+		<TableLayout
+			android:id="@+id/_transaction_table"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="20sp">
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Hash"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_hash"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Index"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_index"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Date"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_date"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Relayed By"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_relayed_by"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Size"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_size"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Double Spend"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_double_spend"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Confirmations"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_confirmations"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow2">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Inputs"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_inputs"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				style="@style/TableRow">
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Outputs"
+					style="@style/HeaderText" />
+			
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/_transaction_outputs"
+					style="@style/BodyText"
+					android:gravity="right" />
+			
+			</TableRow>
+			
+		</TableLayout>
+	
+	</ScrollView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-</RelativeLayout>
+</LinearLayout>
