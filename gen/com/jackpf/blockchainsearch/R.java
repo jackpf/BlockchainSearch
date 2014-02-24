@@ -70,12 +70,12 @@ public final class R {
         public static final int content_overview=0x7f0b0000;
         public static final int content_transactions=0x7f0b0007;
         public static final int date=0x7f0b000a;
-        public static final int drawer=0x7f0b000e;
+        public static final int drawer=0x7f0b0010;
         public static final int drawer_layout=0x7f0b000d;
         public static final int hash=0x7f0b0009;
         public static final int loading=0x7f0b001c;
-        public static final int search=0x7f0b000f;
-        public static final int submit=0x7f0b0010;
+        public static final int search=0x7f0b000e;
+        public static final int submit=0x7f0b000f;
     }
     public static final class layout {
         public static final int _address_overview=0x7f030000;

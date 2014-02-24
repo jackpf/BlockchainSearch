@@ -37,16 +37,14 @@ public class MainActionUI extends UIInterface
         drawerList.setAdapter(new ArrayAdapter<String>(
     		context,
             R.layout._drawer_list_item,
-            context.getResources().getStringArray(R.array.drawer_list_titles))
-        );
+            context.getResources().getStringArray(R.array.drawer_list_titles)
+        ));
         
         drawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id)
             {
-            	// Not gonna do this until I can find how to select first item on default -_-
-                //view.setSelected(true);
-
+                drawerList.setItemChecked(position, true);
                 drawerLayout.closeDrawer(drawerList);
             }
 	    });
