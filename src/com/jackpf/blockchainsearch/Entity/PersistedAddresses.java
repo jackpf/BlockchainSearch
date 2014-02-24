@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +34,15 @@ public class PersistedAddresses extends ArrayList<String>
 		return r;
 	}
 	
+	public boolean add(String e, boolean persist)
+	{
+	    if (persist) {
+	        return add(e);
+	    } else {
+	        return super.add(e);
+	    }
+	}
+	
 	protected void save()
 	{
 		try {
@@ -59,7 +67,7 @@ public class PersistedAddresses extends ArrayList<String>
 		    JSONArray json = new JSONArray(sb.toString());
 		    
 		    for (int i = 0; i < json.length(); i++) {
-		    	this.add(json.getString(i));
+		    	this.add(json.getString(i), false /* don't persist here, no point */);
 	    	}
 		} catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
 	}

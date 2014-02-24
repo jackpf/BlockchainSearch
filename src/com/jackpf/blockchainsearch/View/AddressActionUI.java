@@ -103,7 +103,7 @@ public class AddressActionUI extends UIInterface
 		
 		// Transactions fragment
 		View transactionsFragment = activity.findViewById(R.id.content_transactions);
-		JSONArray txs = (JSONArray) json.get("txs");
+		JSONArray txs = (JSONArray) vars.get("transactions");
 		LayoutInflater inflater = activity.getLayoutInflater();
 		TableLayout transactionsTable = (TableLayout) transactionsFragment.findViewById(R.id._address_transactions);
 		
@@ -114,7 +114,7 @@ public class AddressActionUI extends UIInterface
 			
 			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
 
-			((TextView) tr.findViewById(R.id.hash)).setText(tx.get("hash").toString());
+			((TextView) tr.findViewById(R.id.hash)).setText(tx.get("addr").toString());
 			
 			((TextView) tr.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(tx.get("time").toString()) * 1000L)));
 
