@@ -1,6 +1,6 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.json.simple.JSONArray;
@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -20,15 +21,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
 import com.jackpf.blockchainsearch.Service.Utils;
@@ -102,48 +111,40 @@ public class AddressActionUI extends UIInterface
 		}
 		
 		// Transactions fragment
-		View transactionsFragment = activity.findViewById(R.id.content_transactions);
-		JSONArray txs = (JSONArray) vars.get("transactions");
-		LayoutInflater inflater = activity.getLayoutInflater();
-		TableLayout transactionsTable = (TableLayout) transactionsFragment.findViewById(R.id._address_transactions);
+	    ListView txList = (ListView) activity.findViewById(R.id.content_transactions);
 		
-		int i = 0;
-		transactionsTable.removeAllViews(); // Get rid of rows in case we're updating
-		for (Object o : txs) {
-			final JSONObject tx = (JSONObject) o;
-			
-			TableRow tr = (TableRow) inflater.inflate(R.layout._address_transactions_row, null);
-
-			((TextView) tr.findViewById(R.id.hash)).setText(tx.get("addr").toString());
-			
-			((TextView) tr.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(tx.get("time").toString()) * 1000L)));
-
-			Object bc = vars.get("block_count"), bh = tx.get("block_height");
-			int blockCount = Integer.parseInt(bc.toString());
-			int blockHeight = bh == null ? blockCount - 1 : Integer.parseInt(bh.toString());
-			
-			int confirmations = blockCount - blockHeight + 1;
-			((ImageView) tr.findViewById(R.id.confirmations)).setImageDrawable(new BitmapDrawable(context.getResources(), Utils.drawConfirmationsArc(confirmations, 3, Color.parseColor("#F06699CC"), Color.parseColor("#60666666"), 24)));
-			
-			Object r = tx.get("result");
-			long result = Long.parseLong(r.toString());
-			TextView resultTextView = (TextView) tr.findViewById(R.id.amount);
-			if (result > 0) {
-				resultTextView.setTextColor(Color.GREEN);
-			} else if (result < 0) {
-				resultTextView.setTextColor(Color.RED);
+		final ArrayAdapter<JSONArray> adapter = new ArrayAdapter<JSONArray>(context, (JSONArray) vars.get("transactions"));
+	    txList.setAdapter(adapter);
+	    txList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				Intent intent = new Intent(context, AddressActivity.class);
+				intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
+				context.startActivity(intent);
 			}
-			resultTextView.setText(Utils.btcFormat(result).replace("-", ""));
-			
-			if (i % 2 == 1) {
-				// This should be from style really
-				tr.setBackgroundColor(Color.parseColor("#f9f9f9"));
+    	});
+	    txList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
+				
+				PopupMenu menu = new PopupMenu(context, view);
+				activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
+				menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+                    public boolean onMenuItemClick(MenuItem item)
+					{
+						Intent intent = new Intent(context, TransactionActivity.class);
+						intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+						context.startActivity(intent);
+						return true;
+					}
+				});
+				menu.show();
+				
+				return true;
 			}
-			
-			transactionsTable.addView(tr);
-			
-			i++;
-		}
+    	});
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
 	}
@@ -159,21 +160,25 @@ public class AddressActionUI extends UIInterface
 		).show();
 	}
 	
+	/**
+	 * Tab swipe listener
+	 * Sets the current tab when tabs are swept
+	 */
 	protected class TabListener implements android.app.ActionBar.TabListener
 	{
-		@Override
 		public void onTabReselected(Tab arg0, android.app.FragmentTransaction tx) { }
-
+		public void onTabUnselected(Tab arg0, android.app.FragmentTransaction tx) { }
 		@Override
 		public void onTabSelected(Tab tab, android.app.FragmentTransaction arg1)
 		{
 			viewPager.setCurrentItem(tab.getPosition());
 		}
-
-		@Override
-		public void onTabUnselected(Tab arg0, android.app.FragmentTransaction tx) { }
 	}
 	
+	/**
+	 * Fragment adapter
+	 * Provides a fragment for a given index
+	 */
 	protected class TabsPagerAdapter extends FragmentPagerAdapter
 	{
 		public TabsPagerAdapter(FragmentManager fm)
@@ -194,6 +199,9 @@ public class AddressActionUI extends UIInterface
 		}
 	}
 	
+	/**
+	 * Overview fragment
+	 */
 	protected static class OverviewFragment extends Fragment
 	{
 		public OverviewFragment()
@@ -209,6 +217,9 @@ public class AddressActionUI extends UIInterface
 		}
 	}
 	
+	/**
+	 * Transactions fragment
+	 */
 	protected static class TransactionsFragment extends Fragment
 	{
 		public TransactionsFragment()
@@ -222,5 +233,80 @@ public class AddressActionUI extends UIInterface
 			View rootView = inflater.inflate(R.layout._address_transactions, container, false);
 			return rootView;
 		}
+	}
+	
+	/**
+	 * Transactions ListView array adapter
+	 * 
+	 *
+	 * @param <T>
+	 */
+	private class ArrayAdapter<T extends ArrayList> extends BaseAdapter
+	{
+	    private final Context context;
+	    private final T objects;
+	    private final LayoutInflater inflater;
+
+	    public ArrayAdapter(Context context, T objects)
+	    {
+	        this.context = context;
+	        this.objects = objects;
+
+	        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    }
+
+	    public Object getItem(int position)
+	    {
+	        return objects.get(position);
+	    }
+
+	    public long getItemId(int position)
+	    {
+	        return position;
+	    }
+
+	    public int getCount()
+	    {
+	    	return objects.size();
+	    }
+
+	    @Override
+	    public View getView(int position, View convertView, ViewGroup parent)
+	    {
+	    	View row;
+
+			if (convertView == null) {
+				row = inflater.inflate(R.layout._address_transactions_item, parent, false);
+			} else {
+				row = convertView;
+			}
+			
+			JSONObject tx = (JSONObject) objects.get(position);
+		    
+			// Address
+	    	((TextView) row.findViewById(R.id.hash)).setText(tx.get("addr").toString());
+			
+	    	//Date
+	    	JSONObject time = (JSONObject) tx.get("time");
+	    	if (time != null) {
+	    		((TextView) row.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(time.toString()) * 1000L)));
+	    	}
+	    	
+			//Confirmations image
+			Object bc = vars.get("block_count"), bh = tx.get("block_height");
+			int blockCount = Integer.parseInt(bc.toString());
+			int blockHeight = bh == null ? blockCount - 1 : Integer.parseInt(bh.toString());
+			int confirmations = blockCount - blockHeight + 1;
+			((ImageView) row.findViewById(R.id.confirmations)).setImageDrawable(new BitmapDrawable(context.getResources(), Utils.drawConfirmationsArc(confirmations, 3, Color.parseColor("#F06699CC"), Color.parseColor("#60666666"), 24)));
+			
+			// Amount
+			Object r = tx.get("result");
+			long result = Long.parseLong(r.toString());
+			TextView resultTextView = (TextView) row.findViewById(R.id.amount);
+			resultTextView.setTextColor(result > 0 ? Color.GREEN : Color.RED);
+			resultTextView.setText(Utils.btcFormat(result).replace("-", ""));
+
+    	    return row;
+	    }
 	}
 }

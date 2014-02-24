@@ -1,38 +1,9 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/content_transactions"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
-	
-	<TableLayout
-		android:id="@+id/_address_transactions"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		
-	    <TableRow
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			style="@style/TableRow">
-		
-			<TextView
-			    style="@style/HeaderText"
-			    android:layout_width="0sp"
-			    android:layout_height="wrap_content"
-			    android:text="ID"
-			    android:layout_weight="0.5"
-			    android:gravity="center" />
-		
-			<TextView
-				android:layout_width="0sp"
-				android:layout_height="wrap_content"
-				android:text="Amount"
-				style="@style/HeaderText"
-			    android:layout_weight="0.5"
-			    android:gravity="center" />
-		
-		</TableRow>
-		
-	</TableLayout>
-
-</ScrollView>
+    android:id="@+id/content_transactions"
+    android:layout_width="fill_parent"
+    android:layout_height="0sp"
+    android:divider="@android:color/transparent"
+    android:choiceMode="singleChoice" 
+    android:listSelector="@drawable/arraylist_selector" 
+    android:cacheColorHint="@android:color/transparent" />

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_transaction_view"
+        android:orderInCategory="1"
+        android:showAsAction="never"
+        android:title="@string/action_transaction_view" />
+
+</menu>

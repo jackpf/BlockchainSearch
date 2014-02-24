@@ -1,13 +1,15 @@
 package com.jackpf.blockchainsearch;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
@@ -95,17 +97,5 @@ public class AddressActivity extends FragmentActivity
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
-	}
-	
-	/**
-	 * On transaction table row click
-	 * 
-	 * @param v
-	 */
-	public void onClick(View v)
-	{
-		Intent intent = new Intent(this, TransactionActivity.class);
-		intent.putExtra(TransactionActivity.EXTRA_SEARCH, ((TextView) v.findViewById(R.id.hash)).getText().toString());
-		startActivity(intent);
 	}
 }
