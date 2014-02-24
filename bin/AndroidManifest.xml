@@ -28,10 +28,22 @@
         <activity
             android:name=".AddressActivity"
             android:label="@string/activity_address_title" >
+            <intent-filter>
+	            <action android:name="android.intent.action.VIEW" />
+	            <category android:name="android.intent.category.DEFAULT" />
+	            <category android:name="android.intent.category.BROWSABLE" />
+	            <data android:scheme="https" android:host="blockchain.info" android:pathPrefix="/address/" />
+	        </intent-filter>
         </activity>
         <activity
             android:name=".TransactionActivity"
             android:label="@string/title_activity_transaction" >
+            <intent-filter>
+	            <action android:name="android.intent.action.VIEW" />
+	            <category android:name="android.intent.category.DEFAULT" />
+	            <category android:name="android.intent.category.BROWSABLE" />
+	            <data android:scheme="https" android:host="blockchain.info" android:pathPrefix="/tx/" />
+	        </intent-filter>
         </activity>
     </application>
 

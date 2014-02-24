@@ -1,15 +1,13 @@
 package com.jackpf.blockchainsearch;
 
+import java.util.List;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
@@ -36,7 +34,18 @@ public class AddressActivity extends FragmentActivity
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		ui = new AddressActionUI(this);
-		searchText = getIntent().getStringExtra(EXTRA_SEARCH);
+		
+		final Intent intent = getIntent();
+	    final String action = intent.getAction();
+
+	    if (Intent.ACTION_VIEW.equals(action)) {
+	        final List<String> segments = intent.getData().getPathSegments();
+	        if (segments.size() > 1) {
+	            searchText = segments.get(1);
+	        }
+	    } else {
+	    	searchText = getIntent().getStringExtra(EXTRA_SEARCH);
+	    }
 		
 		ui.initialise();
 		
@@ -57,6 +66,10 @@ public class AddressActivity extends FragmentActivity
 	 */
 	private void refresh()
 	{
+		if (thread instanceof NetworkThread) {
+			thread.cancel(true);
+		}
+		
 		thread = new NetworkThread(
 			this,
 			new AddressRequest(searchText),
