@@ -6,7 +6,8 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_save">Save</string>
     <string name="text_refreshing">Refreshing...</string>
-    <string name="text_saving">Address saved</string>
+    <string name="text_address_saved">Address saved</string>
+    <string name="text_address_unsaved">Address removed</string>
     <string name="text_exception">An error has occurred: %s</string>
     <string name="text_invalid_input">Please enter a valid address or tx hash</string>
     <string name="activity_main_title">Search</string>

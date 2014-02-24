@@ -10,7 +10,9 @@ import org.ocpsoft.prettytime.PrettyTime;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -38,6 +41,7 @@ import android.widget.Toast;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
+import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
 import com.jackpf.blockchainsearch.Service.Utils;
@@ -97,8 +101,9 @@ public class AddressActionUI extends UIInterface
 		
 		// Overview fragment
 		View overviewFragment = activity.findViewById(R.id.content_overview);
-		
-		((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance")));
+
+        ((TextView) overviewFragment.findViewById(R.id._address_address)).setText(json.get("address").toString());
+        ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance")));
 		((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received")));
 		((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent")));
 		((TextView) overviewFragment.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
@@ -160,6 +165,43 @@ public class AddressActionUI extends UIInterface
 		).show();
 	}
 	
+	public void promptPersistAddress(final String address, final PersistedAddresses addresses)
+	{
+	    final EditText input = new EditText(context);
+	    
+	    new AlertDialog.Builder(context)
+	        .setTitle("Enter a name for this address")
+	        .setView(input)
+	        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int button)
+	            {
+	                addresses.add(address, input.getText().toString());
+	                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+	            }
+	        })
+	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button) { }
+	        })
+	        .show();
+	}
+    
+    public void promptRemoveAddress(final String address, final PersistedAddresses addresses)
+    {
+        new AlertDialog.Builder(context)
+            .setTitle("Do you want to unsave this address?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button)
+                {
+                    addresses.remove(address);
+                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
+                }
+            })
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button) { }
+            })
+            .show();
+    }
+	
 	/**
 	 * Tab swipe listener
 	 * Sets the current tab when tabs are swept
@@ -212,8 +254,7 @@ public class AddressActionUI extends UIInterface
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			View rootView = inflater.inflate(R.layout._address_overview, container, false);
-			return rootView;
+			return inflater.inflate(R.layout._address_overview, container, false);
 		}
 	}
 	
@@ -230,8 +271,7 @@ public class AddressActionUI extends UIInterface
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			View rootView = inflater.inflate(R.layout._address_transactions, container, false);
-			return rootView;
+			return inflater.inflate(R.layout._address_transactions, container, false);
 		}
 	}
 	
@@ -300,7 +340,19 @@ public class AddressActionUI extends UIInterface
 				int blockHeight = Integer.parseInt(bh.toString());
 				confirmations = blockCount - blockHeight + 1;
 			}
-			((ImageView) row.findViewById(R.id.confirmations)).setImageDrawable(new BitmapDrawable(context.getResources(), Utils.drawConfirmationsArc(confirmations, 3, Color.parseColor("#F06699CC"), Color.parseColor("#60666666"), 24)));
+			((ImageView) row.findViewById(R.id.confirmations))
+			    .setImageDrawable(
+		            new BitmapDrawable(
+	                    context.getResources(),
+	                    Utils.drawConfirmationsArc(
+                            confirmations,
+                            3,
+                            context.getResources().getColor(R.color.confirmations1),
+                            context.getResources().getColor(R.color.confirmations2),
+                            24
+                        )
+                    )
+		        );
 			
 			// Amount
 			Object r = tx.get("result");

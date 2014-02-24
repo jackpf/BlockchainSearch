@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="btc">#A06699CC</color>
+    <color name="confirmations1">#80f58f1b</color>
+    <color name="confirmations2">#60666666</color>
+</resources>

@@ -2,9 +2,15 @@ package com.jackpf.blockchainsearch.View;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,6 +23,8 @@ public class MainActionUI extends UIInterface
 	private Activity activity;
 	
 	public ActionBarDrawerToggle drawerToggle;
+	
+	Fragment[] fragments = {new SearchFragment(), new SavedAddressesFragment()};
 	
 	public MainActionUI(Context context)
 	{
@@ -33,6 +41,7 @@ public class MainActionUI extends UIInterface
 	{
 		final DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         final ListView drawerList = (ListView) activity.findViewById(R.id.drawer);
+        final FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
 
         drawerList.setAdapter(new ArrayAdapter<String>(
     		context,
@@ -45,6 +54,7 @@ public class MainActionUI extends UIInterface
             public void onItemClick(AdapterView parent, View view, int position, long id)
             {
                 drawerList.setItemChecked(position, true);
+                fragmentManager.beginTransaction().replace(R.id.content, fragments[position]).commit();
                 drawerLayout.closeDrawer(drawerList);
             }
 	    });
@@ -77,5 +87,40 @@ public class MainActionUI extends UIInterface
         });
 
         drawerLayout.setDrawerListener(drawerToggle);
+        
+        fragmentManager.beginTransaction().replace(R.id.content, fragments[0]).commit();
+        drawerList.setItemChecked(0, true);
 	}
+    
+    protected static class SearchFragment extends Fragment
+    {
+        public SearchFragment()
+        {
+            super();
+        }
+        
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            return inflater.inflate(R.layout._main_search, container, false);
+        }
+    }
+    
+    protected static class SavedAddressesFragment extends Fragment
+    {
+        public SavedAddressesFragment()
+        {
+            super();
+        }
+        
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            View rootView = inflater.inflate(R.layout._main_saved_addresses, container, false);
+            
+            // Saved addresses
+            
+            return rootView;
+        }
+    }
 }

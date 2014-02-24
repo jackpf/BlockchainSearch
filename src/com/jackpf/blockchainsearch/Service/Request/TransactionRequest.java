@@ -28,6 +28,10 @@ public class TransactionRequest extends RequestInterface
 		RequestResponse response = new RequestResponse();
 		
 		response.put("response", json);
+        
+        // Also get the current block count
+        path = new ApiPath(BlockchainData.BLOCKCOUNT_URL);
+        response.put("block_count", this.blockchain.rawRequest(path));
 		
 		return response;
 	}

@@ -2,16 +2,17 @@ package com.jackpf.blockchainsearch;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
-import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
 
@@ -19,7 +20,7 @@ public class AddressActivity extends FragmentActivity
 {
 	public final static String EXTRA_SEARCH = "search";
 	
-	private UIInterface ui;
+	private /*UIInterface*/ AddressActionUI ui;
 	private String searchText;
 	private NetworkThread thread;
 	
@@ -78,12 +79,6 @@ public class AddressActivity extends FragmentActivity
 		
 		thread.execute();
 	}
-	
-	private void persistAddress()
-	{
-		PersistedAddresses addresses = new PersistedAddresses(this);
-		addresses.add(searchText);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -104,8 +99,12 @@ public class AddressActivity extends FragmentActivity
 		    	refresh();
 		    	return true;
 		    case R.id.action_save:
-		    	Toast.makeText(getApplicationContext(), getString(R.string.text_saving), Toast.LENGTH_SHORT).show();
-		    	persistAddress();
+		        PersistedAddresses addresses = new PersistedAddresses(this);
+		        if (!addresses.has(searchText)) {
+		            ui.promptPersistAddress(searchText, addresses);
+		        } else {
+		            ui.promptRemoveAddress(searchText, addresses);
+		        }
 		    	return true;
 		    default:
 		        return super.onOptionsItemSelected(item);

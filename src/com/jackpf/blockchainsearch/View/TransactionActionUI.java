@@ -51,7 +51,15 @@ public class TransactionActionUI extends UIInterface
 		((TextView) transactionView.findViewById(R.id._transaction_date)).setText(json.get("time").toString());
 		((TextView) transactionView.findViewById(R.id._transaction_size)).setText(json.get("size").toString() + " bytes");
 		((TextView) transactionView.findViewById(R.id._transaction_double_spend)).setText(json.get("double_spend").toString());
-		((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(json.get("block_height").toString());
+		Object bh = json.get("block_height");
+		int blockHeight = 0, blockCount = Integer.parseInt(vars.get("block_count").toString());
+		if (bh != null) {
+		    blockHeight = Integer.parseInt(bh.toString());
+		} else {
+		    blockHeight = blockCount + 1;
+		}
+        ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
+        ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
 		
 		String relayedBy = json.get("relayed_by").toString();
 		try {
