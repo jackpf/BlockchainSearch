@@ -38,13 +38,14 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
         public static final int ic_menu_refresh=0x7f020003;
         public static final int ic_menu_save=0x7f020004;
-        public static final int ic_menu_search=0x7f020005;
-        public static final int ic_navigation_drawer=0x7f020006;
-        public static final int list_divider=0x7f020007;
-        public static final int list_item=0x7f020008;
-        public static final int list_item_selected=0x7f020009;
-        public static final int loading=0x7f02000a;
-        public static final int loading_intermediate=0x7f02000b;
+        public static final int ic_menu_save_tinted=0x7f020005;
+        public static final int ic_menu_search=0x7f020006;
+        public static final int ic_navigation_drawer=0x7f020007;
+        public static final int list_divider=0x7f020008;
+        public static final int list_item=0x7f020009;
+        public static final int list_item_selected=0x7f02000a;
+        public static final int loading=0x7f02000b;
+        public static final int loading_intermediate=0x7f02000c;
     }
     public static final class id {
         public static final int _address_address=0x7f0b0002;

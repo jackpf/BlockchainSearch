@@ -2,8 +2,6 @@ package com.jackpf.blockchainsearch.View;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
@@ -11,6 +9,7 @@ import org.json.simple.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -68,7 +67,6 @@ public class TransactionActionUI extends UIInterface
         ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
         ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
         
-        System.err.println((Long) json.get("time"));
         DateTime dt = new DateTime((Long) json.get("time") * 1000L);
         ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
 		
@@ -78,6 +76,8 @@ public class TransactionActionUI extends UIInterface
 		} catch (UnknownHostException e) { }
 		((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
 		
+		String f = "<font color=\"blue\"><u>%s</u></font>: %s";
+		
 		LinearLayout inputView = (LinearLayout) transactionView.findViewById(R.id._transaction_inputs);
         inputView.removeAllViews();
 		for (Object _in : (JSONArray) json.get("inputs")) {
@@ -85,7 +85,7 @@ public class TransactionActionUI extends UIInterface
             JSONObject prev = (JSONObject) in.get("prev_out");
             
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(prev.get("addr").toString() + ": " + Utils.btcFormat((Long) prev.get("value")));
+            tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value")))));
             inputView.addView(tv);
         }
         
@@ -95,7 +95,7 @@ public class TransactionActionUI extends UIInterface
             JSONObject out = (JSONObject) _out;
             
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(out.get("addr").toString() + ": " + Utils.btcFormat((Long) out.get("value")));
+            tv.setText(Html.fromHtml(String.format(f, out.get("addr").toString(), Utils.btcFormat((Long) out.get("value")))));
             outputView.addView(tv);
         }
 		

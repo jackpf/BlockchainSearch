@@ -165,7 +165,7 @@ public class AddressActionUI extends UIInterface
 		).show();
 	}
 	
-	public void promptPersistAddress(final String address, final PersistedAddresses addresses)
+	public void promptPersistAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
 	{
 	    final EditText input = new EditText(context);
 	    
@@ -177,6 +177,7 @@ public class AddressActionUI extends UIInterface
 	            {
 	                addresses.add(address, input.getText().toString());
 	                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+	                saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
 	            }
 	        })
 	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -185,7 +186,7 @@ public class AddressActionUI extends UIInterface
 	        .show();
 	}
     
-    public void promptRemoveAddress(final String address, final PersistedAddresses addresses)
+    public void promptRemoveAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
     {
         new AlertDialog.Builder(context)
             .setTitle("Do you want to unsave this address?")
@@ -194,6 +195,7 @@ public class AddressActionUI extends UIInterface
                 {
                     addresses.remove(address);
                     Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
+                    saveMenuItem.setIcon(R.drawable.ic_menu_save);
                 }
             })
             .setNegativeButton("No", new DialogInterface.OnClickListener() {
