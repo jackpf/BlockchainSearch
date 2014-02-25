@@ -1,23 +1,12 @@
 package com.jackpf.blockchainsearch.View;
 
-<<<<<<< HEAD
-import android.annotation.TargetApi;
-=======
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-
->>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.app.Activity;
-import android.content.ClipboardManager;
 import android.content.Context;
-<<<<<<< HEAD
-import android.os.Build;
-=======
 import android.content.Intent;
->>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -28,21 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-<<<<<<< HEAD
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-=======
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
->>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
-import com.jackpf.blockchainsearch.Service.Utils;
 
 public class MainActionUI extends UIInterface
 {
