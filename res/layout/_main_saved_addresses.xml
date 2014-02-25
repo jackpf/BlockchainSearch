@@ -1,12 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/_main_saved_addresses"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal">
-    
-    <TextView
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:text="hi" />
-    
-</LinearLayout>
+    android:layout_height="0sp"
+    android:divider="@android:color/transparent"
+    android:choiceMode="singleChoice" 
+    android:listSelector="@drawable/arraylist_selector"
+    android:cacheColorHint="@android:color/transparent"
+    android:scrollbars="none" />

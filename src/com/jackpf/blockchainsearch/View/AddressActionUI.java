@@ -1,7 +1,7 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -280,10 +280,9 @@ public class AddressActionUI extends UIInterface
 	/**
 	 * Transactions ListView array adapter
 	 * 
-	 *
 	 * @param <T>
 	 */
-	private class ArrayAdapter<T extends ArrayList> extends BaseAdapter
+	private class ArrayAdapter<T extends List> extends BaseAdapter
 	{
 	    private final Context context;
 	    private final T objects;
@@ -323,7 +322,7 @@ public class AddressActionUI extends UIInterface
 				row = convertView;
 			}
 			
-			JSONObject tx = (JSONObject) objects.get(position);
+			JSONObject tx = (JSONObject) getItem(position);
 		    
 			// Address
 	    	((TextView) row.findViewById(R.id.hash)).setText(tx.get("addr").toString());
