@@ -1,7 +1,10 @@
 package com.jackpf.blockchainsearch.View;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -13,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.jackpf.blockchainsearch.Service.Utils;
 
 public class MainActionUI extends UIInterface
 {

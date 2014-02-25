@@ -15,8 +15,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.8"
             android:singleLine="true"
-            android:hint="@string/search_hint_text"
-            android:text="18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp">
+            android:hint="@string/search_hint_text">
     
             <requestFocus />
         </EditText>

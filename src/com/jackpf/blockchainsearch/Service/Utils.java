@@ -112,7 +112,7 @@ public class Utils
 	 * @param hash
 	 * @return
 	 */
-	public static boolean validateTransaction(String hash)
+	public static boolean validTransaction(String hash)
 	{
 		return hash.getBytes().length == 64;
 	}

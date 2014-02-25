@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity
 			Intent intent = new Intent(this, AddressActivity.class);
 			intent.putExtra(AddressActivity.EXTRA_SEARCH, searchText);
 			startActivity(intent);
-		} else if (Utils.validateTransaction(searchText)) {
+		} else if (Utils.validTransaction(searchText)) {
 			Intent intent = new Intent(this, TransactionActivity.class);
 			intent.putExtra(TransactionActivity.EXTRA_SEARCH, searchText);
 			startActivity(intent);
