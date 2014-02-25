@@ -2,8 +2,6 @@ package com.jackpf.blockchainsearch.View;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
@@ -11,12 +9,17 @@ import org.json.simple.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Utils;
 
@@ -68,7 +71,6 @@ public class TransactionActionUI extends UIInterface
         ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
         ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
         
-        System.err.println((Long) json.get("time"));
         DateTime dt = new DateTime((Long) json.get("time") * 1000L);
         ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
 		
@@ -78,21 +80,43 @@ public class TransactionActionUI extends UIInterface
 		} catch (UnknownHostException e) { }
 		((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
 		
-        for (Object _in : (JSONArray) json.get("inputs")) {
+		String f = "<font color=\"blue\"><u>%s</u></font>: %s";
+		
+		LinearLayout inputView = (LinearLayout) transactionView.findViewById(R.id._transaction_inputs);
+        inputView.removeAllViews();
+		for (Object _in : (JSONArray) json.get("inputs")) {
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
-            
+
+            final String address = prev.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(prev.get("addr").toString() + ": " + Utils.btcFormat((Long) prev.get("value")));
-            ((LinearLayout) transactionView.findViewById(R.id._transaction_inputs)).addView(tv);
+            tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value")))));
+            inputView.addView(tv);
+            tv.setOnClickListener(new OnClickListener() {
+            	public void onClick(View v) {
+            		Intent intent = new Intent(context, AddressActivity.class);
+        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+        			context.startActivity(intent);
+            	}
+            });
         }
         
+        LinearLayout outputView = (LinearLayout) transactionView.findViewById(R.id._transaction_outputs);
+        outputView.removeAllViews();
         for (Object _out : (JSONArray) json.get("out")) {
             JSONObject out = (JSONObject) _out;
             
+            final String address = out.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(out.get("addr").toString() + ": " + Utils.btcFormat((Long) out.get("value")));
-            ((LinearLayout) transactionView.findViewById(R.id._transaction_outputs)).addView(tv);
+            tv.setText(Html.fromHtml(String.format(f, address, Utils.btcFormat((Long) out.get("value")))));
+            outputView.addView(tv);
+            tv.setOnClickListener(new OnClickListener() {
+            	public void onClick(View v) {
+            		Intent intent = new Intent(context, AddressActivity.class);
+        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+        			context.startActivity(intent);
+            	}
+            });
         }
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);

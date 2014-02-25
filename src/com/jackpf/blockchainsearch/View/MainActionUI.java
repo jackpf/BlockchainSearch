@@ -1,10 +1,23 @@
 package com.jackpf.blockchainsearch.View;
 
+<<<<<<< HEAD
 import android.annotation.TargetApi;
+=======
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONObject;
+
+>>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
+<<<<<<< HEAD
 import android.os.Build;
+=======
+import android.content.Intent;
+>>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -15,20 +28,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+<<<<<<< HEAD
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+=======
+import android.widget.BaseAdapter;
+>>>>>>> 09dffe3096f19ecd5299e90aa074a65f825d9010
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Utils;
 
 public class MainActionUI extends UIInterface
 {
 	private Activity activity;
-	
 	public ActionBarDrawerToggle drawerToggle;
-	
 	Fragment[] fragments = {new SearchFragment(), new SavedAddressesFragment()};
 	
 	public MainActionUI(Context context)
@@ -48,7 +67,7 @@ public class MainActionUI extends UIInterface
         final ListView drawerList = (ListView) activity.findViewById(R.id.drawer);
         final FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
 
-        drawerList.setAdapter(new ArrayAdapter<String>(
+        drawerList.setAdapter(new android.widget.ArrayAdapter<String>(
     		context,
             R.layout._drawer_list_item,
             context.getResources().getStringArray(R.array.drawer_list_titles)
@@ -107,7 +126,9 @@ public class MainActionUI extends UIInterface
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.inflate(R.layout._main_search, container, false);
+            View rootView = inflater.inflate(R.layout._main_search, container, false);
+            
+            return rootView;
         }
     }
     
@@ -121,11 +142,85 @@ public class MainActionUI extends UIInterface
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+        	PersistedAddresses persistedAddresses = new PersistedAddresses(getActivity());
+        	
             View rootView = inflater.inflate(R.layout._main_saved_addresses, container, false);
             
             // Saved addresses
+            ListView addressesList = (ListView) rootView.findViewById(R.id._main_saved_addresses);
+    		
+            ArrayList<Map.Entry<String, String>> al = new ArrayList<Map.Entry<String, String>>();
+            for (Map.Entry<String, String> entry : persistedAddresses.getAll().entrySet()) {
+            	al.add(entry);
+            }
+            
+    		final ArrayAdapter<ArrayList<Map.Entry<String, String>>> adapter = new ArrayAdapter<ArrayList<Map.Entry<String, String>>>(getActivity(), al);
+    		addressesList.setAdapter(adapter);
+    		
+    		final Activity activity = getActivity();
+    		addressesList.setOnItemClickListener(new OnItemClickListener() {
+    			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    				Intent intent = new Intent(activity, AddressActivity.class);
+    				intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
+    				activity.startActivity(intent);
+    			}
+        	});
             
             return rootView;
         }
+        
+        /**
+    	 * Saved addresses ListView array adapter
+    	 * 
+    	 * @param <T>
+    	 */
+    	private class ArrayAdapter<T extends List> extends BaseAdapter
+    	{
+    	    private final Context context;
+    	    private final T objects;
+    	    private final LayoutInflater inflater;
+
+    	    public ArrayAdapter(Context context, T objects)
+    	    {
+    	        this.context = context;
+    	        this.objects = objects;
+
+    	        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	    }
+
+    	    public Object getItem(int position)
+    	    {
+    	        return objects.get(position);
+    	    }
+
+    	    public long getItemId(int position)
+    	    {
+    	        return position;
+    	    }
+
+    	    public int getCount()
+    	    {
+    	    	return objects.size();
+    	    }
+
+    	    @Override
+    	    public View getView(int position, View convertView, ViewGroup parent)
+    	    {
+    	    	View row;
+
+    			if (convertView == null) {
+    				row = inflater.inflate(R.layout._main_saved_address_item, parent, false);
+    			} else {
+    				row = convertView;
+    			}
+    			
+    			Map.Entry<String, String> savedAddress = (Map.Entry<String, String>) getItem(position);
+
+    			((TextView) row.findViewById(R.id.name)).setText(savedAddress.getKey());
+    			((TextView) row.findViewById(R.id.address)).setText(savedAddress.getValue());
+
+        	    return row;
+    	    }
+    	}
     }
 }

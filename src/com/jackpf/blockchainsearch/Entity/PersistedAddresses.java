@@ -6,14 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 public class PersistedAddresses
 {
@@ -21,7 +22,7 @@ public class PersistedAddresses
 	
 	private Context context;
 	
-	HashMap<String, String> addresses = new HashMap<String, String>();
+	TreeMap<String, String> addresses = new TreeMap<String, String>();
 	
 	public PersistedAddresses(Context context)
 	{
@@ -30,31 +31,46 @@ public class PersistedAddresses
 		restore();
 	}
     
-    public void add(String address, String name)
+    public void add(String name, String address)
     {
-        addresses.put(address, name);
+        addresses.put(name, address);
         save();
     }
     
     public void remove(String address)
     {
-        addresses.remove(address);
+    	for (Map.Entry<String, String> entry : addresses.entrySet()) {
+    		if (address.equals(entry.getValue())) {
+    			addresses.remove(entry.getKey());
+    		}
+    	}
         save();
     }
     
     public boolean has(String address)
     {
-        return addresses.containsKey(address);
+        return addresses.containsValue(address);
     }
     
-    public String get(String address)
+    public boolean hasName(String name)
     {
-        return addresses.get(address);
+        return addresses.containsKey(name);
     }
     
-    public HashMap<String, String> getAll()
+    public Map.Entry<String, String> get(String address)
     {
-        return new HashMap<String, String>(addresses);
+    	for (Map.Entry<String, String> entry : addresses.entrySet()) {
+    		if (address.equals(entry.getValue())) {
+    			return entry;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public TreeMap<String, String> getAll()
+    {
+        return new TreeMap<String, String>(addresses);
     }
 	
 	protected void save()
@@ -92,6 +108,7 @@ public class PersistedAddresses
 	        while(keys.hasNext()) {
 	            String key = (String) keys.next();
 	            addresses.put(key, (String) obj.get(key));
+	            Log.d("Restoring addresses", key + " = " + (String) obj.get(key));
 	        }
 	        
 		} catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }

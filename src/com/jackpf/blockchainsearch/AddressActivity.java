@@ -20,19 +20,24 @@ public class AddressActivity extends FragmentActivity
 {
 	public final static String EXTRA_SEARCH = "search";
 	
-	private /*UIInterface*/ AddressActionUI ui;
+	private AddressActionUI ui;
 	private String searchText;
 	private NetworkThread thread;
+	private PersistedAddresses persistedAddresses;
+	MenuItem saveMenuItem;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_address);
 		
 		getActionBar().setHomeButtonEnabled(true);
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		persistedAddresses = new PersistedAddresses(this);
 
 		ui = new AddressActionUI(this);
 		
@@ -79,6 +84,20 @@ public class AddressActivity extends FragmentActivity
 		
 		thread.execute();
 	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+	    super.onPrepareOptionsMenu(menu);
+	    
+	    saveMenuItem = menu.findItem(R.id.action_save);
+	    
+	    if (persistedAddresses.has(searchText)) {
+		    saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+	    }
+	    
+	    return true;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -99,11 +118,10 @@ public class AddressActivity extends FragmentActivity
 		    	refresh();
 		    	return true;
 		    case R.id.action_save:
-		        PersistedAddresses addresses = new PersistedAddresses(this);
-		        if (!addresses.has(searchText)) {
-		            ui.promptPersistAddress(searchText, addresses);
+		        if (!persistedAddresses.has(searchText)) {
+		            ui.promptPersistAddress(searchText, persistedAddresses, saveMenuItem);
 		        } else {
-		            ui.promptRemoveAddress(searchText, addresses);
+		            ui.promptRemoveAddress(searchText, persistedAddresses, saveMenuItem);
 		        }
 		    	return true;
 		    default:

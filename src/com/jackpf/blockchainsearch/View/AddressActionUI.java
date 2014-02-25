@@ -1,7 +1,7 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -121,16 +121,14 @@ public class AddressActionUI extends UIInterface
 		final ArrayAdapter<JSONArray> adapter = new ArrayAdapter<JSONArray>(context, (JSONArray) vars.get("transactions"));
 	    txList.setAdapter(adapter);
 	    txList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(context, AddressActivity.class);
 				intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
 				context.startActivity(intent);
 			}
     	});
 	    txList.setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-			{
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
 				
 				PopupMenu menu = new PopupMenu(context, view);
@@ -165,9 +163,10 @@ public class AddressActionUI extends UIInterface
 		).show();
 	}
 	
-	public void promptPersistAddress(final String address, final PersistedAddresses addresses)
+	public void promptPersistAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
 	{
 	    final EditText input = new EditText(context);
+	    input.setSingleLine();
 	    
 	    new AlertDialog.Builder(context)
 	        .setTitle("Enter a name for this address")
@@ -175,8 +174,17 @@ public class AddressActionUI extends UIInterface
 	        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int button)
 	            {
-	                addresses.add(address, input.getText().toString());
-	                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+	            	String name = input.getText().toString();
+	            	
+	            	if (name.equals("")) {
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_empty_name), Toast.LENGTH_SHORT).show();
+	            	} else if (addresses.hasName(name)) {
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_name_exists), Toast.LENGTH_SHORT).show();
+	            	} else {
+		                addresses.add(name, address);
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+		                saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+	            	}
 	            }
 	        })
 	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -185,7 +193,7 @@ public class AddressActionUI extends UIInterface
 	        .show();
 	}
     
-    public void promptRemoveAddress(final String address, final PersistedAddresses addresses)
+    public void promptRemoveAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
     {
         new AlertDialog.Builder(context)
             .setTitle("Do you want to unsave this address?")
@@ -194,6 +202,7 @@ public class AddressActionUI extends UIInterface
                 {
                     addresses.remove(address);
                     Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
+                    saveMenuItem.setIcon(R.drawable.ic_menu_save);
                 }
             })
             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -278,10 +287,9 @@ public class AddressActionUI extends UIInterface
 	/**
 	 * Transactions ListView array adapter
 	 * 
-	 *
 	 * @param <T>
 	 */
-	private class ArrayAdapter<T extends ArrayList> extends BaseAdapter
+	private class ArrayAdapter<T extends List> extends BaseAdapter
 	{
 	    private final Context context;
 	    private final T objects;
@@ -321,7 +329,7 @@ public class AddressActionUI extends UIInterface
 				row = convertView;
 			}
 			
-			JSONObject tx = (JSONObject) objects.get(position);
+			JSONObject tx = (JSONObject) getItem(position);
 		    
 			// Address
 	    	((TextView) row.findViewById(R.id.hash)).setText(tx.get("addr").toString());
