@@ -9,13 +9,17 @@ import org.json.simple.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Utils;
 
@@ -83,10 +87,18 @@ public class TransactionActionUI extends UIInterface
 		for (Object _in : (JSONArray) json.get("inputs")) {
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
-            
+
+            final String address = prev.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
             tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value")))));
             inputView.addView(tv);
+            tv.setOnClickListener(new OnClickListener() {
+            	public void onClick(View v) {
+            		Intent intent = new Intent(context, AddressActivity.class);
+        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+        			context.startActivity(intent);
+            	}
+            });
         }
         
         LinearLayout outputView = (LinearLayout) transactionView.findViewById(R.id._transaction_outputs);
@@ -94,9 +106,17 @@ public class TransactionActionUI extends UIInterface
         for (Object _out : (JSONArray) json.get("out")) {
             JSONObject out = (JSONObject) _out;
             
+            final String address = out.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(Html.fromHtml(String.format(f, out.get("addr").toString(), Utils.btcFormat((Long) out.get("value")))));
+            tv.setText(Html.fromHtml(String.format(f, address, Utils.btcFormat((Long) out.get("value")))));
             outputView.addView(tv);
+            tv.setOnClickListener(new OnClickListener() {
+            	public void onClick(View v) {
+            		Intent intent = new Intent(context, AddressActivity.class);
+        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+        			context.startActivity(intent);
+            	}
+            });
         }
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
