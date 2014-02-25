@@ -78,21 +78,25 @@ public class TransactionActionUI extends UIInterface
 		} catch (UnknownHostException e) { }
 		((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
 		
-        for (Object _in : (JSONArray) json.get("inputs")) {
+		LinearLayout inputView = (LinearLayout) transactionView.findViewById(R.id._transaction_inputs);
+        inputView.removeAllViews();
+		for (Object _in : (JSONArray) json.get("inputs")) {
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
             
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
             tv.setText(prev.get("addr").toString() + ": " + Utils.btcFormat((Long) prev.get("value")));
-            ((LinearLayout) transactionView.findViewById(R.id._transaction_inputs)).addView(tv);
+            inputView.addView(tv);
         }
         
+        LinearLayout outputView = (LinearLayout) transactionView.findViewById(R.id._transaction_outputs);
+        outputView.removeAllViews();
         for (Object _out : (JSONArray) json.get("out")) {
             JSONObject out = (JSONObject) _out;
             
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
             tv.setText(out.get("addr").toString() + ": " + Utils.btcFormat((Long) out.get("value")));
-            ((LinearLayout) transactionView.findViewById(R.id._transaction_outputs)).addView(tv);
+            outputView.addView(tv);
         }
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
