@@ -11,8 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jackpf.blockchainsearch.R;
@@ -102,7 +104,9 @@ public class MainActionUI extends UIInterface
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.inflate(R.layout._main_search, container, false);
+            View rootView = inflater.inflate(R.layout._main_search, container, false);
+            
+            return rootView;
         }
     }
     
