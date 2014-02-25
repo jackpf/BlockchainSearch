@@ -2,16 +2,23 @@ package com.jackpf.blockchainsearch.View;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.jackpf.blockchainsearch.Service.Utils;
 
 public class TransactionActionUI extends UIInterface
 {
@@ -41,6 +48,7 @@ public class TransactionActionUI extends UIInterface
 		loadingView.setVisibility(View.GONE);
 		
 		final JSONObject json = (JSONObject) vars.get("response");
+		LayoutInflater inflater = activity.getLayoutInflater();
 		
 		activity.getActionBar().setSubtitle(json.get("hash").toString());
 		
@@ -48,7 +56,6 @@ public class TransactionActionUI extends UIInterface
 
 		((TextView) transactionView.findViewById(R.id._transaction_hash)).setText(json.get("hash").toString());
 		((TextView) transactionView.findViewById(R.id._transaction_index)).setText(json.get("tx_index").toString());
-		((TextView) transactionView.findViewById(R.id._transaction_date)).setText(json.get("time").toString());
 		((TextView) transactionView.findViewById(R.id._transaction_size)).setText(json.get("size").toString() + " bytes");
 		((TextView) transactionView.findViewById(R.id._transaction_double_spend)).setText(json.get("double_spend").toString());
 		Object bh = json.get("block_height");
@@ -60,12 +67,33 @@ public class TransactionActionUI extends UIInterface
 		}
         ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
         ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
+        
+        System.err.println((Long) json.get("time"));
+        DateTime dt = new DateTime((Long) json.get("time") * 1000L);
+        ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
 		
 		String relayedBy = json.get("relayed_by").toString();
 		try {
 			relayedBy = String.format("%s (%s)", InetAddress.getByName(relayedBy).toString(), relayedBy);
 		} catch (UnknownHostException e) { }
 		((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
+		
+        for (Object _in : (JSONArray) json.get("inputs")) {
+            JSONObject in = (JSONObject) _in;
+            JSONObject prev = (JSONObject) in.get("prev_out");
+            
+            TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
+            tv.setText(prev.get("addr").toString() + ": " + Utils.btcFormat((Long) prev.get("value")));
+            ((LinearLayout) transactionView.findViewById(R.id._transaction_inputs)).addView(tv);
+        }
+        
+        for (Object _out : (JSONArray) json.get("out")) {
+            JSONObject out = (JSONObject) _out;
+            
+            TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
+            tv.setText(out.get("addr").toString() + ": " + Utils.btcFormat((Long) out.get("value")));
+            ((LinearLayout) transactionView.findViewById(R.id._transaction_outputs)).addView(tv);
+        }
 		
 		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
 	}

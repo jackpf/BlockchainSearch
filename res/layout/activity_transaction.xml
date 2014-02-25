@@ -15,7 +15,8 @@
 		android:id="@+id/content"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+        android:scrollbars="none">
 	
 		<TableLayout
 			android:id="@+id/_transaction_table"
@@ -196,12 +197,13 @@
 					android:text="Inputs"
 					style="@style/HeaderText" />
 			
-				<TextView
+				<LinearLayout
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:id="@+id/_transaction_inputs"
 					style="@style/BodyText"
-					android:gravity="right" />
+					android:gravity="right"
+					android:orientation="vertical" />
 			
 			</TableRow>
 			
@@ -215,13 +217,14 @@
 					android:layout_height="wrap_content"
 					android:text="Outputs"
 					style="@style/HeaderText" />
-			
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/_transaction_outputs"
-					style="@style/BodyText"
-					android:gravity="right" />
+            
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/_transaction_outputs"
+                    style="@style/BodyText"
+                    android:gravity="right"
+                    android:orientation="vertical" />
 			
 			</TableRow>
 			

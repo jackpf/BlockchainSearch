@@ -3,7 +3,8 @@
 	android:id="@+id/content_overview"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+    android:scrollbars="none">
 	
     <LinearLayout
 	    android:layout_width="fill_parent"
