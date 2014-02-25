@@ -2,7 +2,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_transactions"
     android:layout_width="fill_parent"
-    android:layout_height="0sp"
+    android:layout_height="wrap_content"
     android:divider="@android:color/transparent"
     android:choiceMode="singleChoice" 
     android:listSelector="@drawable/arraylist_selector"

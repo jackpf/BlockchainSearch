@@ -110,20 +110,22 @@ public final class R {
         public static final int action_refresh=0x7f070002;
         public static final int action_save=0x7f070003;
         public static final int action_settings=0x7f070001;
-        public static final int action_transaction_view=0x7f07000e;
-        public static final int activity_address_title=0x7f07000a;
-        public static final int activity_main_title=0x7f070009;
+        public static final int action_transaction_view=0x7f070010;
+        public static final int activity_address_title=0x7f07000c;
+        public static final int activity_main_title=0x7f07000b;
         public static final int app_name=0x7f070000;
-        public static final int drawer_close=0x7f070010;
-        public static final int drawer_open=0x7f07000f;
-        public static final int hello_world=0x7f07000c;
-        public static final int search_hint_text=0x7f07000d;
+        public static final int drawer_close=0x7f070012;
+        public static final int drawer_open=0x7f070011;
+        public static final int hello_world=0x7f07000e;
+        public static final int search_hint_text=0x7f07000f;
+        public static final int text_address_empty_name=0x7f070006;
+        public static final int text_address_name_exists=0x7f070007;
         public static final int text_address_saved=0x7f070005;
-        public static final int text_address_unsaved=0x7f070006;
-        public static final int text_exception=0x7f070007;
-        public static final int text_invalid_input=0x7f070008;
+        public static final int text_address_unsaved=0x7f070008;
+        public static final int text_exception=0x7f070009;
+        public static final int text_invalid_input=0x7f07000a;
         public static final int text_refreshing=0x7f070004;
-        public static final int title_activity_transaction=0x7f07000b;
+        public static final int title_activity_transaction=0x7f07000d;
     }
     public static final class style {
         /** 

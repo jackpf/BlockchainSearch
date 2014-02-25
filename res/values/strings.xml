@@ -7,6 +7,8 @@
     <string name="action_save">Save</string>
     <string name="text_refreshing">Refreshing...</string>
     <string name="text_address_saved">Address saved</string>
+    <string name="text_address_empty_name">Please enter a valid name</string>
+    <string name="text_address_name_exists">You have already saved an address with this name</string>
     <string name="text_address_unsaved">Address removed</string>
     <string name="text_exception">An error has occurred: %s</string>
     <string name="text_invalid_input">Please enter a valid address or tx hash</string>

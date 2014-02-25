@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -19,7 +22,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
@@ -136,61 +141,71 @@ public class MainActionUI extends UIInterface
             
     		final ArrayAdapter<ArrayList<Map.Entry<String, String>>> adapter = new ArrayAdapter<ArrayList<Map.Entry<String, String>>>(getActivity(), al);
     		addressesList.setAdapter(adapter);
+    		
+    		final Activity activity = getActivity();
+    		addressesList.setOnItemClickListener(new OnItemClickListener() {
+    			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    				Intent intent = new Intent(activity, AddressActivity.class);
+    				intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
+    				activity.startActivity(intent);
+    			}
+        	});
             
             return rootView;
         }
+        
+        /**
+    	 * Saved addresses ListView array adapter
+    	 * 
+    	 * @param <T>
+    	 */
+    	private class ArrayAdapter<T extends List> extends BaseAdapter
+    	{
+    	    private final Context context;
+    	    private final T objects;
+    	    private final LayoutInflater inflater;
+
+    	    public ArrayAdapter(Context context, T objects)
+    	    {
+    	        this.context = context;
+    	        this.objects = objects;
+
+    	        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	    }
+
+    	    public Object getItem(int position)
+    	    {
+    	        return objects.get(position);
+    	    }
+
+    	    public long getItemId(int position)
+    	    {
+    	        return position;
+    	    }
+
+    	    public int getCount()
+    	    {
+    	    	return objects.size();
+    	    }
+
+    	    @Override
+    	    public View getView(int position, View convertView, ViewGroup parent)
+    	    {
+    	    	View row;
+
+    			if (convertView == null) {
+    				row = inflater.inflate(R.layout._main_saved_address_item, parent, false);
+    			} else {
+    				row = convertView;
+    			}
+    			
+    			Map.Entry<String, String> savedAddress = (Map.Entry<String, String>) getItem(position);
+
+    			((TextView) row.findViewById(R.id.name)).setText(savedAddress.getKey());
+    			((TextView) row.findViewById(R.id.address)).setText(savedAddress.getValue());
+
+        	    return row;
+    	    }
+    	}
     }
-    
-    /**
-	 * Saved addresses ListView array adapter
-	 * 
-	 * @param <T>
-	 */
-	private static class ArrayAdapter<T extends List> extends BaseAdapter
-	{
-	    private final Context context;
-	    private final T objects;
-	    private final LayoutInflater inflater;
-
-	    public ArrayAdapter(Context context, T objects)
-	    {
-	        this.context = context;
-	        this.objects = objects;
-
-	        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    }
-
-	    public Object getItem(int position)
-	    {
-	        return objects.get(position);
-	    }
-
-	    public long getItemId(int position)
-	    {
-	        return position;
-	    }
-
-	    public int getCount()
-	    {
-	    	return objects.size();
-	    }
-
-	    @Override
-	    public View getView(int position, View convertView, ViewGroup parent)
-	    {
-	    	View row;
-
-			if (convertView == null) {
-				row = inflater.inflate(R.layout._main_saved_address_item, parent, false);
-			} else {
-				row = convertView;
-			}
-			
-			Map.Entry<String, String> savedAddress = (Map.Entry<String, String>) getItem(position);
-			
-			((TextView) row.findViewById(R.id.name)).setText(savedAddress.getKey());
-
-    	    return row;
-	    }
-	}
 }

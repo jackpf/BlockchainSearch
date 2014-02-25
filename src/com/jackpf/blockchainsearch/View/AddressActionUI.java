@@ -121,16 +121,14 @@ public class AddressActionUI extends UIInterface
 		final ArrayAdapter<JSONArray> adapter = new ArrayAdapter<JSONArray>(context, (JSONArray) vars.get("transactions"));
 	    txList.setAdapter(adapter);
 	    txList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(context, AddressActivity.class);
 				intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
 				context.startActivity(intent);
 			}
     	});
 	    txList.setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-			{
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
 				
 				PopupMenu menu = new PopupMenu(context, view);
@@ -168,6 +166,7 @@ public class AddressActionUI extends UIInterface
 	public void promptPersistAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
 	{
 	    final EditText input = new EditText(context);
+	    input.setSingleLine();
 	    
 	    new AlertDialog.Builder(context)
 	        .setTitle("Enter a name for this address")
@@ -175,9 +174,17 @@ public class AddressActionUI extends UIInterface
 	        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int button)
 	            {
-	                addresses.add(address, input.getText().toString());
-	                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
-	                saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+	            	String name = input.getText().toString();
+	            	
+	            	if (name.equals("")) {
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_empty_name), Toast.LENGTH_SHORT).show();
+	            	} else if (addresses.hasName(name)) {
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_name_exists), Toast.LENGTH_SHORT).show();
+	            	} else {
+		                addresses.add(name, address);
+		                Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+		                saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+	            	}
 	            }
 	        })
 	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

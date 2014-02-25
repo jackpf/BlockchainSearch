@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 public class PersistedAddresses
 {
@@ -50,6 +50,11 @@ public class PersistedAddresses
     public boolean has(String address)
     {
         return addresses.containsValue(address);
+    }
+    
+    public boolean hasName(String name)
+    {
+        return addresses.containsKey(name);
     }
     
     public Map.Entry<String, String> get(String address)
@@ -103,6 +108,7 @@ public class PersistedAddresses
 	        while(keys.hasNext()) {
 	            String key = (String) keys.next();
 	            addresses.put(key, (String) obj.get(key));
+	            Log.d("Restoring addresses", key + " = " + (String) obj.get(key));
 	        }
 	        
 		} catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
