@@ -126,8 +126,8 @@ public class AddressActionUI extends UIInterface
         txList.setAdapter(adapter);
         txList.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, TransactionActivity.class);
-                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("hash").toString());
+                Intent intent = new Intent(context, AddressActivity.class);
+                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
                 context.startActivity(intent);
             }
         });
@@ -151,7 +151,19 @@ public class AddressActionUI extends UIInterface
                     });
                     menu.show();
                 } else {
-                    // TODO: compat
+                    AlertDialog menu = new AlertDialog.Builder(context)
+                    .setTitle("Menu")
+                    .setSingleChoiceItems(new String[]{context.getString(R.string.action_transaction_view)}, 0, new android.content.DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            Intent intent = new Intent(context, TransactionActivity.class);
+                            intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+                            context.startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNeutralButton("Cancel", null) // don't need to do anything but dismiss here
+                    .create();
+                    menu.show();
                 }
                 
                 return true;
@@ -196,9 +208,7 @@ public class AddressActionUI extends UIInterface
                     }
                 }
             })
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int button) { }
-            })
+            .setNegativeButton("Cancel", null)
             .show();
     }
     
@@ -214,9 +224,7 @@ public class AddressActionUI extends UIInterface
                     saveMenuItem.setIcon(R.drawable.ic_menu_save);
                 }
             })
-            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int button) { }
-            })
+            .setNegativeButton("No", null)
             .show();
     }
     

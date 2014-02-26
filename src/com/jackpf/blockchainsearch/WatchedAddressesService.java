@@ -65,7 +65,15 @@ public class WatchedAddressesService extends Service
         
         updateNotification("Connecting to service...");
         
-        final String[] addresses = {"1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK", "14qFqPmoVABQHTT7Sn9qmW6wYN4jf3w7dA", "1LuckyG4tMMZf64j6ea7JhCz7sDpk6vdcS"};
+        final String[] addresses = {
+            "1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK",
+            "1LuckyG4tMMZf64j6ea7JhCz7sDpk6vdcS",
+            "1bonesBjs3DQUbx4wxPQwrbwCkNjWtLB4",
+            "1bonesUhqtbLAGKWZuawCzsYqmYWEgPwH",
+            "1bonesPdRYS91Mq9arbiUratHy2J5gDut",
+            "1bones5gF1HJeiexQus6UtvhU4EUD4qfj",
+            "1dice5wwEZT2u6ESAdUGG6MHgCpbQqZiy"
+        };
         
         try {
             socket.connect(BlockchainData.WS_URL, new WebSocketHandler() {
@@ -83,7 +91,7 @@ public class WatchedAddressesService extends Service
                 }
      
                 @Override
-                public void onTextMessage(String payload) {
+                public void onTextMessage(String payload) {System.err.println(payload);
                    JSONParser parser = new JSONParser();
                    try {
                        // Get the transaction
