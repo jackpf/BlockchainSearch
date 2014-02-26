@@ -1138,10 +1138,11 @@ containing a value of this type.
         public static final int pref_btc_format_key=0x7f0b0023;
         public static final int pref_btc_format_summary=0x7f0b0025;
         public static final int pref_btc_format_title=0x7f0b0024;
-        public static final int pref_donate_address=0x7f0b0027;
+        public static final int pref_donate_address=0x7f0b0028;
         /**  Preferences 
          */
         public static final int pref_title=0x7f0b0022;
+        public static final int pref_watch_addresses_key=0x7f0b0027;
         public static final int text_address_empty_name=0x7f0b0019;
         public static final int text_address_name_exists=0x7f0b001a;
         public static final int text_address_saved=0x7f0b0018;

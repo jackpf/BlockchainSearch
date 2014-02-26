@@ -125,7 +125,7 @@ public class WatchedAddressesService extends Service
      
                 @Override
                 public void onClose(int code, String reason) {
-                   WatchedAddressesService.this.updateNotification("Connection lost");
+                   Log.d(TAG, code + ": " + reason);
                 }
             });
         } catch (WebSocketException e) {

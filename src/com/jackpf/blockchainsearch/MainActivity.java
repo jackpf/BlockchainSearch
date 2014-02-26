@@ -32,8 +32,6 @@ public class MainActivity extends SherlockFragmentActivity
         
         ui = new MainActionUI(this);
         ui.initialise();
-        
-        startService(new Intent(this, WatchedAddressesService.class));
     }
 
     @Override

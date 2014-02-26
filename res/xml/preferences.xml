@@ -16,12 +16,23 @@
     </PreferenceCategory>
     
     <PreferenceCategory 
+        android:title="Beta">
+        
+        <CheckBoxPreference
+	        android:key="@string/pref_watch_addresses_key"
+	        android:title="Watch saved addresses"
+	        android:summary="This will monitor your saved addresses in real time and give you notifications when they send or receive payments"
+	        android:defaultValue="false" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
         android:title="Donate">
         
         <PreferenceScreen
 	        android:key="donate"
 	        android:title="Donate"
-	        android:summary="Please consider donating to this address to help with the development of this open source app. If donations outweigh advertising revenue, adverts will be completely removed from the app!">
+	        android:summary="If you find this app useful, please consider clicking here and donating to this address to help with the future development of this open source app. If donations outweigh advertising revenue, adverts will be completely removed from the app!">
 	        <intent
 	             android:action="android.intent.action.VIEW"
 	             android:targetPackage="com.jackpf.blockchainsearch"

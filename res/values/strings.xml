@@ -52,6 +52,7 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string name="pref_watch_addresses_key">watch_addresses</string>
     <string name="pref_donate_address">18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp</string>
     
 </resources>

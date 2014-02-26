@@ -427,8 +427,9 @@ int string pref_btc_format_default 0x7f0b0026
 int string pref_btc_format_key 0x7f0b0023
 int string pref_btc_format_summary 0x7f0b0025
 int string pref_btc_format_title 0x7f0b0024
-int string pref_donate_address 0x7f0b0027
+int string pref_donate_address 0x7f0b0028
 int string pref_title 0x7f0b0022
+int string pref_watch_addresses_key 0x7f0b0027
 int string text_address_empty_name 0x7f0b0019
 int string text_address_name_exists 0x7f0b001a
 int string text_address_saved 0x7f0b0018
