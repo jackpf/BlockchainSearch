@@ -7,12 +7,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -31,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +42,6 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
@@ -124,29 +126,33 @@ public class AddressActionUI extends UIInterface
         txList.setAdapter(adapter);
         txList.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, AddressActivity.class);
-                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
+                Intent intent = new Intent(context, TransactionActivity.class);
+                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("hash").toString());
                 context.startActivity(intent);
             }
         });
         txList.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
                 
-                // TODO: compat
-                /*PopupMenu menu = new PopupMenu(context, view);
-                activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
-                menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item)
-                    {
-                        Intent intent = new Intent(context, TransactionActivity.class);
-                        intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                        context.startActivity(intent);
-                        return true;
-                    }
-                });
-                menu.show();*/
+                if (android.os.Build.VERSION.SDK_INT >= 11) {
+                    PopupMenu menu = new PopupMenu(context, view);
+                    activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
+                    menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(android.view.MenuItem item)
+                        {
+                            Intent intent = new Intent(context, TransactionActivity.class);
+                            intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+                            context.startActivity(intent);
+                            return true;
+                        }
+                    });
+                    menu.show();
+                } else {
+                    // TODO: compat
+                }
                 
                 return true;
             }

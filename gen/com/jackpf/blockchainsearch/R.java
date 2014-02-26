@@ -1115,28 +1115,30 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0007;
-        public static final int action_refresh=0x7f0a000f;
-        public static final int action_save=0x7f0a0010;
+        public static final int action_refresh=0x7f0a0012;
+        public static final int action_save=0x7f0a0013;
         /**  Actions 
          */
-        public static final int action_settings=0x7f0a000e;
-        public static final int action_transaction_view=0x7f0a0011;
-        public static final int activity_address_title=0x7f0a001a;
-        public static final int activity_main_title=0x7f0a0019;
+        public static final int action_settings=0x7f0a0011;
+        public static final int action_transaction_view=0x7f0a0014;
+        public static final int activity_address_title=0x7f0a000f;
+        public static final int activity_main_title=0x7f0a000e;
+        /**  Titles 
+         */
         public static final int app_name=0x7f0a000d;
         public static final int drawer_close=0x7f0a001e;
         public static final int drawer_open=0x7f0a001d;
-        public static final int text_address_empty_name=0x7f0a0014;
-        public static final int text_address_name_exists=0x7f0a0015;
-        public static final int text_address_saved=0x7f0a0013;
-        public static final int text_address_unsaved=0x7f0a0016;
-        public static final int text_exception=0x7f0a0017;
-        public static final int text_invalid_input=0x7f0a0018;
+        public static final int text_address_empty_name=0x7f0a0017;
+        public static final int text_address_name_exists=0x7f0a0018;
+        public static final int text_address_saved=0x7f0a0016;
+        public static final int text_address_unsaved=0x7f0a0019;
+        public static final int text_exception=0x7f0a001a;
+        public static final int text_invalid_input=0x7f0a001b;
         /**  Text 
          */
-        public static final int text_refreshing=0x7f0a0012;
+        public static final int text_refreshing=0x7f0a0015;
         public static final int text_search_hint=0x7f0a001c;
-        public static final int title_activity_transaction=0x7f0a001b;
+        public static final int title_activity_transaction=0x7f0a0010;
     }
     public static final class style {
         /** 
