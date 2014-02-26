@@ -2,14 +2,12 @@ package com.jackpf.blockchainsearch;
 
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;

@@ -21,7 +21,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
@@ -60,7 +59,7 @@ public class MainActionUI extends UIInterface
         
         drawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 drawerList.setItemChecked(position, true);
                 fragmentManager.beginTransaction().replace(R.id.content, fragments[position]).commit();
@@ -159,7 +158,7 @@ public class MainActionUI extends UIInterface
          * 
          * @param <T>
          */
-        private class ArrayAdapter<T extends List> extends BaseAdapter
+        private class ArrayAdapter<T extends List<?>> extends BaseAdapter
         {
             private final Context context;
             private final T objects;

@@ -289,7 +289,7 @@ public class AddressActionUI extends UIInterface
      * 
      * @param <T>
      */
-    private class ArrayAdapter<T extends List> extends BaseAdapter
+    private class ArrayAdapter<T extends List<?>> extends BaseAdapter
     {
         private final Context context;
         private final T objects;

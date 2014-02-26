@@ -42,6 +42,7 @@ public class AddressRequest extends RequestInterface
         return requestResponse;
     }
     
+    @SuppressWarnings("unchecked")
     private JSONArray processTransactions(String address, JSONArray txs)
     {
         for (Object _tx : txs) {

@@ -33,6 +33,7 @@ public class SocketCmd
      * @param key
      * @param value
      */
+    @SuppressWarnings("unchecked")
     public void setParam(String key, String value)
     {
         this.cmd.put(key, value);

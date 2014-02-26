@@ -17,7 +17,8 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
     /**
      * Context called from
      */
-    private Context context;
+    // Not really needed
+    //private Context context;
     
     /**
      * Api request to call
@@ -48,7 +49,7 @@ public class NetworkThread extends AsyncTask<String, Void, Void>
      */
     public NetworkThread(Context context, RequestInterface request, UIInterface ui)
     {
-        this.context = context;
+        //this.context = context;
         this.request = request;
         this.ui = ui;
     }
