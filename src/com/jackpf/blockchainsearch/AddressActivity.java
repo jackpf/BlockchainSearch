@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -41,7 +42,7 @@ public class AddressActivity extends SherlockFragmentActivity
         final Intent intent = getIntent();
         final String action = intent.getAction();
 
-        if (Intent.ACTION_VIEW.equals(action)) {
+        if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
             final List<String> segments = intent.getData().getPathSegments();
             if (segments.size() > 1) {
                 searchText = segments.get(1);
@@ -103,6 +104,7 @@ public class AddressActivity extends SherlockFragmentActivity
         return true;
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -120,6 +122,15 @@ public class AddressActivity extends SherlockFragmentActivity
                 } else {
                     ui.promptRemoveAddress(searchText, persistedAddresses, saveMenuItem);
                 }
+                return true;
+            case R.id.action_copy:
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                cm.setText(searchText);
+                Toast.makeText(getApplicationContext(), getString(R.string.text_copied), Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

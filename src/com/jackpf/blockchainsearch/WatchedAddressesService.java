@@ -91,7 +91,7 @@ public class WatchedAddressesService extends Service
                 }
      
                 @Override
-                public void onTextMessage(String payload) {System.err.println(payload);
+                public void onTextMessage(String payload) {
                    JSONParser parser = new JSONParser();
                    try {
                        // Get the transaction
@@ -106,11 +106,15 @@ public class WatchedAddressesService extends Service
                                    String text = String.format(
                                        "%s %s %s %s",
                                        processed.getAmount() > 0 ? "Received" : "Sent",
-                                       Utils.btcFormat(processed.getAmount()).replace("-", ""),
+                                       Utils.btcFormat(processed.getAmount(), WatchedAddressesService.this).replace("-", ""),
                                        processed.getAmount() > 0 ? "from" : "to",
                                        processed.getAddress()
                                    );
-                                   WatchedAddressesService.this.newNotification(addresses[i], text);
+                                   
+                                   Intent intent = new Intent(WatchedAddressesService.this, AddressActivity.class);
+                                   intent.putExtra(AddressActivity.EXTRA_SEARCH, addresses[i]);
+                                   
+                                   WatchedAddressesService.this.newNotification(addresses[i], text, intent);
                                }
                            }
                        }
@@ -199,7 +203,7 @@ public class WatchedAddressesService extends Service
         nm.notify(ID, builders.get(ID).build());
     }
     
-    private void newNotification(String title, String text)
+    private void newNotification(String title, String text, Intent intent)
     {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         
@@ -209,7 +213,7 @@ public class WatchedAddressesService extends Service
             .setSmallIcon(R.drawable.ic_launcher)
             .setAutoCancel(false)
             .setOnlyAlertOnce(true)
-            .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT)));
+            .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)));
         
         nm.notify(builders.size() - 1, builders.get(builders.size() - 1).build());
     }

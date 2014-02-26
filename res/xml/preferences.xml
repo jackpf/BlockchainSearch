@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory 
+        android:title="@string/pref_title">
+        
+        <ListPreference 
+            android:key="@string/pref_btc_format_key"
+            android:title="@string/pref_btc_format_title"
+            android:summary="@string/pref_btc_format_summary"
+            android:defaultValue="@string/pref_btc_format_default" 
+            android:entries="@array/pref_btc_format_entries"
+            android:entryValues="@array/pref_btc_format_values" />
+            
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Donate">
+        
+        <PreferenceScreen
+	        android:key="donate"
+	        android:title="Donate"
+	        android:summary="Please consider donating to this address to help with the development of this open source app. If donations outweigh advertising revenue, adverts will be completely removed from the app!">
+	        <intent
+	             android:action="android.intent.action.VIEW"
+	             android:targetPackage="com.jackpf.blockchainsearch"
+	             android:targetClass="com.jackpf.blockchainsearch.AddressActivity">     
+	             <extra android:name="search" android:value="@string/pref_donate_address" />
+	        </intent>
+	    </PreferenceScreen>
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

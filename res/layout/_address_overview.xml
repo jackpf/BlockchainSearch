@@ -34,7 +34,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/_address_address"
                     style="@style/BodyText"
-                    android:gravity="right" />
+                    android:gravity="right"
+    				android:textIsSelectable="true" />
             
             </TableRow>
 			

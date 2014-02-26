@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
+import android.text.ClipboardManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -86,6 +86,7 @@ public class TransactionActivity extends SherlockActivity
         return true;
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -96,6 +97,15 @@ public class TransactionActivity extends SherlockActivity
             case R.id.action_refresh:
                 Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
                 refresh();
+                return true;
+            case R.id.action_copy:
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                cm.setText(searchText);
+                Toast.makeText(getApplicationContext(), getString(R.string.text_copied), Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

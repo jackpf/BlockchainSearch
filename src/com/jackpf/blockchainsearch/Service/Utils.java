@@ -8,12 +8,16 @@ import java.util.Locale;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
+import android.preference.PreferenceManager;
 
+import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Lib.AddressFormatException;
 import com.jackpf.blockchainsearch.Lib.Base58;
@@ -79,9 +83,12 @@ public class Utils
      * @param i
      * @return
      */
-    public static String btcFormat(Long i)
+    public static String btcFormat(Long i, Context context)
     {
-        return String.format(Locale.getDefault(), "%s%.8f", "\u0E3F", i.doubleValue() / BlockchainData.CURRENCY_MULTIPLIER);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int format = Integer.parseInt(prefs.getString(context.getString(R.string.pref_btc_format_key), context.getString(R.string.pref_btc_format_default)));
+        
+        return String.format(Locale.getDefault(), BlockchainData.FORMATS[format], i.doubleValue() / BlockchainData.CONVERSIONS[format]);
     }
     
     /**
@@ -141,8 +148,8 @@ public class Utils
             return false;
         }
 
-        byte[] digest = Arrays.copyOfRange(decoded, 0, 21);
-        byte[] checksum = Arrays.copyOfRange(decoded, 21, 25);
+        byte[] digest = getBytes(decoded, 0, 21);
+        byte[] checksum = getBytes(decoded, 21, 25);
         
         MessageDigest sha256 = null;
         try {
@@ -157,6 +164,26 @@ public class Utils
         }
         
         return true;
+    }
+    
+    /**
+     * Synonymous to Arrays.copyOfRange but rewritten for API level
+     * 
+     * @param array
+     * @param start
+     * @param end
+     * @return
+     */
+    private static byte[] getBytes(byte[] array, int start, int end)
+    {
+        int range = end - start;
+        byte[] copy = new byte[range];
+        
+        for (int i = start, j = 0; i < end; i++, j++) {
+            copy[j] = array[i];
+        }
+        
+        return copy;
     }
     
     /**

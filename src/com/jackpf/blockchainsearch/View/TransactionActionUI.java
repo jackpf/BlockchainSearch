@@ -90,7 +90,7 @@ public class TransactionActionUI extends UIInterface
 
             final String address = prev.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value")))));
+            tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value"), context))));
             inputView.addView(tv);
             tv.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
@@ -108,7 +108,7 @@ public class TransactionActionUI extends UIInterface
             
             final String address = out.get("addr").toString();
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
-            tv.setText(Html.fromHtml(String.format(f, address, Utils.btcFormat((Long) out.get("value")))));
+            tv.setText(Html.fromHtml(String.format(f, address, Utils.btcFormat((Long) out.get("value"), context))));
             outputView.addView(tv);
             tv.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {

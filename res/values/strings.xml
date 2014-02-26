@@ -5,13 +5,15 @@
     <string name="app_name">BlockchainSearch</string>
     <string name="activity_main_title">Search</string>
     <string name="activity_address_title">Address</string>
-    <string name="title_activity_transaction">Transaction</string>
+    <string name="activity_transaction_title">Transaction</string>
+    <string name="activity_preferences_title">Preferences</string>
     
     <!-- Actions -->
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_save">Save</string>
     <string name="action_transaction_view">View transaction</string>
+    <string name="action_copy">Copy to clipboard</string>
     
     <!-- Text -->
     <string name="text_refreshing">Refreshing...</string>
@@ -22,6 +24,7 @@
     <string name="text_exception">An error has occurred: %s</string>
     <string name="text_invalid_input">Please enter a valid address or tx hash</string>
     <string name="text_search_hint">Enter address...</string>
+    <string name="text_copied">Copied to clipboard</string>
 
     <!-- Nav drawer -->
     <string-array name="drawer_list_titles">
@@ -34,5 +37,21 @@
     </string-array>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    
+    <!-- Preferences -->
+    <string name="pref_title">Preferences</string>
+    <string name="pref_btc_format_key">btc_format</string>
+    <string name="pref_btc_format_title">Bitcoin Format</string>
+    <string name="pref_btc_format_summary">Denomination to use when displaying bitcoin amounts</string>
+    <string name="pref_btc_format_default">0</string>
+    <string-array name="pref_btc_format_entries">
+        <item>Bitcoin</item>
+        <item>Satoshi</item>
+    </string-array>
+    <string-array name="pref_btc_format_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_donate_address">18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp</string>
     
 </resources>

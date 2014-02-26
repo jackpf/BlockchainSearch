@@ -107,9 +107,9 @@ public class AddressActionUI extends UIInterface
         View overviewFragment = activity.findViewById(R.id.content_overview);
 
         ((TextView) overviewFragment.findViewById(R.id._address_address)).setText(json.get("address").toString());
-        ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance")));
-        ((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received")));
-        ((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent")));
+        ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance"), context));
+        ((TextView) overviewFragment.findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received"), context));
+        ((TextView) overviewFragment.findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent"), context));
         ((TextView) overviewFragment.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
         
         ImageView qrCode = (ImageView) overviewFragment.findViewById(R.id._address_qr_code);
@@ -384,7 +384,7 @@ public class AddressActionUI extends UIInterface
             long result = Long.parseLong(r.toString());
             TextView resultTextView = (TextView) row.findViewById(R.id.amount);
             resultTextView.setTextColor(result > 0 ? Color.GREEN : Color.RED);
-            resultTextView.setText(Utils.btcFormat(result).replace("-", ""));
+            resultTextView.setText(Utils.btcFormat(result, context).replace("-", ""));
 
             return row;
         }

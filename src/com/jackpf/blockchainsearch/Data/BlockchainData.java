@@ -10,7 +10,12 @@ public class BlockchainData
         WS_URL          = "ws://ws.blockchain.info/inv"
     ;
     
-    public static final Long
-        CURRENCY_MULTIPLIER = 100000000L
-    ;
+    public static final Long[] CONVERSIONS = {
+        100000000L,
+        1L
+    };
+    public static final String[] FORMATS = {
+        "\u0E3F%.8f",
+        "\u0024%.0f",
+    };
 }

@@ -47,9 +47,17 @@ public class MainActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO: compat
-        if (ui.drawerToggle.onOptionsItemSelected(item)) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
+            break;
+            default:
+                // Nav drawer
+                if (ui.drawerToggle.onOptionsItemSelected(item)) {
+                    return true;
+                }
+            break;
         }
         
         return super.onOptionsItemSelected(item);
