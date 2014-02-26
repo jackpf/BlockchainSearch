@@ -93,7 +93,7 @@ public class AddressActivity extends FragmentActivity
         saveMenuItem = menu.findItem(R.id.action_save);
         
         if (persistedAddresses.has(searchText)) {
-            saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+            saveMenuItem.setIcon(R.drawable.ic_menu_saved);
         }
         
         return true;

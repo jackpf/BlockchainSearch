@@ -183,7 +183,7 @@ public class AddressActionUI extends UIInterface
                     } else {
                         addresses.add(name, address);
                         Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
-                        saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+                        saveMenuItem.setIcon(R.drawable.ic_menu_saved);
                     }
                 }
             })

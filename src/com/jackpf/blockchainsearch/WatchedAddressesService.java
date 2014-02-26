@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.jackpf.blockchainsearch.Data.BlockchainData;
+import com.jackpf.blockchainsearch.Entity.SocketCmd;
 import com.jackpf.blockchainsearch.Service.Utils;
 
 import de.tavendo.autobahn.WebSocketConnection;
@@ -25,18 +26,39 @@ import de.tavendo.autobahn.WebSocketHandler;
 
 public class WatchedAddressesService extends Service
 {
+    /**
+     * Service binder
+     */
     private final IBinder binder = new ServiceBinder();
     
+    /**
+     * Web socket
+     */
     private final WebSocketConnection socket = new WebSocketConnection();
     
+    /**
+     * Log tag
+     */
     private final String TAG = this.getClass().getName();
     
-    public final static String EXTRA_ACTION = "action";
+    /**
+     * Stop service extra parameter
+     */
+    public final static String EXTRA_STOPSERVICE = "stop";
 
+    /**
+     * Start service
+     * 
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        if ("stop".equals(intent.getStringExtra(EXTRA_ACTION))) {
+        // We've been told to stop the service
+        if (intent.getBooleanExtra(EXTRA_STOPSERVICE, false)) {
             stopService(new Intent(this, WatchedAddressesService.class));
             return 0;
         }
@@ -51,8 +73,9 @@ public class WatchedAddressesService extends Service
                 public void onOpen() {
                    WatchedAddressesService.this.updateNotification("Watching addresses!");
                    
+                   // Subscribe to addresses
                    for (int i = 0; i < addresses.length; i++) {
-                       Cmd cmd = new Cmd(Cmd.ADDR_SUB);
+                       SocketCmd cmd = new SocketCmd(SocketCmd.ADDR_SUB);
                        cmd.setParam("addr", addresses[i]);
                        
                        socket.sendTextMessage(cmd.toString());
@@ -63,23 +86,28 @@ public class WatchedAddressesService extends Service
                 public void onTextMessage(String payload) {
                    JSONParser parser = new JSONParser();
                    try {
+                       // Get the transaction
                        JSONObject obj = (JSONObject) parser.parse(payload);
                        JSONObject tx = (JSONObject) obj.get("x");
-                       for (int i = 0; i < addresses.length; i++) {
-                           Utils.ProcessedTransaction processed = Utils.processTransaction(addresses[i], tx);
-                           if (processed.getAmount() != 0) {
-                               String text = String.format(
-                                   "%s %s %s %s",
-                                   processed.getAmount() > 0 ? "Received" : "Sent",
-                                   Utils.btcFormat(processed.getAmount()).replace("-", ""),
-                                   processed.getAmount() > 0 ? "from" : "to",
-                                   processed.getAddress()
-                               );
-                               WatchedAddressesService.this.newNotification(addresses[i], text);
+                       if (tx != null) {
+                           // Check which of our watched addresses the transaction involves
+                           for (int i = 0; i < addresses.length; i++) {
+                               Utils.ProcessedTransaction processed = Utils.processTransaction(addresses[i], tx);
+                               // If the transaction amount for this address is not 0, this address was involved
+                               if (processed.getAmount() != 0) {
+                                   String text = String.format(
+                                       "%s %s %s %s",
+                                       processed.getAmount() > 0 ? "Received" : "Sent",
+                                       Utils.btcFormat(processed.getAmount()).replace("-", ""),
+                                       processed.getAmount() > 0 ? "from" : "to",
+                                       processed.getAddress()
+                                   );
+                                   WatchedAddressesService.this.newNotification(addresses[i], text);
+                               }
                            }
                        }
                    } catch (ParseException e) {
-                       e.printStackTrace();
+                       Log.d(TAG, e.toString());
                    }
                 }
      
@@ -95,22 +123,38 @@ public class WatchedAddressesService extends Service
         return Service.START_STICKY;
     }
     
+    /**
+     * On bind
+     * 
+     * @param intent
+     * @return
+     */
     @Override
     public IBinder onBind(Intent intent)
     {
         return binder;
     }
     
+    /**
+     * On destroy
+     */
     @Override
     public void onDestroy()
     {
+        // Remove any notifications
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         
         for (int i = 0; i < builders.size(); i++) {
             nm.cancel(i);
         }
+        
+        // Disconnect the web socket
+        socket.disconnect();
     }
     
+    /**
+     * Service binder
+     */
     public class ServiceBinder extends Binder
     {
         public WatchedAddressesService getService()
@@ -127,7 +171,7 @@ public class WatchedAddressesService extends Service
         
         if (builders.size() == ID) {
             Intent stopIntent = new Intent(this, WatchedAddressesService.class);
-            stopIntent.putExtra(EXTRA_ACTION, "stop");
+            stopIntent.putExtra(EXTRA_STOPSERVICE, true);
             PendingIntent stopPendingIntent = PendingIntent.getService(this, 0, stopIntent, PendingIntent.FLAG_ONE_SHOT);
             PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
             
@@ -138,7 +182,7 @@ public class WatchedAddressesService extends Service
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
-                .addAction(R.drawable.ic_menu_refresh, "Stop", stopPendingIntent)
+                .addAction(R.drawable.ic_action_delete, "Stop", stopPendingIntent)
                 .setContentIntent(contentPendingIntent));
         } else {
             builders.get(ID).setContentTitle(title);
@@ -160,27 +204,5 @@ public class WatchedAddressesService extends Service
             .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT)));
         
         nm.notify(builders.size() - 1, builders.get(builders.size() - 1).build());
-    }
-    
-    private class Cmd
-    {
-        public final static String ADDR_SUB = "addr_sub", UNCONFIRMED_SUB = "unconfirmed_sub";
-        
-        private JSONObject cmd = new JSONObject();
-        
-        public Cmd(String cmd)
-        {
-            setParam("op", cmd);
-        }
-        
-        public void setParam(String key, String value)
-        {
-            this.cmd.put(key, value);
-        }
-        
-        public String toString()
-        {
-            return cmd.toString();
-        }
     }
 }
