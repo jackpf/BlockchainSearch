@@ -25,16 +25,16 @@ import java.security.NoSuchAlgorithmException;
  * To enable debug logging from the library, run with -Dbitcoinj.logging=true on your command line.
  */
 public class Utils {
-	private static final MessageDigest digest;
-	static {
+    private static final MessageDigest digest;
+    static {
         try {
             digest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);  // Can't happen.
         }
     }
-	
-	/**
+    
+    /**
      * See {@link Utils#doubleDigest(byte[], int, int)}.
      */
     public static byte[] doubleDigest(byte[] input) {

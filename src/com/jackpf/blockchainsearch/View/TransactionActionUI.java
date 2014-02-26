@@ -25,66 +25,66 @@ import com.jackpf.blockchainsearch.Service.Utils;
 
 public class TransactionActionUI extends UIInterface
 {
-	private Activity activity;
-	
-	private View loadingView;
-	
-	public TransactionActionUI(Context context)
-	{
-		super(context);
-		
-		activity = (Activity) context;
-	}
-	
-	public void initialise()
-	{
-		
-	}
-	
-	public void preUpdate()
-	{
-		loadingView = activity.findViewById(R.id.loading);
-	}
-	
-	public void update()
-	{
-		loadingView.setVisibility(View.GONE);
-		
-		final JSONObject json = (JSONObject) vars.get("response");
-		LayoutInflater inflater = activity.getLayoutInflater();
-		
-		activity.getActionBar().setSubtitle(json.get("hash").toString());
-		
-		View transactionView = activity.findViewById(R.id._transaction_table);
+    private Activity activity;
+    
+    private View loadingView;
+    
+    public TransactionActionUI(Context context)
+    {
+        super(context);
+        
+        activity = (Activity) context;
+    }
+    
+    public void initialise()
+    {
+        
+    }
+    
+    public void preUpdate()
+    {
+        loadingView = activity.findViewById(R.id.loading);
+    }
+    
+    public void update()
+    {
+        loadingView.setVisibility(View.GONE);
+        
+        final JSONObject json = (JSONObject) vars.get("response");
+        LayoutInflater inflater = activity.getLayoutInflater();
+        
+        activity.getActionBar().setSubtitle(json.get("hash").toString());
+        
+        View transactionView = activity.findViewById(R.id._transaction_table);
 
-		((TextView) transactionView.findViewById(R.id._transaction_hash)).setText(json.get("hash").toString());
-		((TextView) transactionView.findViewById(R.id._transaction_index)).setText(json.get("tx_index").toString());
-		((TextView) transactionView.findViewById(R.id._transaction_size)).setText(json.get("size").toString() + " bytes");
-		((TextView) transactionView.findViewById(R.id._transaction_double_spend)).setText(json.get("double_spend").toString());
-		Object bh = json.get("block_height");
-		int blockHeight = 0, blockCount = Integer.parseInt(vars.get("block_count").toString());
-		if (bh != null) {
-		    blockHeight = Integer.parseInt(bh.toString());
-		} else {
-		    blockHeight = blockCount + 1;
-		}
+        ((TextView) transactionView.findViewById(R.id._transaction_hash)).setText(json.get("hash").toString());
+        ((TextView) transactionView.findViewById(R.id._transaction_index)).setText(json.get("tx_index").toString());
+        ((TextView) transactionView.findViewById(R.id._transaction_size)).setText(json.get("size").toString() + " bytes");
+        ((TextView) transactionView.findViewById(R.id._transaction_double_spend)).setText(json.get("double_spend").toString());
+        Object bh = json.get("block_height");
+        int blockHeight = 0, blockCount = Integer.parseInt(vars.get("block_count").toString());
+        if (bh != null) {
+            blockHeight = Integer.parseInt(bh.toString());
+        } else {
+            blockHeight = blockCount + 1;
+        }
         ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
         ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
         
         DateTime dt = new DateTime((Long) json.get("time") * 1000L);
         ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
-		
-		String relayedBy = json.get("relayed_by").toString();
-		try {
-			relayedBy = String.format("%s (%s)", InetAddress.getByName(relayedBy).toString(), relayedBy);
-		} catch (UnknownHostException e) { }
-		((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
-		
-		String f = "<font color=\"blue\"><u>%s</u></font>: %s";
-		
-		LinearLayout inputView = (LinearLayout) transactionView.findViewById(R.id._transaction_inputs);
+        
+        String relayedBy = json.get("relayed_by").toString();
+        try {
+            relayedBy = String.format("%s (%s)", InetAddress.getByName(relayedBy).toString(), relayedBy);
+        } catch (UnknownHostException e) { }
+        ((TextView) transactionView.findViewById(R.id._transaction_relayed_by)).setText(relayedBy);
+        
+        String f = "<font color=\"blue\"><u>%s</u></font>: %s";
+        
+        LinearLayout inputView = (LinearLayout) transactionView.findViewById(R.id._transaction_inputs);
         inputView.removeAllViews();
-		for (Object _in : (JSONArray) json.get("inputs")) {
+        for (Object _in : (JSONArray) json.get("inputs")) {
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
 
@@ -93,11 +93,11 @@ public class TransactionActionUI extends UIInterface
             tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value")))));
             inputView.addView(tv);
             tv.setOnClickListener(new OnClickListener() {
-            	public void onClick(View v) {
-            		Intent intent = new Intent(context, AddressActivity.class);
-        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
-        			context.startActivity(intent);
-            	}
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AddressActivity.class);
+                    intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+                    context.startActivity(intent);
+                }
             });
         }
         
@@ -111,19 +111,19 @@ public class TransactionActionUI extends UIInterface
             tv.setText(Html.fromHtml(String.format(f, address, Utils.btcFormat((Long) out.get("value")))));
             outputView.addView(tv);
             tv.setOnClickListener(new OnClickListener() {
-            	public void onClick(View v) {
-            		Intent intent = new Intent(context, AddressActivity.class);
-        			intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
-        			context.startActivity(intent);
-            	}
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AddressActivity.class);
+                    intent.putExtra(TransactionActivity.EXTRA_SEARCH, address);
+                    context.startActivity(intent);
+                }
             });
         }
-		
-		activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
-	}
-	
-	public void error(Exception e)
-	{
-		e.printStackTrace();
-	}
+        
+        activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
+    }
+    
+    public void error(Exception e)
+    {
+        e.printStackTrace();
+    }
 }

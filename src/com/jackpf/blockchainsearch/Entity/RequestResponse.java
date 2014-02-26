@@ -7,5 +7,5 @@ import java.util.HashMap;
  */
 public class RequestResponse extends HashMap<String, Object>
 {
-	
+    
 }

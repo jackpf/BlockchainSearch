@@ -18,18 +18,18 @@ import android.util.Log;
 
 public class PersistedAddresses
 {
-	private final static String FILENAME = "addresses.json";
-	
-	private Context context;
-	
-	TreeMap<String, String> addresses = new TreeMap<String, String>();
-	
-	public PersistedAddresses(Context context)
-	{
-		this.context = context;
-		
-		restore();
-	}
+    private final static String FILENAME = "addresses.json";
+    
+    private Context context;
+    
+    TreeMap<String, String> addresses = new TreeMap<String, String>();
+    
+    public PersistedAddresses(Context context)
+    {
+        this.context = context;
+        
+        restore();
+    }
     
     public void add(String name, String address)
     {
@@ -39,11 +39,11 @@ public class PersistedAddresses
     
     public void remove(String address)
     {
-    	for (Map.Entry<String, String> entry : addresses.entrySet()) {
-    		if (address.equals(entry.getValue())) {
-    			addresses.remove(entry.getKey());
-    		}
-    	}
+        for (Map.Entry<String, String> entry : addresses.entrySet()) {
+            if (address.equals(entry.getValue())) {
+                addresses.remove(entry.getKey());
+            }
+        }
         save();
     }
     
@@ -59,58 +59,58 @@ public class PersistedAddresses
     
     public Map.Entry<String, String> get(String address)
     {
-    	for (Map.Entry<String, String> entry : addresses.entrySet()) {
-    		if (address.equals(entry.getValue())) {
-    			return entry;
-    		}
-    	}
-    	
-    	return null;
+        for (Map.Entry<String, String> entry : addresses.entrySet()) {
+            if (address.equals(entry.getValue())) {
+                return entry;
+            }
+        }
+        
+        return null;
     }
     
     public TreeMap<String, String> getAll()
     {
         return new TreeMap<String, String>(addresses);
     }
-	
-	protected void save()
-	{
-		try {
-			FileOutputStream out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-			
-			JSONObject obj = new JSONObject();
-			
-			for (Map.Entry<String, String> entry : addresses.entrySet()) {
-			    obj.put(entry.getKey(), entry.getValue());
-			}
-			
-			out.write(obj.toString().getBytes());
-			out.close();
-		} catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
-	}
-	
-	protected void restore()
-	{
-		try {
-			FileInputStream in = context.openFileInput(FILENAME);
-		    BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		    
-		    StringBuilder sb = new StringBuilder();
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		        sb.append(line);
-		    }
-		    
-		    JSONObject obj = new JSONObject(sb.toString());
-		    
-		    Iterator<?> keys = obj.keys();
+    
+    protected void save()
+    {
+        try {
+            FileOutputStream out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            
+            JSONObject obj = new JSONObject();
+            
+            for (Map.Entry<String, String> entry : addresses.entrySet()) {
+                obj.put(entry.getKey(), entry.getValue());
+            }
+            
+            out.write(obj.toString().getBytes());
+            out.close();
+        } catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
+    }
+    
+    protected void restore()
+    {
+        try {
+            FileInputStream in = context.openFileInput(FILENAME);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            JSONObject obj = new JSONObject(sb.toString());
+            
+            Iterator<?> keys = obj.keys();
 
-	        while(keys.hasNext()) {
-	            String key = (String) keys.next();
-	            addresses.put(key, (String) obj.get(key));
-	            Log.d("Restoring addresses", key + " = " + (String) obj.get(key));
-	        }
-	        
-		} catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
-	}
+            while(keys.hasNext()) {
+                String key = (String) keys.next();
+                addresses.put(key, (String) obj.get(key));
+                Log.d("Restoring addresses", key + " = " + (String) obj.get(key));
+            }
+            
+        } catch (FileNotFoundException e) { } catch (IOException e) { } catch (JSONException e) { }
+    }
 }

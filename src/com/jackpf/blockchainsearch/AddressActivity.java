@@ -18,114 +18,114 @@ import com.jackpf.blockchainsearch.View.AddressActionUI;
 
 public class AddressActivity extends FragmentActivity
 {
-	public final static String EXTRA_SEARCH = "search";
-	
-	private AddressActionUI ui;
-	private String searchText;
-	private NetworkThread thread;
-	private PersistedAddresses persistedAddresses;
-	MenuItem saveMenuItem;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		
-	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		setContentView(R.layout.activity_address);
-		
-		getActionBar().setHomeButtonEnabled(true);
-	    getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		persistedAddresses = new PersistedAddresses(this);
+    public final static String EXTRA_SEARCH = "search";
+    
+    private AddressActionUI ui;
+    private String searchText;
+    private NetworkThread thread;
+    private PersistedAddresses persistedAddresses;
+    MenuItem saveMenuItem;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        setContentView(R.layout.activity_address);
+        
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        persistedAddresses = new PersistedAddresses(this);
 
-		ui = new AddressActionUI(this);
-		
-		final Intent intent = getIntent();
-	    final String action = intent.getAction();
+        ui = new AddressActionUI(this);
+        
+        final Intent intent = getIntent();
+        final String action = intent.getAction();
 
-	    if (Intent.ACTION_VIEW.equals(action)) {
-	        final List<String> segments = intent.getData().getPathSegments();
-	        if (segments.size() > 1) {
-	            searchText = segments.get(1);
-	        }
-	    } else {
-	    	searchText = getIntent().getStringExtra(EXTRA_SEARCH);
-	    }
-		
-		ui.initialise();
-		
-		refresh();
-	}
-	
-	@Override
-	protected void onDestroy()
-	{
-		super.onDestroy();
-		
-		thread.cancel(true);
-	}
-	
-	/**
-	 * Runs the network thread and updates the UI
-	 * Sectioned off since it's called from onCreate and from the refresh button
-	 */
-	private void refresh()
-	{
-		if (thread instanceof NetworkThread) {
-			thread.cancel(true);
-		}
-		
-		thread = new NetworkThread(
-			this,
-			new AddressRequest(searchText),
-			ui
-		);
-		
-		thread.execute();
-	}
-	
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu)
-	{
-	    super.onPrepareOptionsMenu(menu);
-	    
-	    saveMenuItem = menu.findItem(R.id.action_save);
-	    
-	    if (persistedAddresses.has(searchText)) {
-		    saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
-	    }
-	    
-	    return true;
-	}
+        if (Intent.ACTION_VIEW.equals(action)) {
+            final List<String> segments = intent.getData().getPathSegments();
+            if (segments.size() > 1) {
+                searchText = segments.get(1);
+            }
+        } else {
+            searchText = getIntent().getStringExtra(EXTRA_SEARCH);
+        }
+        
+        ui.initialise();
+        
+        refresh();
+    }
+    
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        
+        thread.cancel(true);
+    }
+    
+    /**
+     * Runs the network thread and updates the UI
+     * Sectioned off since it's called from onCreate and from the refresh button
+     */
+    private void refresh()
+    {
+        if (thread instanceof NetworkThread) {
+            thread.cancel(true);
+        }
+        
+        thread = new NetworkThread(
+            this,
+            new AddressRequest(searchText),
+            ui
+        );
+        
+        thread.execute();
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        super.onPrepareOptionsMenu(menu);
+        
+        saveMenuItem = menu.findItem(R.id.action_save);
+        
+        if (persistedAddresses.has(searchText)) {
+            saveMenuItem.setIcon(R.drawable.ic_menu_save_tinted);
+        }
+        
+        return true;
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.address, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-	    switch (item.getItemId()) {
-		    case android.R.id.home:
-		        finish();
-		        return true;
-		    case R.id.action_refresh:
-		    	Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
-		    	refresh();
-		    	return true;
-		    case R.id.action_save:
-		        if (!persistedAddresses.has(searchText)) {
-		            ui.promptPersistAddress(searchText, persistedAddresses, saveMenuItem);
-		        } else {
-		            ui.promptRemoveAddress(searchText, persistedAddresses, saveMenuItem);
-		        }
-		    	return true;
-		    default:
-		        return super.onOptionsItemSelected(item);
-	    }
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.address, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_refresh:
+                Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
+                refresh();
+                return true;
+            case R.id.action_save:
+                if (!persistedAddresses.has(searchText)) {
+                    ui.promptPersistAddress(searchText, persistedAddresses, saveMenuItem);
+                } else {
+                    ui.promptRemoveAddress(searchText, persistedAddresses, saveMenuItem);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

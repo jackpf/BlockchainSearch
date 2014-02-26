@@ -17,14 +17,14 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  */
 public class QRCode
 {
-	/**
-	 * Create a qrcode bitmap from string
-	 * 
-	 * @param qrCodeText
-	 * @param size
-	 * @return
-	 * @throws WriterException
-	 */
+    /**
+     * Create a qrcode bitmap from string
+     * 
+     * @param qrCodeText
+     * @param size
+     * @return
+     * @throws WriterException
+     */
     public static Bitmap create(String qrCodeText, int size)
             throws WriterException
     {
