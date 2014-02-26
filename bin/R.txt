@@ -392,9 +392,10 @@ int layout abs__simple_dropdown_hint 0x7f03001c
 int layout activity_address 0x7f03001d
 int layout activity_main 0x7f03001e
 int layout activity_transaction 0x7f03001f
-int layout loading 0x7f030020
-int layout sherlock_spinner_dropdown_item 0x7f030021
-int layout sherlock_spinner_item 0x7f030022
+int layout ads 0x7f030020
+int layout loading 0x7f030021
+int layout sherlock_spinner_dropdown_item 0x7f030022
+int layout sherlock_spinner_item 0x7f030023
 int menu _address_transaction 0x7f0e0000
 int menu address 0x7f0e0001
 int menu main 0x7f0e0002
@@ -421,6 +422,7 @@ int string activity_address_title 0x7f0b000f
 int string activity_main_title 0x7f0b000e
 int string activity_preferences_title 0x7f0b0011
 int string activity_transaction_title 0x7f0b0010
+int string admob_id 0x7f0b0029
 int string app_name 0x7f0b000d
 int string drawer_close 0x7f0b0021
 int string drawer_open 0x7f0b0020

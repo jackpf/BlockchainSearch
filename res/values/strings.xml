@@ -46,13 +46,19 @@
     <string name="pref_btc_format_default">0</string>
     <string-array name="pref_btc_format_entries">
         <item>Bitcoin</item>
+        <item>Millibitcoin</item>
+        <item>Microbitcoin</item>
         <item>Satoshi</item>
     </string-array>
     <string-array name="pref_btc_format_values">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
     <string name="pref_watch_addresses_key">watch_addresses</string>
     <string name="pref_donate_address">18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp</string>
+    
+    <string name="admob_id">ca-app-pub-9822609068892864/7717430702</string>
     
 </resources>

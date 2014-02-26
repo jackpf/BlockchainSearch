@@ -32,7 +32,7 @@
         <PreferenceScreen
 	        android:key="donate"
 	        android:title="Donate"
-	        android:summary="If you find this app useful, please consider clicking here and donating to this address to help with the future development of this open source app. If donations outweigh advertising revenue, adverts will be completely removed from the app!">
+	        android:summary="If you find this app useful, please consider clicking here and donating a small amount to this address to help with the future development of this open source app. If donations outweigh advertising revenue, adverts will be completely removed from the app!">
 	        <intent
 	             android:action="android.intent.action.VIEW"
 	             android:targetPackage="com.jackpf.blockchainsearch"

@@ -1069,9 +1069,10 @@ containing a value of this type.
         public static final int activity_address=0x7f03001d;
         public static final int activity_main=0x7f03001e;
         public static final int activity_transaction=0x7f03001f;
-        public static final int loading=0x7f030020;
-        public static final int sherlock_spinner_dropdown_item=0x7f030021;
-        public static final int sherlock_spinner_item=0x7f030022;
+        public static final int ads=0x7f030020;
+        public static final int loading=0x7f030021;
+        public static final int sherlock_spinner_dropdown_item=0x7f030022;
+        public static final int sherlock_spinner_item=0x7f030023;
     }
     public static final class menu {
         public static final int _address_transaction=0x7f0e0000;
@@ -1130,6 +1131,7 @@ containing a value of this type.
         public static final int activity_main_title=0x7f0b000e;
         public static final int activity_preferences_title=0x7f0b0011;
         public static final int activity_transaction_title=0x7f0b0010;
+        public static final int admob_id=0x7f0b0029;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
