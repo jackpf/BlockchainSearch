@@ -2,7 +2,6 @@ package com.jackpf.blockchainsearch.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Locale;
 
 import org.json.simple.JSONArray;

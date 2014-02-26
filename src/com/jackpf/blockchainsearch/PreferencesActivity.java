@@ -1,5 +1,8 @@
 package com.jackpf.blockchainsearch;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +19,11 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
         
         addPreferencesFromResource(R.xml.preferences);
         
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        syncServiceStates(prefs);
+        
+        prefs.registerOnSharedPreferenceChangeListener(this);
     }
     
     @Override
@@ -30,5 +37,30 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
                 stopService(new Intent(this, WatchedAddressesService.class));
             }
         }
+    }
+    
+    private void syncServiceStates(SharedPreferences prefs)
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+        
+        String waKey = getString(R.string.pref_watch_addresses_key);
+        if (serviceIsRunning(WatchedAddressesService.class)) {
+            editor.putBoolean(waKey, true);
+        } else {
+            editor.putBoolean(waKey, false);
+        }
+        
+        editor.commit();
+    }
+    
+    private boolean serviceIsRunning(Class<?> c)
+    {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (c.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

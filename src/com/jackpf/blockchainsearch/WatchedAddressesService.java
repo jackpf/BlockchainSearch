@@ -40,11 +40,6 @@ public class WatchedAddressesService extends Service
      * Log tag
      */
     private final String TAG = this.getClass().getName();
-    
-    /**
-     * Stop service extra parameter
-     */
-    public final static String EXTRA_STOPSERVICE = "stop";
 
     /**
      * Start service
@@ -57,12 +52,6 @@ public class WatchedAddressesService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        // We've been told to stop the service
-        if (intent.getBooleanExtra(EXTRA_STOPSERVICE, false)) {
-            stopService(new Intent(this, WatchedAddressesService.class));
-            return 0;
-        }
-        
         updateNotification("Connecting to service...");
         
         final String[] addresses = {
@@ -182,9 +171,6 @@ public class WatchedAddressesService extends Service
         int ID = 0;
         
         if (builders.size() == ID) {
-            Intent stopIntent = new Intent(this, WatchedAddressesService.class);
-            stopIntent.putExtra(EXTRA_STOPSERVICE, true);
-            PendingIntent stopPendingIntent = PendingIntent.getService(this, 0, stopIntent, PendingIntent.FLAG_ONE_SHOT);
             PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
             
             builders.add(new NotificationCompat.Builder(this)
@@ -194,7 +180,6 @@ public class WatchedAddressesService extends Service
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
-                .addAction(R.drawable.ic_action_delete, "Stop", stopPendingIntent)
                 .setContentIntent(contentPendingIntent));
         } else {
             builders.get(ID).setContentTitle(title);
