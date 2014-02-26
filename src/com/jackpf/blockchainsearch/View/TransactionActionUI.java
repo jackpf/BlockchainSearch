@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
@@ -25,7 +26,7 @@ import com.jackpf.blockchainsearch.Service.Utils;
 
 public class TransactionActionUI extends UIInterface
 {
-    private Activity activity;
+    private SherlockActivity activity;
     
     private View loadingView;
     
@@ -33,7 +34,7 @@ public class TransactionActionUI extends UIInterface
     {
         super(context);
         
-        activity = (Activity) context;
+        activity = (SherlockActivity) context;
     }
     
     public void initialise()
@@ -53,7 +54,7 @@ public class TransactionActionUI extends UIInterface
         final JSONObject json = (JSONObject) vars.get("response");
         LayoutInflater inflater = activity.getLayoutInflater();
         
-        activity.getActionBar().setSubtitle(json.get("hash").toString());
+        activity.getSupportActionBar().setSubtitle(json.get("hash").toString());
         
         View transactionView = activity.findViewById(R.id._transaction_table);
 

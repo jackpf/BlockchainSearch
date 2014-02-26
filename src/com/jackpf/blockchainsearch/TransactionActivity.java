@@ -2,19 +2,19 @@ package com.jackpf.blockchainsearch;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.TransactionRequest;
 import com.jackpf.blockchainsearch.View.TransactionActionUI;
 
-public class TransactionActivity extends Activity
+public class TransactionActivity extends SherlockActivity
 {
     public final static String EXTRA_SEARCH = "search";
     
@@ -29,8 +29,8 @@ public class TransactionActivity extends Activity
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_transaction);
         
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ui = new TransactionActionUI(this);
         
@@ -81,7 +81,7 @@ public class TransactionActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.transaction, menu);
+        getSupportMenuInflater().inflate(R.menu.transaction, menu);
         
         return true;
     }
