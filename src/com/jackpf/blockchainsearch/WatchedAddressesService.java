@@ -190,7 +190,7 @@ public class WatchedAddressesService extends Service
             builders.add(new NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 //.setContentText("Text")
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
@@ -210,7 +210,7 @@ public class WatchedAddressesService extends Service
         builders.add(new NotificationCompat.Builder(this)
             .setContentTitle(title)
             .setContentText(text)
-            .setSmallIcon(R.drawable.ic_launcher)
+            .setSmallIcon(R.drawable.ic_notification)
             .setAutoCancel(false)
             .setOnlyAlertOnce(true)
             .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)));

@@ -265,11 +265,12 @@ int drawable ic_menu_save 0x7f020078
 int drawable ic_menu_saved 0x7f020079
 int drawable ic_menu_search 0x7f02007a
 int drawable ic_navigation_drawer 0x7f02007b
-int drawable list_divider 0x7f02007c
-int drawable list_item 0x7f02007d
-int drawable list_item_selected 0x7f02007e
-int drawable loading 0x7f02007f
-int drawable loading_intermediate 0x7f020080
+int drawable ic_notification 0x7f02007c
+int drawable list_divider 0x7f02007d
+int drawable list_item 0x7f02007e
+int drawable list_item_selected 0x7f02007f
+int drawable loading 0x7f020080
+int drawable loading_intermediate 0x7f020081
 int id _address_address 0x7f060012
 int id _address_final_balance 0x7f060013
 int id _address_no_transactions 0x7f060016
