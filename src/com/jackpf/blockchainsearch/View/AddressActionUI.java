@@ -7,9 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,9 +18,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,10 +31,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
@@ -48,7 +50,7 @@ import com.jackpf.blockchainsearch.Service.Utils;
 
 public class AddressActionUI extends UIInterface
 {
-    private Activity activity;
+    private SherlockFragmentActivity activity;
     
     private View loadingView;
     
@@ -62,14 +64,14 @@ public class AddressActionUI extends UIInterface
     {
         super(context);
         
-        activity = (Activity) context;
+        activity = (SherlockFragmentActivity) context;
     }
     
     public void initialise()
     {
         // Initilization
         viewPager = (ViewPager) activity.findViewById(R.id.content);
-        actionBar = activity.getActionBar();
+        actionBar = activity.getSupportActionBar();
         tabAdapter = new TabsPagerAdapter(((FragmentActivity) context).getSupportFragmentManager());
 
         viewPager.setAdapter(tabAdapter);
@@ -82,7 +84,7 @@ public class AddressActionUI extends UIInterface
 
         // Adding Tabs
         for (String tab : tabTitles) {
-            actionBar.addTab(actionBar.newTab().setText(tab).setTabListener(new TabListener()));
+            actionBar.addTab(actionBar.newTab().setText(tab).setTabListener(new TabSwipeListener()));
         }
     }
     
@@ -131,7 +133,8 @@ public class AddressActionUI extends UIInterface
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
                 
-                PopupMenu menu = new PopupMenu(context, view);
+                // TODO: compat
+                /*PopupMenu menu = new PopupMenu(context, view);
                 activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
                 menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
@@ -143,7 +146,7 @@ public class AddressActionUI extends UIInterface
                         return true;
                     }
                 });
-                menu.show();
+                menu.show();*/
                 
                 return true;
             }
@@ -215,12 +218,12 @@ public class AddressActionUI extends UIInterface
      * Tab swipe listener
      * Sets the current tab when tabs are swept
      */
-    protected class TabListener implements android.app.ActionBar.TabListener
+    protected class TabSwipeListener implements TabListener
     {
-        public void onTabReselected(Tab arg0, android.app.FragmentTransaction tx) { }
-        public void onTabUnselected(Tab arg0, android.app.FragmentTransaction tx) { }
+        public void onTabReselected(Tab arg0, FragmentTransaction tx) { }
+        public void onTabUnselected(Tab arg0, FragmentTransaction tx) { }
         @Override
-        public void onTabSelected(Tab tab, android.app.FragmentTransaction arg1)
+        public void onTabSelected(Tab tab, FragmentTransaction arg1)
         {
             viewPager.setCurrentItem(tab.getPosition());
         }

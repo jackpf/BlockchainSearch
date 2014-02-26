@@ -4,17 +4,16 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
 
-public class AddressActivity extends FragmentActivity
+public class AddressActivity extends SherlockFragmentActivity
 {
     public final static String EXTRA_SEARCH = "search";
     
@@ -29,11 +28,11 @@ public class AddressActivity extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_address);
         
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         persistedAddresses = new PersistedAddresses(this);
 
@@ -100,7 +99,7 @@ public class AddressActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.address, menu);
+        getSupportMenuInflater().inflate(R.menu.address, menu);
         return true;
     }
     
