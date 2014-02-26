@@ -2,18 +2,17 @@ package com.jackpf.blockchainsearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Service.Utils;
 import com.jackpf.blockchainsearch.View.MainActionUI;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends SherlockFragmentActivity
 {
     private /*UIInterface*/ MainActionUI ui;
     
@@ -21,13 +20,13 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // Not needed with sherlock?
+        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        
-        getActionBar().setTitle(getString(R.string.activity_main_title));
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.activity_main_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         
         setContentView(R.layout.activity_main);
         
@@ -40,7 +39,7 @@ public class MainActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getSupportMenuInflater().inflate(R.menu.main, menu);
         
         return true;
     }
@@ -48,6 +47,7 @@ public class MainActivity extends FragmentActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        // TODO: compat
         if (ui.drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,22 +21,25 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.sherlock.navigationdrawer.compat.SherlockActionBarDrawerToggle;
 
 public class MainActionUI extends UIInterface
 {
-    private Activity activity;
-    public ActionBarDrawerToggle drawerToggle;
+    private SherlockFragmentActivity activity;
+    public SherlockActionBarDrawerToggle drawerToggle;
     Fragment[] fragments = {new SearchFragment(), new SavedAddressesFragment()};
     
     public MainActionUI(Context context)
     {
         super(context);
         
-        activity = (Activity) context;
+        activity = (SherlockFragmentActivity) context;
     }
     
     public void update() { }
@@ -66,7 +68,7 @@ public class MainActionUI extends UIInterface
             }
         });
         
-        drawerToggle = new ActionBarDrawerToggle(
+        drawerToggle = new SherlockActionBarDrawerToggle(
             activity,                   /* Host Activity */
             drawerLayout,          /* DrawerLayout object */
             R.drawable.ic_navigation_drawer, /* Nav drawer icon to replace 'Up' caret */
@@ -75,12 +77,12 @@ public class MainActionUI extends UIInterface
         ) {
             @Override
             public void onDrawerClosed(View drawerView) {
-                activity.invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                activity.invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
 
