@@ -5,6 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -20,6 +23,56 @@ import com.jackpf.blockchainsearch.Lib.Base58;
  */
 public class Utils
 {
+    public static ProcessedTransaction processTransaction(String address, JSONObject tx)
+    {
+        Long total = 0L;
+        String addrIn = "", addrOut = "";
+        
+        for (Object _in : (JSONArray) tx.get("inputs")) {
+            JSONObject in = (JSONObject) _in;
+            JSONObject prev = (JSONObject) in.get("prev_out");
+            
+            if (address.equals((String) prev.get("addr"))) {
+                total -= Long.parseLong(prev.get("value").toString());
+            } else {
+                addrOut = prev.get("addr").toString();
+            }
+        }
+        
+        for (Object _out : (JSONArray) tx.get("out")) {
+            JSONObject out = (JSONObject) _out;
+            
+            if (address.equals((String) out.get("addr"))) {
+                total += Long.parseLong(out.get("value").toString());
+            } else {
+                addrIn = out.get("addr").toString();
+            }
+        }
+        
+        return new ProcessedTransaction(total > 0L ? addrOut : addrIn, total);
+    }
+    public static class ProcessedTransaction
+    {
+        private String address;
+        private Long amount;
+        
+        public ProcessedTransaction(String address, Long amount)
+        {
+            this.address = address;
+            this.amount = amount;
+        }
+        
+        public String getAddress()
+        {
+            return address;
+        }
+        
+        public Long getAmount()
+        {
+            return amount;
+        }
+    }
+    
 	/**
 	 * Format given value into a bitcoin currency value
 	 * 

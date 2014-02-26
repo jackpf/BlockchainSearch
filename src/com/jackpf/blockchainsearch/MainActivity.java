@@ -33,6 +33,8 @@ public class MainActivity extends FragmentActivity
 		
 		ui = new MainActionUI(this);
 		ui.initialise();
+		
+		startService(new Intent(this, WatchedAddressesService.class));
 	}
 
 	@Override

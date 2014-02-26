@@ -9,6 +9,7 @@ import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
 import com.jackpf.blockchainsearch.Interface.RequestInterface;
+import com.jackpf.blockchainsearch.Service.Utils;
 
 public class AddressRequest extends RequestInterface
 {
@@ -45,33 +46,11 @@ public class AddressRequest extends RequestInterface
 	{
 	    for (Object _tx : txs) {
 	        JSONObject tx = (JSONObject) _tx;
-	        
-	        Long total = 0L;
-	        String addrIn = "", addrOut = "";
-            
-            for (Object _in : (JSONArray) tx.get("inputs")) {
-                JSONObject in = (JSONObject) _in;
-                JSONObject prev = (JSONObject) in.get("prev_out");
-                
-                if (address.equals((String) prev.get("addr"))) {
-                    total -= Long.parseLong(prev.get("value").toString());
-                } else {
-                    addrOut = prev.get("addr").toString();
-                }
-            }
-            
-            for (Object _out : (JSONArray) tx.get("out")) {
-                JSONObject out = (JSONObject) _out;
-                
-                if (address.equals((String) out.get("addr"))) {
-                    total += Long.parseLong(out.get("value").toString());
-                } else {
-                    addrIn = out.get("addr").toString();
-                }
-            }
 
-            tx.put("result", total);
-            tx.put("addr", total > 0L ? addrOut : addrIn);
+            Utils.ProcessedTransaction processed = Utils.processTransaction(address, (JSONObject) _tx);
+
+            tx.put("result", processed.getAmount());
+            tx.put("addr", processed.getAddress());
 	    }
 	    
 	    return txs;

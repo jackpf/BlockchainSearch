@@ -6,7 +6,8 @@ public class BlockchainData
 		BLOCKCHAIN_URL	= "https://blockchain.info",
 		ADDRESS_URL		= "address/%s?format=json",
 		TRANSACTION_URL	= "tx/%s?format=json",
-		BLOCKCOUNT_URL	= "q/getblockcount"
+		BLOCKCOUNT_URL	= "q/getblockcount",
+		WS_URL          = "ws://ws.blockchain.info/inv"
 	;
 	
 	public static final Long
