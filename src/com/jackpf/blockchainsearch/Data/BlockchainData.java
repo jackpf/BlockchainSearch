@@ -26,4 +26,17 @@ public class BlockchainData
         "\u03BC\u0E3F%.0f",
         "\u0024%.0f",
     };
+
+    public static final String[] CURRENCIES = {
+        "",
+        "GBP",
+        "USD",
+        "EUR"
+    };
+    public static final String[] CURRENCY_SYMBOLS = {
+        "",
+        "\u00A3",
+        "\u0024",
+        "\u20AC"
+    };
 }

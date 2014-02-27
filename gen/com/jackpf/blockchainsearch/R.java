@@ -21,6 +21,8 @@ public final class R {
         public static final int drawer_list_values=0x7f0d0001;
         public static final int pref_btc_format_entries=0x7f0d0002;
         public static final int pref_btc_format_values=0x7f0d0003;
+        public static final int pref_currency_entries=0x7f0d0004;
+        public static final int pref_currency_values=0x7f0d0005;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -694,20 +696,22 @@ containing a value of this type.
         public static final int abs__split_action_bar_is_narrow=0x7f070001;
     }
     public static final class color {
-        public static final int TableRow2=0x7f080009;
+        public static final int TableRow2=0x7f08000b;
         public static final int abs__background_holo_dark=0x7f080000;
         public static final int abs__background_holo_light=0x7f080001;
         public static final int abs__bright_foreground_disabled_holo_dark=0x7f080004;
         public static final int abs__bright_foreground_disabled_holo_light=0x7f080005;
         public static final int abs__bright_foreground_holo_dark=0x7f080002;
         public static final int abs__bright_foreground_holo_light=0x7f080003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f08000a;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f08000b;
-        public static final int abs__primary_text_holo_dark=0x7f08000c;
-        public static final int abs__primary_text_holo_light=0x7f08000d;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f08000c;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f08000d;
+        public static final int abs__primary_text_holo_dark=0x7f08000e;
+        public static final int abs__primary_text_holo_light=0x7f08000f;
         public static final int btc=0x7f080006;
         public static final int confirmations1=0x7f080007;
         public static final int confirmations2=0x7f080008;
+        public static final int value_negative=0x7f08000a;
+        public static final int value_positive=0x7f080009;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -933,15 +937,14 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020076;
         public static final int ic_menu_refresh=0x7f020077;
         public static final int ic_menu_save=0x7f020078;
-        public static final int ic_menu_saved=0x7f020079;
-        public static final int ic_menu_search=0x7f02007a;
-        public static final int ic_navigation_drawer=0x7f02007b;
-        public static final int ic_notification=0x7f02007c;
-        public static final int list_divider=0x7f02007d;
-        public static final int list_item=0x7f02007e;
-        public static final int list_item_selected=0x7f02007f;
-        public static final int loading=0x7f020080;
-        public static final int loading_intermediate=0x7f020081;
+        public static final int ic_menu_search=0x7f020079;
+        public static final int ic_navigation_drawer=0x7f02007a;
+        public static final int ic_notification=0x7f02007b;
+        public static final int list_divider=0x7f02007c;
+        public static final int list_item=0x7f02007d;
+        public static final int list_item_selected=0x7f02007e;
+        public static final int loading=0x7f02007f;
+        public static final int loading_intermediate=0x7f020080;
     }
     public static final class id {
         public static final int _address_address=0x7f060012;
@@ -1140,7 +1143,7 @@ containing a value of this type.
         public static final int activity_main_title=0x7f0b000e;
         public static final int activity_preferences_title=0x7f0b0011;
         public static final int activity_transaction_title=0x7f0b0010;
-        public static final int admob_id=0x7f0b0030;
+        public static final int admob_id=0x7f0b0034;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
@@ -1150,18 +1153,22 @@ containing a value of this type.
         public static final int pref_btc_format_key=0x7f0b0023;
         public static final int pref_btc_format_summary=0x7f0b0025;
         public static final int pref_btc_format_title=0x7f0b0024;
-        public static final int pref_confirmations_default=0x7f0b002e;
-        public static final int pref_confirmations_key=0x7f0b002c;
-        public static final int pref_confirmations_summary=0x7f0b002f;
-        public static final int pref_confirmations_title=0x7f0b002d;
-        public static final int pref_donate_address=0x7f0b002b;
+        public static final int pref_confirmations_default=0x7f0b0032;
+        public static final int pref_confirmations_key=0x7f0b0030;
+        public static final int pref_confirmations_summary=0x7f0b0033;
+        public static final int pref_confirmations_title=0x7f0b0031;
+        public static final int pref_currency_default=0x7f0b002a;
+        public static final int pref_currency_key=0x7f0b0027;
+        public static final int pref_currency_summary=0x7f0b0029;
+        public static final int pref_currency_title=0x7f0b0028;
+        public static final int pref_donate_address=0x7f0b002f;
         /**  Preferences 
          */
         public static final int pref_title=0x7f0b0022;
-        public static final int pref_watch_addresses_default=0x7f0b0029;
-        public static final int pref_watch_addresses_key=0x7f0b0027;
-        public static final int pref_watch_addresses_summary=0x7f0b002a;
-        public static final int pref_watch_addresses_title=0x7f0b0028;
+        public static final int pref_watch_addresses_default=0x7f0b002d;
+        public static final int pref_watch_addresses_key=0x7f0b002b;
+        public static final int pref_watch_addresses_summary=0x7f0b002e;
+        public static final int pref_watch_addresses_title=0x7f0b002c;
         public static final int text_address_empty_name=0x7f0b0019;
         public static final int text_address_name_exists=0x7f0b001a;
         public static final int text_address_saved=0x7f0b0018;

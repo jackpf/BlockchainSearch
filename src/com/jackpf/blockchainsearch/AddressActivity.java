@@ -91,7 +91,7 @@ public class AddressActivity extends SherlockFragmentActivity
         saveMenuItem = menu.findItem(R.id.action_save);
         
         if (persistedAddresses.has(searchText)) {
-            saveMenuItem.setIcon(R.drawable.ic_menu_saved);
+            saveMenuItem.setIcon(R.drawable.ic_action_delete);
         }
         
         return true;

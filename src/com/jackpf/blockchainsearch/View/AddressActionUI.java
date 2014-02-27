@@ -1,5 +1,6 @@
 package com.jackpf.blockchainsearch.View;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +46,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
+import com.jackpf.blockchainsearch.Data.BlockchainData;
+import com.jackpf.blockchainsearch.Entity.BtcStats;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
@@ -105,7 +107,7 @@ public class AddressActionUI extends UIInterface
         actionBar.setSubtitle(json.get("address").toString());
         
         // Overview fragment
-        View overviewFragment = activity.findViewById(R.id.content_overview);
+        final View overviewFragment = activity.findViewById(R.id.content_overview);
 
         ((TextView) overviewFragment.findViewById(R.id._address_address)).setText(json.get("address").toString());
         ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance"), context));
@@ -119,6 +121,26 @@ public class AddressActionUI extends UIInterface
         } catch (Exception e) {
             error(e);
         }
+        
+        // Currency conversion
+        BtcStats stats = BtcStats.getInstance();
+        stats.update(new BtcStats.UpdateListener() {
+           @Override
+           public void update(BtcStats stats, IOException e) {
+               int currencyChoice = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_currency_key), context.getString(R.string.pref_currency_default)));
+               double btc = Double.valueOf(json.get("final_balance").toString()) / BlockchainData.CONVERSIONS[0];
+               double converted = btc * Double.valueOf(stats.getExchangeValues().get(BlockchainData.CURRENCIES[currencyChoice]));
+               if (currencyChoice > 0) {
+                   String text = String.format(
+                       "%s (\u2248 %s%.2f)",
+                       Utils.btcFormat((Long) json.get("final_balance"), context),
+                       BlockchainData.CURRENCY_SYMBOLS[currencyChoice],
+                       converted
+                   );
+                   ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(text);
+               }
+           }
+        });
         
         // Transactions fragment
         ListView txList = (ListView) activity.findViewById(R.id.content_transactions);
@@ -205,7 +227,7 @@ public class AddressActionUI extends UIInterface
                     } else {
                         addresses.add(name, address);
                         Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
-                        saveMenuItem.setIcon(R.drawable.ic_menu_saved);
+                        saveMenuItem.setIcon(R.drawable.ic_action_delete);
                     }
                 }
             })
@@ -372,7 +394,7 @@ public class AddressActionUI extends UIInterface
                         context.getResources(),
                         Utils.drawConfirmationsArc(
                             confirmations,
-                            PreferenceManager.getDefaultSharedPreferences(context).getInt(context.getString(R.string.pref_confirmations_key), Integer.parseInt(context.getString(R.string.pref_confirmations_default))),
+                            Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_confirmations_key), context.getString(R.string.pref_confirmations_default))),
                             context.getResources().getColor(R.color.confirmations1),
                             context.getResources().getColor(R.color.confirmations2),
                             24
@@ -384,7 +406,7 @@ public class AddressActionUI extends UIInterface
             Object r = tx.get("result");
             long result = Long.parseLong(r.toString());
             TextView resultTextView = (TextView) row.findViewById(R.id.amount);
-            resultTextView.setTextColor(result > 0 ? Color.GREEN : Color.RED);
+            resultTextView.setTextColor(context.getResources().getColor(result > 0 ? R.color.value_positive : R.color.value_negative));
             resultTextView.setText(Utils.btcFormat(result, context).replace("-", ""));
 
             return row;

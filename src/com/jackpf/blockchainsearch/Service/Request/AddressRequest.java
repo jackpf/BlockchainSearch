@@ -34,7 +34,7 @@ public class AddressRequest extends RequestInterface
         
         // Work out the transactions results
         requestResponse.put("transactions", processTransactions(address, (JSONArray) response.get("txs")));
-        
+
         // Also get the current block count
         path = new ApiPath(BlockchainData.Q_BLOCKCOUNT_URL);
         requestResponse.put("block_count", this.blockchain.rawRequest(path));

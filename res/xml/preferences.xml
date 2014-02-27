@@ -20,6 +20,14 @@
 		    android:summary="@string/pref_confirmations_summary"
 		    android:inputType="number" />
         
+        <ListPreference 
+            android:key="@string/pref_currency_key"
+            android:title="@string/pref_currency_title"
+            android:summary="@string/pref_currency_summary"
+            android:defaultValue="@string/pref_currency_default" 
+            android:entries="@array/pref_currency_entries"
+            android:entryValues="@array/pref_currency_values" />
+        
     </PreferenceCategory>
     
     <PreferenceCategory 
