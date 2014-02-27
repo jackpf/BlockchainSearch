@@ -64,7 +64,7 @@ public class WatchedAddressesService extends Service
             socket.connect(BlockchainData.WS_URL, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
-                   WatchedAddressesService.this.updateNotification("Watching addresses!", "Monitoring " + addresses.length + " addresse" + (addresses.length > 1 ? "s" : ""));
+                   WatchedAddressesService.this.updateNotification("Watching addresses!", "Monitoring " + addresses.length + " address" + (addresses.length > 1 ? "es" : ""));
                    
                    // Subscribe to addresses
                    for (int i = 0; i < addresses.length; i++) {
@@ -167,7 +167,7 @@ public class WatchedAddressesService extends Service
         int ID = 0;
         
         if (builders.size() == ID) {
-            PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, PreferencesActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, PreferencesActivity.class), PendingIntent.FLAG_CANCEL_CURRENT);
             
             builders.add(new NotificationCompat.Builder(this)
                 .setContentTitle(title)
