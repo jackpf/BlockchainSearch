@@ -3,11 +3,15 @@ package com.jackpf.blockchainsearch.Data;
 public class BlockchainData
 {
     public static final String
-        BLOCKCHAIN_URL  = "https://blockchain.info",
-        ADDRESS_URL     = "address/%s?format=json",
-        TRANSACTION_URL = "tx/%s?format=json",
-        BLOCKCOUNT_URL  = "q/getblockcount",
-        WS_URL          = "ws://ws.blockchain.info/inv"
+        BLOCKCHAIN_URL          = "https://blockchain.info",
+        ADDRESS_URL             = "address/%s?format=json",
+        TRANSACTION_URL         = "tx/%s?format=json",
+        WS_URL                  = "ws://ws.blockchain.info/inv",
+        Q_BLOCKCOUNT_URL        = "q/getblockcount",
+        Q_DIFFICULTY_URL        = "q/getdifficulty",
+        Q_TOTAL_BTC_URL         = "q/totalbc",
+        Q_EXCHANGE_RATE_URL     = "ticker",
+        Q_NEXT_BLOCK_TIME_URL   = "q/eta"
     ;
     
     public static final Long[] CONVERSIONS = {

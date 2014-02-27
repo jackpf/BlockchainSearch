@@ -171,7 +171,7 @@ public class WatchedAddressesService extends Service
         int ID = 0;
         
         if (builders.size() == ID) {
-            PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, PreferencesActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
             
             builders.add(new NotificationCompat.Builder(this)
                 .setContentTitle(title)
