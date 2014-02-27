@@ -196,7 +196,7 @@ public class WatchedAddressesService extends Service
             .setContentTitle(title)
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_notification)
-            .setAutoCancel(false)
+            .setAutoCancel(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)));
         
