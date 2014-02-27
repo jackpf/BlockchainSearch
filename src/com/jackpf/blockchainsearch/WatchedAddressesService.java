@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -13,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -197,8 +199,11 @@ public class WatchedAddressesService extends Service
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_notification)
             .setAutoCancel(true)
-            .setOnlyAlertOnce(true)
             .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)));
+        
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.pref_notification_key), Boolean.parseBoolean(getString(R.string.pref_notification_default)))) {
+            builders.get(builders.size() - 1).setDefaults(Notification.DEFAULT_ALL);
+        }
         
         nm.notify(builders.size() - 1, builders.get(builders.size() - 1).build());
     }

@@ -28,6 +28,12 @@
             android:entries="@array/pref_currency_entries"
             android:entryValues="@array/pref_currency_values" />
         
+        <CheckBoxPreference
+	        android:key="@string/pref_notification_key"
+	        android:title="@string/pref_notification_title"
+	        android:summary="@string/pref_notification_title"
+	        android:defaultValue="@string/pref_notification_default" />
+        
     </PreferenceCategory>
     
     <PreferenceCategory 
@@ -36,7 +42,7 @@
         <CheckBoxPreference
 	        android:key="@string/pref_watch_addresses_key"
 	        android:title="@string/pref_watch_addresses_title"
-	        android:summary="@string/pref_watch_addresses_title"
+	        android:summary="@string/pref_watch_addresses_summary"
 	        android:defaultValue="@string/pref_watch_addresses_default" />
         
     </PreferenceCategory>
