@@ -1140,7 +1140,7 @@ containing a value of this type.
         public static final int activity_main_title=0x7f0b000e;
         public static final int activity_preferences_title=0x7f0b0011;
         public static final int activity_transaction_title=0x7f0b0010;
-        public static final int admob_id=0x7f0b0029;
+        public static final int admob_id=0x7f0b0030;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
@@ -1150,11 +1150,18 @@ containing a value of this type.
         public static final int pref_btc_format_key=0x7f0b0023;
         public static final int pref_btc_format_summary=0x7f0b0025;
         public static final int pref_btc_format_title=0x7f0b0024;
-        public static final int pref_donate_address=0x7f0b0028;
+        public static final int pref_confirmations_default=0x7f0b002e;
+        public static final int pref_confirmations_key=0x7f0b002c;
+        public static final int pref_confirmations_summary=0x7f0b002f;
+        public static final int pref_confirmations_title=0x7f0b002d;
+        public static final int pref_donate_address=0x7f0b002b;
         /**  Preferences 
          */
         public static final int pref_title=0x7f0b0022;
+        public static final int pref_watch_addresses_default=0x7f0b0029;
         public static final int pref_watch_addresses_key=0x7f0b0027;
+        public static final int pref_watch_addresses_summary=0x7f0b002a;
+        public static final int pref_watch_addresses_title=0x7f0b0028;
         public static final int text_address_empty_name=0x7f0b0019;
         public static final int text_address_name_exists=0x7f0b001a;
         public static final int text_address_saved=0x7f0b0018;
@@ -2331,7 +2338,7 @@ containing a value of this type.
          */
         public static final int[] SherlockSpinner = {
             0x010100af, 0x01010175, 0x01010176, 0x0101017b,
-            0x01010262, 0x010102ac, 0x010102ad, 0x0101043a
+            0x01010262, 0x010102ac, 0x010102ad, 0x0101041f
         };
         /**
           <p>

@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -371,7 +372,7 @@ public class AddressActionUI extends UIInterface
                         context.getResources(),
                         Utils.drawConfirmationsArc(
                             confirmations,
-                            3,
+                            PreferenceManager.getDefaultSharedPreferences(context).getInt(context.getString(R.string.pref_confirmations_key), Integer.parseInt(context.getString(R.string.pref_confirmations_default))),
                             context.getResources().getColor(R.color.confirmations1),
                             context.getResources().getColor(R.color.confirmations2),
                             24

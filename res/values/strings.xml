@@ -57,7 +57,14 @@
         <item>3</item>
     </string-array>
     <string name="pref_watch_addresses_key">watch_addresses</string>
+    <string name="pref_watch_addresses_title">Watch saved addresses</string>
+    <string name="pref_watch_addresses_default">false</string>
+    <string name="pref_watch_addresses_summary">This will monitor your saved addresses in real time and give you notifications when they send or receive payments</string>
     <string name="pref_donate_address">18Zbf9aEKwZTeR92u4tuhQenoen9prSeNp</string>
+    <string name="pref_confirmations_key">confirmations</string>
+    <string name="pref_confirmations_title">Confirmations</string>
+    <string name="pref_confirmations_default">3</string>
+    <string name="pref_confirmations_summary">The number of confirmations a transaction needs to be considered successful (this changes the behaviour of the confirmation counter circle in the transactions list)</string>
     
     <string name="admob_id">ca-app-pub-9822609068892864/7717430702</string>
     

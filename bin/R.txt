@@ -431,7 +431,7 @@ int string activity_address_title 0x7f0b000f
 int string activity_main_title 0x7f0b000e
 int string activity_preferences_title 0x7f0b0011
 int string activity_transaction_title 0x7f0b0010
-int string admob_id 0x7f0b0029
+int string admob_id 0x7f0b0030
 int string app_name 0x7f0b000d
 int string drawer_close 0x7f0b0021
 int string drawer_open 0x7f0b0020
@@ -439,9 +439,16 @@ int string pref_btc_format_default 0x7f0b0026
 int string pref_btc_format_key 0x7f0b0023
 int string pref_btc_format_summary 0x7f0b0025
 int string pref_btc_format_title 0x7f0b0024
-int string pref_donate_address 0x7f0b0028
+int string pref_confirmations_default 0x7f0b002e
+int string pref_confirmations_key 0x7f0b002c
+int string pref_confirmations_summary 0x7f0b002f
+int string pref_confirmations_title 0x7f0b002d
+int string pref_donate_address 0x7f0b002b
 int string pref_title 0x7f0b0022
+int string pref_watch_addresses_default 0x7f0b0029
 int string pref_watch_addresses_key 0x7f0b0027
+int string pref_watch_addresses_summary 0x7f0b002a
+int string pref_watch_addresses_title 0x7f0b0028
 int string text_address_empty_name 0x7f0b0019
 int string text_address_name_exists 0x7f0b001a
 int string text_address_saved 0x7f0b0018
@@ -620,7 +627,7 @@ int styleable SherlockSearchView_android_inputType 1
 int styleable SherlockSearchView_android_maxWidth 0
 int styleable SherlockSearchView_iconifiedByDefault 3
 int styleable SherlockSearchView_queryHint 4
-int[] styleable SherlockSpinner { 0x010100af, 0x01010175, 0x01010176, 0x0101017b, 0x01010262, 0x010102ac, 0x010102ad, 0x0101043a }
+int[] styleable SherlockSpinner { 0x010100af, 0x01010175, 0x01010176, 0x0101017b, 0x01010262, 0x010102ac, 0x010102ad, 0x0101041f }
 int styleable SherlockSpinner_android_dropDownHorizontalOffset 5
 int styleable SherlockSpinner_android_dropDownSelector 1
 int styleable SherlockSpinner_android_dropDownVerticalOffset 6

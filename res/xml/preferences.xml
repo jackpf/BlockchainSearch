@@ -12,7 +12,14 @@
             android:defaultValue="@string/pref_btc_format_default" 
             android:entries="@array/pref_btc_format_entries"
             android:entryValues="@array/pref_btc_format_values" />
-            
+
+        <EditTextPreference 
+		    android:key="@string/pref_confirmations_key"
+		    android:title="@string/pref_confirmations_title"
+		    android:defaultValue="@string/pref_confirmations_default"
+		    android:summary="@string/pref_confirmations_summary"
+		    android:inputType="number" />
+        
     </PreferenceCategory>
     
     <PreferenceCategory 
@@ -20,9 +27,9 @@
         
         <CheckBoxPreference
 	        android:key="@string/pref_watch_addresses_key"
-	        android:title="Watch saved addresses"
-	        android:summary="This will monitor your saved addresses in real time and give you notifications when they send or receive payments"
-	        android:defaultValue="false" />
+	        android:title="@string/pref_watch_addresses_title"
+	        android:summary="@string/pref_watch_addresses_title"
+	        android:defaultValue="@string/pref_watch_addresses_default" />
         
     </PreferenceCategory>
     
