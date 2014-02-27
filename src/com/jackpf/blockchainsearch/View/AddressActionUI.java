@@ -128,9 +128,9 @@ public class AddressActionUI extends UIInterface
            @Override
            public void update(BtcStats stats, IOException e) {
                int currencyChoice = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_currency_key), context.getString(R.string.pref_currency_default)));
-               double btc = Double.valueOf(json.get("final_balance").toString()) / BlockchainData.CONVERSIONS[0];
-               double converted = btc * Double.valueOf(stats.getExchangeValues().get(BlockchainData.CURRENCIES[currencyChoice]));
                if (currencyChoice > 0) {
+                   double btc = Double.valueOf(json.get("final_balance").toString()) / BlockchainData.CONVERSIONS[0];
+                   double converted = btc * Double.valueOf(stats.getExchangeValues().get(BlockchainData.CURRENCIES[currencyChoice]));
                    String text = String.format(
                        "%s (\u2248 %s%.2f)",
                        Utils.btcFormat((Long) json.get("final_balance"), context),
@@ -383,6 +383,7 @@ public class AddressActionUI extends UIInterface
             //Confirmations image
             Object bc = vars.get("block_count"), bh = tx.get("block_height");
             int confirmations = 0;
+            int targetConfirmations = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_confirmations_key), context.getString(R.string.pref_confirmations_default)));
             if (bh != null) {
                 int blockCount = Integer.parseInt(bc.toString());
                 int blockHeight = Integer.parseInt(bh.toString());
@@ -394,7 +395,7 @@ public class AddressActionUI extends UIInterface
                         context.getResources(),
                         Utils.drawConfirmationsArc(
                             confirmations,
-                            Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_confirmations_key), context.getString(R.string.pref_confirmations_default))),
+                            targetConfirmations,
                             context.getResources().getColor(R.color.confirmations1),
                             context.getResources().getColor(R.color.confirmations2),
                             24

@@ -49,7 +49,8 @@
         </activity>
         <activity
 			android:name=".PreferencesActivity"
-			android:label="@string/activity_preferences_title" />
+			android:label="@string/activity_preferences_title"
+			android:noHistory="true" />
         <activity android:name="com.google.ads.AdActivity" 
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
         <service

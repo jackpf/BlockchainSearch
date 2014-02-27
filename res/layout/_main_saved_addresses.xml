@@ -1,11 +1,21 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/_main_saved_addresses"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:divider="@android:color/black"
-    android:dividerHeight="1px"
-    android:choiceMode="singleChoice" 
-    android:listSelector="@drawable/arraylist_selector"
-    android:cacheColorHint="@android:color/transparent"
-    android:scrollbars="none" />
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+    <ListView
+	    android:id="@+id/_main_saved_addresses"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1.0"
+	    android:divider="@android:color/black"
+	    android:dividerHeight="1px"
+	    android:choiceMode="singleChoice" 
+	    android:listSelector="@drawable/arraylist_selector"
+	    android:cacheColorHint="@android:color/transparent"
+	    android:scrollbars="none" />
+    
+    <include layout="@layout/ads" />
+    
+</LinearLayout>

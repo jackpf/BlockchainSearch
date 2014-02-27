@@ -14,6 +14,7 @@ import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.TransactionRequest;
 import com.jackpf.blockchainsearch.View.TransactionActionUI;
 
+@SuppressWarnings("deprecation")
 public class TransactionActivity extends SherlockActivity
 {
     public final static String EXTRA_SEARCH = "search";
@@ -86,7 +87,6 @@ public class TransactionActivity extends SherlockActivity
         return true;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {

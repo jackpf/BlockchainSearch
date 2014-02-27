@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -19,6 +20,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.jackpf.blockchainsearch.Data.BlockchainData;
+import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Entity.SocketCmd;
 import com.jackpf.blockchainsearch.Service.Utils;
 
@@ -54,23 +56,15 @@ public class WatchedAddressesService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        updateNotification("Connecting to service...");
+        updateNotification("Connecting to service", "Please wait...");
         
-        final String[] addresses = {
-            "1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK",
-            "1LuckyG4tMMZf64j6ea7JhCz7sDpk6vdcS",
-            "1bonesBjs3DQUbx4wxPQwrbwCkNjWtLB4",
-            "1bonesUhqtbLAGKWZuawCzsYqmYWEgPwH",
-            "1bonesPdRYS91Mq9arbiUratHy2J5gDut",
-            "1bones5gF1HJeiexQus6UtvhU4EUD4qfj",
-            "1dice5wwEZT2u6ESAdUGG6MHgCpbQqZiy"
-        };
+        final String[] addresses = new PersistedAddresses(this).getAll().values().toArray(new String[]{});
         
         try {
             socket.connect(BlockchainData.WS_URL, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
-                   WatchedAddressesService.this.updateNotification("Watching addresses!");
+                   WatchedAddressesService.this.updateNotification("Watching addresses!", "Monitoring " + addresses.length + " addresse" + (addresses.length > 1 ? "s" : ""));
                    
                    // Subscribe to addresses
                    for (int i = 0; i < addresses.length; i++) {
@@ -167,7 +161,7 @@ public class WatchedAddressesService extends Service
     }
     
     ArrayList<NotificationCompat.Builder> builders = new ArrayList<NotificationCompat.Builder>();
-    private void updateNotification(String title)
+    private void updateNotification(String title, String text)
     {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         int ID = 0;
@@ -177,14 +171,17 @@ public class WatchedAddressesService extends Service
             
             builders.add(new NotificationCompat.Builder(this)
                 .setContentTitle(title)
-                //.setContentText("Text")
+                .setContentText(text)
                 .setSmallIcon(R.drawable.ic_notification)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setContentIntent(contentPendingIntent));
         } else {
-            builders.get(ID).setContentTitle(title);
+            builders.get(ID)
+                .setContentTitle(title)
+                .setContentText(text);
         }
         
         nm.notify(ID, builders.get(ID).build());
@@ -198,6 +195,7 @@ public class WatchedAddressesService extends Service
             .setContentTitle(title)
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
             .setAutoCancel(true)
             .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)));
         

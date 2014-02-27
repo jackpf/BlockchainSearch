@@ -14,6 +14,7 @@ import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
 
+@SuppressWarnings("deprecation")
 public class AddressActivity extends SherlockFragmentActivity
 {
     public final static String EXTRA_SEARCH = "search";
@@ -104,7 +105,6 @@ public class AddressActivity extends SherlockFragmentActivity
         return true;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {

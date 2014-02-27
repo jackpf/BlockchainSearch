@@ -3,7 +3,7 @@
 
     <!-- Titles -->
     <string name="app_name">BlockchainSearch</string>
-    <string name="activity_main_title">Blockchain Search</string>
+    <string name="activity_main_title">Blockchain Explorer</string>
     <string name="activity_address_title">Address</string>
     <string name="activity_transaction_title">Transaction</string>
     <string name="activity_preferences_title">Preferences</string>

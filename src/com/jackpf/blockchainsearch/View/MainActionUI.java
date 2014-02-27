@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.BtcStats;
 import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
@@ -122,11 +123,16 @@ public class MainActionUI extends UIInterface
             stats.update(new BtcStats.UpdateListener() {
                @Override
                public void update(BtcStats stats, IOException e) {
+                   if (e != null) {
+                       return;
+                   }
+                   
+                   Long m = Math.abs(stats.getNextBlockTime()) / 60;
                    String[] values = {
                        Long.toString(stats.getBlockCount()),
-                       stats.getNextBlockTime() >= 0 ? "in about " + (Math.abs(stats.getNextBlockTime()) / 60) + " minutes" : "about " + (Math.abs(stats.getNextBlockTime()) / 60) + " minutes ago",
+                       stats.getNextBlockTime() >= 0 ? "in about " + m + " minute" + (m > 1 ? "s" : "") : "about " + m + " minute" + (m > 1 ? "s" : "") + " ago",
                        Long.toString(stats.getDifficulty()),
-                       Long.toString(stats.getTotalBitcoins())
+                       Long.toString(stats.getTotalBitcoins() / BlockchainData.CONVERSIONS[0])
                    };
                    int[] holders = {
                        R.id.stats_block_height,

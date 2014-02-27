@@ -17,11 +17,11 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
     {        
         super.onCreate(savedInstanceState);
         
-        addPreferencesFromResource(R.xml.preferences);
-        
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         
         syncServiceStates(prefs);
+        
+        addPreferencesFromResource(R.xml.preferences);
         
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
