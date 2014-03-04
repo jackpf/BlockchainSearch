@@ -137,6 +137,8 @@ public class BtcStats
     {
         private UpdateListener listener;
         
+        private IOException e = null;
+        
         public UpdateThread(UpdateListener listener)
         {
             this.listener = listener;
@@ -158,7 +160,7 @@ public class BtcStats
                 updateExchangeValues();
                 updatedAt = new Timestamp(new Date().getTime());
             } catch (IOException e) {
-                e.printStackTrace();
+                this.e = e;
             }
             
             return null;
@@ -167,7 +169,7 @@ public class BtcStats
         @Override
         public void onPostExecute(Void _void)
         {
-            listener.update(BtcStats.this, null);
+            listener.update(BtcStats.this, e);
         }
     }
     
