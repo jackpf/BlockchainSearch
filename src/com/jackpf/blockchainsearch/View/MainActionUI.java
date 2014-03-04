@@ -130,7 +130,7 @@ public class MainActionUI extends UIInterface
                    Long m = Math.abs(stats.getNextBlockTime()) / 60;
                    String[] values = {
                        Long.toString(stats.getBlockCount()),
-                       stats.getNextBlockTime() >= 0 ? "in about " + m + " minute" + (m > 1 ? "s" : "") : "about " + m + " minute" + (m > 1 ? "s" : "") + " ago",
+                       stats.getNextBlockTime() >= 0 ? "in about " + m + " minute" + (m != 1 ? "s" : "") : "about " + m + " minute" + (m != 1 ? "s" : "") + " ago",
                        Long.toString(stats.getDifficulty()),
                        Long.toString(stats.getTotalBitcoins() / BlockchainData.CONVERSIONS[0])
                    };
