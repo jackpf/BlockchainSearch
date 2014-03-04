@@ -28,11 +28,19 @@
 	        android:layout_height="50dp"
 	        android:orientation="horizontal">
 	    
+	        <ImageButton
+	            android:id="@+id/submit"
+	            android:layout_width="0dp"
+	            android:layout_height="fill_parent"
+	            android:layout_weight="0.2"
+	            android:onClick="onQrScan"
+	            android:src="@drawable/ic_action_qrcode" />
+	    
 	        <EditText
 	            android:id="@+id/search"
 	            android:layout_width="0dp"
 	            android:layout_height="fill_parent"
-	            android:layout_weight="0.8"
+	            android:layout_weight="0.6"
 	            android:singleLine="true"
 	            android:hint="@string/text_search_hint"
 	            android:inputType="text">

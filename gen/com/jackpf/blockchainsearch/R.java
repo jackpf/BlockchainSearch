@@ -932,19 +932,21 @@ containing a value of this type.
         public static final int drawer_list_selector=0x7f020071;
         public static final int drawer_shadow=0x7f020072;
         public static final int ic_action_delete=0x7f020073;
-        public static final int ic_drawer_dark=0x7f020074;
-        public static final int ic_drawer_light=0x7f020075;
-        public static final int ic_launcher=0x7f020076;
-        public static final int ic_menu_refresh=0x7f020077;
-        public static final int ic_menu_save=0x7f020078;
-        public static final int ic_menu_search=0x7f020079;
-        public static final int ic_navigation_drawer=0x7f02007a;
-        public static final int ic_notification=0x7f02007b;
-        public static final int list_divider=0x7f02007c;
-        public static final int list_item=0x7f02007d;
-        public static final int list_item_selected=0x7f02007e;
-        public static final int loading=0x7f02007f;
-        public static final int loading_intermediate=0x7f020080;
+        public static final int ic_action_photo=0x7f020074;
+        public static final int ic_action_photo2=0x7f020075;
+        public static final int ic_drawer_dark=0x7f020076;
+        public static final int ic_drawer_light=0x7f020077;
+        public static final int ic_launcher=0x7f020078;
+        public static final int ic_menu_refresh=0x7f020079;
+        public static final int ic_menu_save=0x7f02007a;
+        public static final int ic_menu_search=0x7f02007b;
+        public static final int ic_navigation_drawer=0x7f02007c;
+        public static final int ic_notification=0x7f02007d;
+        public static final int list_divider=0x7f02007e;
+        public static final int list_item=0x7f02007f;
+        public static final int list_item_selected=0x7f020080;
+        public static final int loading=0x7f020081;
+        public static final int loading_intermediate=0x7f020082;
     }
     public static final class id {
         public static final int _address_address=0x7f060012;
@@ -1027,7 +1029,7 @@ containing a value of this type.
         public static final int loading=0x7f06005b;
         public static final int name=0x7f06001d;
         public static final int normal=0x7f060001;
-        public static final int search=0x7f060020;
+        public static final int search=0x7f060021;
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
@@ -1040,7 +1042,7 @@ containing a value of this type.
         public static final int stats_total_bitcoins=0x7f060028;
         public static final int stats_total_bitcoins_loader=0x7f060029;
         public static final int stats_updated_at=0x7f06002a;
-        public static final int submit=0x7f060021;
+        public static final int submit=0x7f060020;
         public static final int tabMode=0x7f060003;
         public static final int useLogo=0x7f060004;
         public static final int wrap_content=0x7f060000;
@@ -1143,36 +1145,36 @@ containing a value of this type.
         public static final int activity_main_title=0x7f0b000e;
         public static final int activity_preferences_title=0x7f0b0011;
         public static final int activity_transaction_title=0x7f0b0010;
-        public static final int admob_id=0x7f0b0038;
+        public static final int admob_id=0x7f0b0039;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
-        public static final int drawer_close=0x7f0b0021;
-        public static final int drawer_open=0x7f0b0020;
-        public static final int pref_btc_format_default=0x7f0b0026;
-        public static final int pref_btc_format_key=0x7f0b0023;
-        public static final int pref_btc_format_summary=0x7f0b0025;
-        public static final int pref_btc_format_title=0x7f0b0024;
-        public static final int pref_confirmations_default=0x7f0b0032;
-        public static final int pref_confirmations_key=0x7f0b0030;
-        public static final int pref_confirmations_summary=0x7f0b0033;
-        public static final int pref_confirmations_title=0x7f0b0031;
-        public static final int pref_currency_default=0x7f0b002a;
-        public static final int pref_currency_key=0x7f0b0027;
-        public static final int pref_currency_summary=0x7f0b0029;
-        public static final int pref_currency_title=0x7f0b0028;
-        public static final int pref_donate_address=0x7f0b002f;
-        public static final int pref_notification_default=0x7f0b0036;
-        public static final int pref_notification_key=0x7f0b0034;
-        public static final int pref_notification_summary=0x7f0b0037;
-        public static final int pref_notification_title=0x7f0b0035;
+        public static final int drawer_close=0x7f0b0022;
+        public static final int drawer_open=0x7f0b0021;
+        public static final int pref_btc_format_default=0x7f0b0027;
+        public static final int pref_btc_format_key=0x7f0b0024;
+        public static final int pref_btc_format_summary=0x7f0b0026;
+        public static final int pref_btc_format_title=0x7f0b0025;
+        public static final int pref_confirmations_default=0x7f0b0033;
+        public static final int pref_confirmations_key=0x7f0b0031;
+        public static final int pref_confirmations_summary=0x7f0b0034;
+        public static final int pref_confirmations_title=0x7f0b0032;
+        public static final int pref_currency_default=0x7f0b002b;
+        public static final int pref_currency_key=0x7f0b0028;
+        public static final int pref_currency_summary=0x7f0b002a;
+        public static final int pref_currency_title=0x7f0b0029;
+        public static final int pref_donate_address=0x7f0b0030;
+        public static final int pref_notification_default=0x7f0b0037;
+        public static final int pref_notification_key=0x7f0b0035;
+        public static final int pref_notification_summary=0x7f0b0038;
+        public static final int pref_notification_title=0x7f0b0036;
         /**  Preferences 
          */
-        public static final int pref_title=0x7f0b0022;
-        public static final int pref_watch_addresses_default=0x7f0b002d;
-        public static final int pref_watch_addresses_key=0x7f0b002b;
-        public static final int pref_watch_addresses_summary=0x7f0b002e;
-        public static final int pref_watch_addresses_title=0x7f0b002c;
+        public static final int pref_title=0x7f0b0023;
+        public static final int pref_watch_addresses_default=0x7f0b002e;
+        public static final int pref_watch_addresses_key=0x7f0b002c;
+        public static final int pref_watch_addresses_summary=0x7f0b002f;
+        public static final int pref_watch_addresses_title=0x7f0b002d;
         public static final int text_address_empty_name=0x7f0b0019;
         public static final int text_address_name_exists=0x7f0b001a;
         public static final int text_address_saved=0x7f0b0018;
@@ -1180,6 +1182,7 @@ containing a value of this type.
         public static final int text_copied=0x7f0b001f;
         public static final int text_exception=0x7f0b001c;
         public static final int text_invalid_input=0x7f0b001d;
+        public static final int text_no_qrcode=0x7f0b0020;
         /**  Text 
          */
         public static final int text_refreshing=0x7f0b0017;

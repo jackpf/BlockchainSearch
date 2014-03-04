@@ -25,6 +25,7 @@
     <string name="text_invalid_input">Please enter a valid address or tx hash</string>
     <string name="text_search_hint">Enter address...</string>
     <string name="text_copied">Copied to clipboard</string>
+    <string name="text_no_qrcode">Unable to scan QR code</string>
 
     <!-- Nav drawer -->
     <string-array name="drawer_list_titles">

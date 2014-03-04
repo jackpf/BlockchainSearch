@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jackpf.blockchainsearch.Lib.IntentIntegrator;
+import com.jackpf.blockchainsearch.Lib.IntentResult;
 import com.jackpf.blockchainsearch.Service.Utils;
 import com.jackpf.blockchainsearch.View.MainActionUI;
 
@@ -62,15 +64,12 @@ public class MainActivity extends SherlockFragmentActivity
     }
     
     /**
-     * On search button click
+     * Process input and launch relevant activity
      * 
-     * @param v
+     * @param searchText
      */
-    public void onSubmit(View v)
+    private void processSearchText(String searchText)
     {
-        TextView searchTextView = (TextView) findViewById(R.id.search);
-        String searchText = searchTextView.getText().toString();
-        
         if (Utils.validAddress(searchText)) {
             Intent intent = new Intent(this, AddressActivity.class);
             intent.putExtra(AddressActivity.EXTRA_SEARCH, searchText);
@@ -85,8 +84,52 @@ public class MainActivity extends SherlockFragmentActivity
                 getString(R.string.text_invalid_input),
                 Toast.LENGTH_SHORT
             ).show();
-            
-            return;
+        }
+    }
+    
+    /**
+     * On search button click
+     * 
+     * @param v
+     */
+    public void onSubmit(View v)
+    {
+        TextView searchTextView = (TextView) findViewById(R.id.search);
+        String searchText = searchTextView.getText().toString();
+        
+        processSearchText(searchText);
+    }
+    
+    /**
+     * On qr scan button click
+     * 
+     * @param v
+     */
+    public void onQrScan(View v)
+    {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+    }
+    
+    /**
+     * On qr scan result
+     * 
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        
+        if (scanResult != null) {
+            processSearchText(scanResult.getContents());
+        } else {
+            Toast.makeText(
+                getApplicationContext(),
+                getString(R.string.text_no_qrcode),
+                Toast.LENGTH_SHORT
+            ).show();
         }
     }
 }
