@@ -11,6 +11,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Lib.IntentIntegrator;
 import com.jackpf.blockchainsearch.Lib.IntentResult;
+import com.jackpf.blockchainsearch.Lib.RateDialog;
 import com.jackpf.blockchainsearch.Service.Utils;
 import com.jackpf.blockchainsearch.View.MainActionUI;
 
@@ -22,9 +23,6 @@ public class MainActivity extends SherlockFragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        // Not needed with sherlock?
-        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         
         getSupportActionBar().setTitle(getString(R.string.activity_main_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

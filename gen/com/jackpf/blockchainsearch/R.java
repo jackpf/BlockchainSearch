@@ -22,7 +22,6 @@ public final class R {
         public static final int pref_btc_format_entries=0x7f0d0002;
         public static final int pref_btc_format_values=0x7f0d0003;
         public static final int pref_currency_entries=0x7f0d0004;
-        public static final int pref_currency_values=0x7f0d0005;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1175,6 +1174,13 @@ containing a value of this type.
         public static final int pref_watch_addresses_key=0x7f0b002c;
         public static final int pref_watch_addresses_summary=0x7f0b002f;
         public static final int pref_watch_addresses_title=0x7f0b002d;
+        public static final int rate_confirm_text=0x7f0b003e;
+        public static final int rate_dismiss_text=0x7f0b003c;
+        /**  Rate prompting 
+         */
+        public static final int rate_launches_until_prompt=0x7f0b003a;
+        public static final int rate_prompt_text=0x7f0b003b;
+        public static final int rate_remind_text=0x7f0b003d;
         public static final int text_address_empty_name=0x7f0b0019;
         public static final int text_address_name_exists=0x7f0b001a;
         public static final int text_address_saved=0x7f0b0018;

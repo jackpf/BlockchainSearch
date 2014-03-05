@@ -30,11 +30,10 @@ public class AddressActivity extends SherlockFragmentActivity
     {
         super.onCreate(savedInstanceState);
         
-        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        setContentView(R.layout.activity_address);
-        
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        setContentView(R.layout.activity_address);
         
         persistedAddresses = new PersistedAddresses(this);
 

@@ -7,7 +7,6 @@ int array drawer_list_values 0x7f0d0001
 int array pref_btc_format_entries 0x7f0d0002
 int array pref_btc_format_values 0x7f0d0003
 int array pref_currency_entries 0x7f0d0004
-int array pref_currency_values 0x7f0d0005
 int attr actionBarDivider 0x7f01000e
 int attr actionBarItemBackground 0x7f01000f
 int attr actionBarSize 0x7f01000d
@@ -462,6 +461,11 @@ int string pref_watch_addresses_default 0x7f0b002e
 int string pref_watch_addresses_key 0x7f0b002c
 int string pref_watch_addresses_summary 0x7f0b002f
 int string pref_watch_addresses_title 0x7f0b002d
+int string rate_confirm_text 0x7f0b003e
+int string rate_dismiss_text 0x7f0b003c
+int string rate_launches_until_prompt 0x7f0b003a
+int string rate_prompt_text 0x7f0b003b
+int string rate_remind_text 0x7f0b003d
 int string text_address_empty_name 0x7f0b0019
 int string text_address_name_exists 0x7f0b001a
 int string text_address_saved 0x7f0b0018

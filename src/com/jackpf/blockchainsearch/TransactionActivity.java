@@ -27,11 +27,11 @@ public class TransactionActivity extends SherlockActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        setContentView(R.layout.activity_transaction);
         
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        setContentView(R.layout.activity_transaction);
 
         ui = new TransactionActionUI(this);
         
