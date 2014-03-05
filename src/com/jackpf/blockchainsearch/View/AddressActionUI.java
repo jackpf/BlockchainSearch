@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -65,6 +66,9 @@ public class AddressActionUI extends UIInterface
     Fragment[] tabs = {new OverviewFragment(), new TransactionsFragment()};
     private final String[] tabTitles = {"Overview", "Transactions"};
     
+    private JSONArray transactions = new JSONArray();
+    private ArrayAdapter<JSONArray> transactionsAdapter;
+    
     public AddressActionUI(Context context)
     {
         super(context);
@@ -93,13 +97,28 @@ public class AddressActionUI extends UIInterface
         }
     }
     
+    private void setLoading(boolean loading)
+    {
+        Button nextPageButton = (Button) activity.findViewById(R.id._address_transactions_next_page);
+        if (nextPageButton != null) {
+            nextPageButton.setEnabled(!loading);
+            if (loading) {
+                nextPageButton.setText("Loading...");
+            } else {
+                nextPageButton.setText("Load more");
+            }
+        }
+    }
+    
     public void preUpdate()
     {
         loadingView = activity.findViewById(R.id.loading);
+        setLoading(true);
     }
     
     public void update()
     {
+        setLoading(false);
         loadingView.setVisibility(View.GONE);
         
         final JSONObject json = (JSONObject) vars.get("response");
@@ -143,55 +162,72 @@ public class AddressActionUI extends UIInterface
         });
         
         // Transactions fragment
+        if ((Integer) vars.get("page") == 1) {
+            transactions.clear();
+        }
+        transactions.addAll((JSONArray) vars.get("transactions"));
+        
         ListView txList = (ListView) activity.findViewById(R.id.content_transactions);
         
-        final ArrayAdapter<JSONArray> adapter = new ArrayAdapter<JSONArray>(context, (JSONArray) vars.get("transactions"));
-        txList.setAdapter(adapter);
-        txList.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(context, AddressActivity.class);
-                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) adapter.getItem(position)).get("addr").toString());
-                context.startActivity(intent);
-            }
-        });
-        txList.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final String txHash = ((JSONObject) adapter.getItem(position)).get("hash").toString();
-                
-                if (android.os.Build.VERSION.SDK_INT >= 11) {
-                    PopupMenu menu = new PopupMenu(context, view);
-                    activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
-                    menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(android.view.MenuItem item)
-                        {
-                            Intent intent = new Intent(context, TransactionActivity.class);
-                            intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                            context.startActivity(intent);
-                            return true;
-                        }
-                    });
-                    menu.show();
-                } else {
-                    AlertDialog menu = new AlertDialog.Builder(context)
-                    .setTitle("Menu")
-                    .setSingleChoiceItems(new String[]{context.getString(R.string.action_transaction_view)}, 0, new android.content.DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            Intent intent = new Intent(context, TransactionActivity.class);
-                            intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                            context.startActivity(intent);
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNeutralButton("Cancel", null) // don't need to do anything but dismiss here
-                    .create();
-                    menu.show();
+        // Display the load more footer view?
+        View footerView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout._address_transactions_footer, null, false);
+        if ((Integer) vars.get("page") < Math.ceil(Double.valueOf(json.get("n_tx").toString()) / BlockchainData.TX_PER_PAGE) && txList.getFooterViewsCount() == 0) {
+            txList.addFooterView(footerView);
+        } else {
+            txList.removeFooterView(footerView);
+        }
+        
+        if (transactionsAdapter == null) {
+            transactionsAdapter = new ArrayAdapter<JSONArray>(context, transactions);
+            txList.setAdapter(transactionsAdapter);
+            txList.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(context, AddressActivity.class);
+                    intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) transactionsAdapter.getItem(position)).get("addr").toString());
+                    context.startActivity(intent);
                 }
-                
-                return true;
-            }
-        });
+            });
+            txList.setOnItemLongClickListener(new OnItemLongClickListener() {
+                @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    final String txHash = ((JSONObject) transactionsAdapter.getItem(position)).get("hash").toString();
+                    
+                    if (android.os.Build.VERSION.SDK_INT >= 11) {
+                        PopupMenu menu = new PopupMenu(context, view);
+                        activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
+                        menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(android.view.MenuItem item)
+                            {
+                                Intent intent = new Intent(context, TransactionActivity.class);
+                                intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+                                context.startActivity(intent);
+                                return true;
+                            }
+                        });
+                        menu.show();
+                    } else {
+                        AlertDialog menu = new AlertDialog.Builder(context)
+                        .setTitle("Menu")
+                        .setSingleChoiceItems(new String[]{context.getString(R.string.action_transaction_view)}, 0, new android.content.DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                Intent intent = new Intent(context, TransactionActivity.class);
+                                intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+                                context.startActivity(intent);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNeutralButton("Cancel", null) // don't need to do anything but dismiss here
+                        .create();
+                        menu.show();
+                    }
+                    
+                    return true;
+                }
+            });
+        } else {
+            transactionsAdapter.notifyDataSetChanged();
+        }
         
         activity.findViewById(R.id.content).setVisibility(View.VISIBLE);
     }

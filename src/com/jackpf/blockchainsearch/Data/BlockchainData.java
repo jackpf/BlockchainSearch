@@ -4,7 +4,7 @@ public class BlockchainData
 {
     public static final String
         BLOCKCHAIN_URL          = "https://blockchain.info",
-        ADDRESS_URL             = "address/%s?format=json",
+        ADDRESS_URL             = "address/%s?format=json&offset=%d",
         TRANSACTION_URL         = "tx/%s?format=json",
         WS_URL                  = "ws://ws.blockchain.info/inv",
         Q_BLOCKCOUNT_URL        = "q/getblockcount",
@@ -13,6 +13,8 @@ public class BlockchainData
         Q_EXCHANGE_RATE_URL     = "ticker",
         Q_NEXT_BLOCK_TIME_URL   = "q/eta"
     ;
+    
+    public static final int TX_PER_PAGE = 50;
     
     public static final Long[] CONVERSIONS = {
         100000000L,

@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.ClipboardManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -24,6 +25,11 @@ public class AddressActivity extends SherlockFragmentActivity
     private NetworkThread thread;
     private PersistedAddresses persistedAddresses;
     MenuItem saveMenuItem;
+    
+    /**
+     * Current page of transactions we're on
+     */
+    private int page = 1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +82,7 @@ public class AddressActivity extends SherlockFragmentActivity
         
         thread = new NetworkThread(
             this,
-            new AddressRequest(searchText),
+            new AddressRequest(searchText, page),
             ui
         );
         
@@ -112,6 +118,7 @@ public class AddressActivity extends SherlockFragmentActivity
                 finish();
                 return true;
             case R.id.action_refresh:
+                page = 1; // Reset page
                 Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
                 refresh();
                 return true;
@@ -134,5 +141,11 @@ public class AddressActivity extends SherlockFragmentActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    
+    public void onNextPage(View v)
+    {
+        page++;
+        refresh();
     }
 }

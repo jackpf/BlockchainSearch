@@ -26,9 +26,15 @@ public class AddressRequest extends RequestInterface
         
         String address = (String) this.params[0];
         
+        int page = 1;
+        if (this.params.length == 2) {
+            page = (Integer) this.params[1];
+        }
+        int offset = (page - 1) * BlockchainData.TX_PER_PAGE;
+        
         RequestResponse requestResponse = new RequestResponse();
         
-        ApiPath path = new ApiPath(BlockchainData.ADDRESS_URL, address);
+        ApiPath path = new ApiPath(BlockchainData.ADDRESS_URL, address, offset);
         JSONObject response = this.blockchain.request(path);
         requestResponse.put("response", response);
         
@@ -38,6 +44,8 @@ public class AddressRequest extends RequestInterface
         // Also get the current block count
         path = new ApiPath(BlockchainData.Q_BLOCKCOUNT_URL);
         requestResponse.put("block_count", this.blockchain.rawRequest(path));
+        
+        requestResponse.put("page", page);
         
         return requestResponse;
     }
