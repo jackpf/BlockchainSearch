@@ -8,6 +8,6 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:onClick="onNextPage"
-		android:text="Load more" />
+		android:text="@string/text_load_more" />
 
 </LinearLayout>

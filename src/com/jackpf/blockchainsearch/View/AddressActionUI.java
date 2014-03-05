@@ -103,9 +103,9 @@ public class AddressActionUI extends UIInterface
         if (nextPageButton != null) {
             nextPageButton.setEnabled(!loading);
             if (loading) {
-                nextPageButton.setText("Loading...");
+                nextPageButton.setText(context.getString(R.string.text_loading));
             } else {
-                nextPageButton.setText("Load more");
+                nextPageButton.setText(context.getString(R.string.text_load_more));
             }
         }
     }
@@ -411,10 +411,7 @@ public class AddressActionUI extends UIInterface
             ((TextView) row.findViewById(R.id.hash)).setText(tx.get("addr").toString());
             
             //Date
-            Object time = tx.get("time");
-            if (time != null) {
-                ((TextView) row.findViewById(R.id.date)).setText(new PrettyTime().format(new Date(Long.parseLong(time.toString()) * 1000L)));
-            }
+            ((TextView) row.findViewById(R.id.date)).setText(tx.get("prettytime").toString());
             
             //Confirmations image
             Object bc = vars.get("block_count"), bh = tx.get("block_height");

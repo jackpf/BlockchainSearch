@@ -1,10 +1,15 @@
 package com.jackpf.blockchainsearch.Service.Request;
 
 import java.security.InvalidParameterException;
+import java.util.Date;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
 
+import android.widget.TextView;
+
+import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
@@ -45,6 +50,7 @@ public class AddressRequest extends RequestInterface
         path = new ApiPath(BlockchainData.Q_BLOCKCOUNT_URL);
         requestResponse.put("block_count", this.blockchain.rawRequest(path));
         
+        // Let the ui know about the current page
         requestResponse.put("page", page);
         
         return requestResponse;
@@ -60,6 +66,16 @@ public class AddressRequest extends RequestInterface
 
             tx.put("result", processed.getAmount());
             tx.put("addr", processed.getAddress());
+            
+            // Process pretty time here since doing it on the ui thread makes it lag like shit
+            Object time = tx.get("time");
+            String prettyTime;
+            if (time != null) {
+                prettyTime = new PrettyTime().format(new Date(Long.parseLong(time.toString()) * 1000L));
+            } else {
+                prettyTime = "";
+            }
+            tx.put("prettytime", prettyTime);
         }
         
         return txs;

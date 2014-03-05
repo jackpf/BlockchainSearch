@@ -120,7 +120,7 @@ public class MainActivity extends SherlockFragmentActivity
     {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         
-        if (scanResult != null) {
+        if (scanResult.getContents() != null) {
             processSearchText(scanResult.getContents());
         } else {
             Toast.makeText(

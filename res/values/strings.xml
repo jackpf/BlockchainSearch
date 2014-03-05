@@ -26,6 +26,8 @@
     <string name="text_search_hint">Enter address...</string>
     <string name="text_copied">Copied to clipboard</string>
     <string name="text_no_qrcode">Unable to scan QR code</string>
+    <string name="text_load_more">Load more</string>
+    <string name="text_loading">Loading...</string>
 
     <!-- Nav drawer -->
     <string-array name="drawer_list_titles">
