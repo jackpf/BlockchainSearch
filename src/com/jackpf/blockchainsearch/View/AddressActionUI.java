@@ -127,14 +127,14 @@ public class AddressActionUI extends UIInterface
         stats.update(new BtcStats.UpdateListener() {
            @Override
            public void update(BtcStats stats, IOException e) {
-               int currencyChoice = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_currency_key), context.getString(R.string.pref_currency_default)));
-               if (currencyChoice > 0) {
+               String currencyChoice = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.pref_currency_key), context.getString(R.string.pref_currency_default));
+               if (!currencyChoice.equals("None")) {
                    double btc = Double.valueOf(json.get("final_balance").toString()) / BlockchainData.CONVERSIONS[0];
-                   double converted = btc * Double.valueOf(stats.getExchangeValues().get(BlockchainData.CURRENCIES[currencyChoice]));
+                   double converted = btc * Double.valueOf(stats.getExchangeValues().get(currencyChoice).get("last").toString());
                    String text = String.format(
                        "%s (\u2248 %s%.2f)",
                        Utils.btcFormat((Long) json.get("final_balance"), context),
-                       BlockchainData.CURRENCY_SYMBOLS[currencyChoice],
+                       stats.getExchangeValues().get(currencyChoice).get("symbol").toString(),
                        converted
                    );
                    ((TextView) overviewFragment.findViewById(R.id._address_final_balance)).setText(text);

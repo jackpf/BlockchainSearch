@@ -26,7 +26,7 @@
             android:summary="@string/pref_currency_summary"
             android:defaultValue="@string/pref_currency_default" 
             android:entries="@array/pref_currency_entries"
-            android:entryValues="@array/pref_currency_values" />
+            android:entryValues="@array/pref_currency_entries" />
         
         <CheckBoxPreference
 	        android:key="@string/pref_notification_key"

@@ -60,18 +60,28 @@
     <string name="pref_currency_key">currency</string>
     <string name="pref_currency_title">Currency</string>
     <string name="pref_currency_summary">Currency to use when converting bitcoin values</string>
-    <string name="pref_currency_default">0</string>
+    <string name="pref_currency_default">None</string>
     <string-array name="pref_currency_entries">
         <item>None</item>
-        <item>GBP</item>
-        <item>USD</item>
+        <item>AUD</item>
+        <item>BRL</item>
+        <item>CAD</item>
+        <item>CHF</item>
+        <item>CNY</item>
+        <item>DKK</item>
         <item>EUR</item>
-    </string-array>
-    <string-array name="pref_currency_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>GBP</item>
+        <item>HKD</item>
+        <item>JPY</item>
+        <item>KRW</item>
+        <item>NZD</item>
+        <item>PLN</item>
+        <item>RUB</item>
+        <item>SEK</item>
+        <item>SGD</item>
+        <item>SLL</item>
+        <item>THB</item>
+        <item>USD</item>
     </string-array>
     <string name="pref_watch_addresses_key">watch_addresses</string>
     <string name="pref_watch_addresses_title">Watch saved addresses</string>

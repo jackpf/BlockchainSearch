@@ -34,7 +34,7 @@ public class BtcStats
     private Long difficulty;
     private Long totalBitcoins;
     private Long nextBlockTime;
-    private HashMap<String, Double> exchangeValues = new HashMap<String, Double>();
+    private HashMap<String, JSONObject> exchangeValues = new HashMap<String, JSONObject>();
     
     /**
      * Seconds until stats expire
@@ -92,7 +92,7 @@ public class BtcStats
     public Long getNextBlockTime() {
         return nextBlockTime;
     }
-    public HashMap<String, Double> getExchangeValues() {
+    public HashMap<String, JSONObject> getExchangeValues() {
         return exchangeValues;
     }
     public Timestamp getUpdatedAt() {
@@ -125,7 +125,7 @@ public class BtcStats
             Iterator<Map.Entry<String, JSONObject>> it = response.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, JSONObject> pairs = it.next();
-                exchangeValues.put(pairs.getKey(), Double.valueOf(pairs.getValue().get("last").toString()));
+                exchangeValues.put(pairs.getKey(), pairs.getValue());
             }
         } catch (ParseException e) { }
     }
