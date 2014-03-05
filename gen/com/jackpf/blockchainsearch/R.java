@@ -933,7 +933,7 @@ containing a value of this type.
         public static final int drawer_shadow=0x7f020072;
         public static final int ic_action_delete=0x7f020073;
         public static final int ic_action_photo=0x7f020074;
-        public static final int ic_action_photo2=0x7f020075;
+        public static final int ic_action_qrcode=0x7f020075;
         public static final int ic_drawer_dark=0x7f020076;
         public static final int ic_drawer_light=0x7f020077;
         public static final int ic_launcher=0x7f020078;

@@ -174,13 +174,18 @@ public class MainActionUI extends UIInterface
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            PersistedAddresses persistedAddresses = new PersistedAddresses(getActivity());
-            
-            View rootView = inflater.inflate(R.layout._main_saved_addresses, container, false);
+            return inflater.inflate(R.layout._main_saved_addresses, container, false);
+        }
+        
+        @Override
+        public void onResume()
+        {
+            super.onResume();
             
             // Saved addresses
-            ListView addressesList = (ListView) rootView.findViewById(R.id._main_saved_addresses);
-            
+            ListView addressesList = (ListView) getActivity().findViewById(R.id._main_saved_addresses);
+
+            PersistedAddresses persistedAddresses = new PersistedAddresses(getActivity());
             ArrayList<Map.Entry<String, String>> al = new ArrayList<Map.Entry<String, String>>();
             for (Map.Entry<String, String> entry : persistedAddresses.getAll().entrySet()) {
                 al.add(entry);
@@ -197,8 +202,6 @@ public class MainActionUI extends UIInterface
                     activity.startActivity(intent);
                 }
             });
-            
-            return rootView;
         }
         
         /**
