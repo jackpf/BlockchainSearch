@@ -71,8 +71,11 @@ public class TransactionActionUI extends UIInterface
         ((TextView) transactionView.findViewById(R.id._transaction_block_height)).setText(Integer.toString(blockHeight));
         ((TextView) transactionView.findViewById(R.id._transaction_confirmations)).setText(Integer.toString(blockCount - blockHeight + 1));
         
-        DateTime dt = new DateTime((Long) json.get("time") * 1000L);
-        ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
+        Object t = json.get("time");
+        if (t != null) {
+            DateTime dt = new DateTime((Long) t * 1000L);
+            ((TextView) transactionView.findViewById(R.id._transaction_date)).setText(dt.toString("dd-MM-yyyy h:m:s"));
+        }
         
         String relayedBy = json.get("relayed_by").toString();
         try {
