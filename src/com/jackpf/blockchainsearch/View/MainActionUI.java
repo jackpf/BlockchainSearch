@@ -196,6 +196,7 @@ public class MainActionUI extends UIInterface
             
             final Activity activity = getActivity();
             addressesList.setOnItemClickListener(new OnItemClickListener() {
+                @SuppressWarnings("unchecked")
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(activity, AddressActivity.class);
                     intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
@@ -249,6 +250,7 @@ public class MainActionUI extends UIInterface
                     row = convertView;
                 }
                 
+                @SuppressWarnings("unchecked")
                 Map.Entry<String, String> savedAddress = (Map.Entry<String, String>) getItem(position);
 
                 ((TextView) row.findViewById(R.id.name)).setText(savedAddress.getKey());

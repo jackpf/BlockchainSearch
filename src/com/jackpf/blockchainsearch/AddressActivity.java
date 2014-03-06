@@ -15,7 +15,7 @@ import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActionUI;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation") // Legacy clipboard manager warnings
 public class AddressActivity extends SherlockFragmentActivity
 {
     public final static String EXTRA_SEARCH = "search";

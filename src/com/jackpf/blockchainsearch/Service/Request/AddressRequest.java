@@ -7,9 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import android.widget.TextView;
-
-import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;

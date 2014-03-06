@@ -1,12 +1,11 @@
 package com.jackpf.blockchainsearch.View;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.ocpsoft.prettytime.PrettyTime;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -116,6 +115,7 @@ public class AddressActionUI extends UIInterface
         setLoading(true);
     }
     
+    @SuppressWarnings("unchecked")
     public void update()
     {
         setLoading(false);
@@ -151,6 +151,7 @@ public class AddressActionUI extends UIInterface
                    double btc = Double.valueOf(json.get("final_balance").toString()) / BlockchainData.CONVERSIONS[0];
                    double converted = btc * Double.valueOf(stats.getExchangeValues().get(currencyChoice).get("last").toString());
                    String text = String.format(
+                       Locale.getDefault(),
                        "%s (\u2248 %s%.2f)",
                        Utils.btcFormat((Long) json.get("final_balance"), context),
                        stats.getExchangeValues().get(currencyChoice).get("symbol").toString(),

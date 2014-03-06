@@ -14,7 +14,7 @@ import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.TransactionRequest;
 import com.jackpf.blockchainsearch.View.TransactionActionUI;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation") // Legacy clipboard manager warnings
 public class TransactionActivity extends SherlockActivity
 {
     public final static String EXTRA_SEARCH = "search";

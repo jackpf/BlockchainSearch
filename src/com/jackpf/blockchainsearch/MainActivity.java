@@ -11,7 +11,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Lib.IntentIntegrator;
 import com.jackpf.blockchainsearch.Lib.IntentResult;
-import com.jackpf.blockchainsearch.Lib.RateDialog;
 import com.jackpf.blockchainsearch.Service.Utils;
 import com.jackpf.blockchainsearch.View.MainActionUI;
 

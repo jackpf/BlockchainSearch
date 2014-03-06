@@ -122,6 +122,7 @@ public class BtcStats
         ApiPath path = new ApiPath(BlockchainData.Q_EXCHANGE_RATE_URL);
         try {
             JSONObject response = blockchain.request(path);
+            @SuppressWarnings("unchecked")
             Iterator<Map.Entry<String, JSONObject>> it = response.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, JSONObject> pairs = it.next();
