@@ -43,6 +43,18 @@
     
     <!-- Preferences -->
     <string name="pref_title">Preferences</string>
+    <string name="pref_theme_key">theme</string>
+    <string name="pref_theme_title">App Theme</string>
+    <string name="pref_theme_summary">Choose how the app looks (requires restart)</string>
+    <string name="pref_theme_default">0</string>
+    <string-array name="pref_theme_entries">
+        <item>Dark</item>
+       <item>Light</item>
+    </string-array>
+    <string-array name="pref_theme_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
     <string name="pref_btc_format_key">btc_format</string>
     <string name="pref_btc_format_title">Bitcoin Format</string>
     <string name="pref_btc_format_summary">Denomination to use when displaying bitcoin amounts</string>

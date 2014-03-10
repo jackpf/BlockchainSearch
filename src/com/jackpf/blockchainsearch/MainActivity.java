@@ -21,6 +21,8 @@ public class MainActivity extends SherlockFragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        ThemeManager.setTheme(this);
+        
         super.onCreate(savedInstanceState);
         
         getSupportActionBar().setTitle(getString(R.string.activity_main_title));
@@ -46,9 +48,7 @@ public class MainActivity extends SherlockFragmentActivity
     {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, PreferencesActivity.class);
-                startActivity(intent);
-            break;
+                return MenuManager.openSettings(this);
             default:
                 // Nav drawer
                 if (ui.drawerToggle.onOptionsItemSelected(item)) {

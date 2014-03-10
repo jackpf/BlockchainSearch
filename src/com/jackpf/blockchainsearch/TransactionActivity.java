@@ -26,6 +26,8 @@ public class TransactionActivity extends SherlockActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        ThemeManager.setTheme(this);
+        
         super.onCreate(savedInstanceState);
         
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -92,8 +94,7 @@ public class TransactionActivity extends SherlockActivity
     {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
-                return true;
+                return MenuManager.back(this);
             case R.id.action_refresh:
                 Toast.makeText(getApplicationContext(), getString(R.string.text_refreshing), Toast.LENGTH_SHORT).show();
                 refresh();
@@ -104,11 +105,10 @@ public class TransactionActivity extends SherlockActivity
                 Toast.makeText(getApplicationContext(), getString(R.string.text_copied), Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_settings:
-                Intent intent = new Intent(this, PreferencesActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                return MenuManager.openSettings(this);
+                
         }
+        
+        return super.onOptionsItemSelected(item);
     }
 }
