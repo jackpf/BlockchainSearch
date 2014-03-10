@@ -258,8 +258,8 @@ public final class R {
 		public static final int abs__textfield_searchview_right_holo_light = 0x7f02006e;
 		public static final int abs__toast_frame = 0x7f02006f;
 		public static final int drawer_shadow = 0x7f020072;
-		public static final int ic_drawer_dark = 0x7f020076;
-		public static final int ic_drawer_light = 0x7f020077;
+		public static final int ic_drawer_dark = 0x7f020077;
+		public static final int ic_drawer_light = 0x7f020078;
 	}
 	public static final class id {
 		public static final int abs__action_bar = 0x7f06003c;

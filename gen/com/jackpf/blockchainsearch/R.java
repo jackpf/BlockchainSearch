@@ -933,21 +933,22 @@ containing a value of this type.
         public static final int drawer_list_selector=0x7f020071;
         public static final int drawer_shadow=0x7f020072;
         public static final int ic_action_delete=0x7f020073;
-        public static final int ic_action_photo=0x7f020074;
-        public static final int ic_action_qrcode=0x7f020075;
-        public static final int ic_drawer_dark=0x7f020076;
-        public static final int ic_drawer_light=0x7f020077;
-        public static final int ic_launcher=0x7f020078;
-        public static final int ic_menu_refresh=0x7f020079;
-        public static final int ic_menu_save=0x7f02007a;
-        public static final int ic_menu_search=0x7f02007b;
-        public static final int ic_navigation_drawer=0x7f02007c;
-        public static final int ic_notification=0x7f02007d;
-        public static final int list_divider=0x7f02007e;
-        public static final int list_item=0x7f02007f;
-        public static final int list_item_selected=0x7f020080;
-        public static final int loading=0x7f020081;
-        public static final int loading_intermediate=0x7f020082;
+        public static final int ic_action_edit=0x7f020074;
+        public static final int ic_action_photo=0x7f020075;
+        public static final int ic_action_qrcode=0x7f020076;
+        public static final int ic_drawer_dark=0x7f020077;
+        public static final int ic_drawer_light=0x7f020078;
+        public static final int ic_launcher=0x7f020079;
+        public static final int ic_menu_refresh=0x7f02007a;
+        public static final int ic_menu_save=0x7f02007b;
+        public static final int ic_menu_search=0x7f02007c;
+        public static final int ic_navigation_drawer=0x7f02007d;
+        public static final int ic_notification=0x7f02007e;
+        public static final int list_divider=0x7f02007f;
+        public static final int list_item=0x7f020080;
+        public static final int list_item_selected=0x7f020081;
+        public static final int loading=0x7f020082;
+        public static final int loading_intermediate=0x7f020083;
     }
     public static final class id {
         public static final int _address_address=0x7f060012;
@@ -1009,10 +1010,12 @@ containing a value of this type.
         public static final int abs__textButton=0x7f06002f;
         public static final int abs__title=0x7f060037;
         public static final int abs__up=0x7f06000b;
-        public static final int action_copy=0x7f060060;
-        public static final int action_refresh=0x7f06005e;
-        public static final int action_save=0x7f06005f;
-        public static final int action_settings=0x7f060061;
+        public static final int action_copy=0x7f060062;
+        public static final int action_delete=0x7f06005f;
+        public static final int action_edit=0x7f06005e;
+        public static final int action_refresh=0x7f060060;
+        public static final int action_save=0x7f060061;
+        public static final int action_settings=0x7f060063;
         public static final int action_transaction_view=0x7f06005d;
         public static final int address=0x7f06001f;
         public static final int amount=0x7f06001d;
@@ -1093,9 +1096,10 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int _address_transaction=0x7f0e0000;
-        public static final int address=0x7f0e0001;
-        public static final int main=0x7f0e0002;
-        public static final int transaction=0x7f0e0003;
+        public static final int _main_addresses_context_menu=0x7f0e0001;
+        public static final int address=0x7f0e0002;
+        public static final int main=0x7f0e0003;
+        public static final int transaction=0x7f0e0004;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1137,72 +1141,74 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0007;
-        public static final int action_copy=0x7f0b0016;
+        public static final int action_copy=0x7f0b0018;
+        public static final int action_delete=0x7f0b0015;
+        public static final int action_edit=0x7f0b0014;
         public static final int action_refresh=0x7f0b0013;
-        public static final int action_save=0x7f0b0014;
+        public static final int action_save=0x7f0b0016;
         /**  Actions 
          */
         public static final int action_settings=0x7f0b0012;
-        public static final int action_transaction_view=0x7f0b0015;
+        public static final int action_transaction_view=0x7f0b0017;
         public static final int activity_address_title=0x7f0b000f;
         public static final int activity_main_title=0x7f0b000e;
         public static final int activity_preferences_title=0x7f0b0011;
         public static final int activity_transaction_title=0x7f0b0010;
-        public static final int admob_id=0x7f0b003f;
+        public static final int admob_id=0x7f0b0041;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
-        public static final int drawer_close=0x7f0b0024;
-        public static final int drawer_open=0x7f0b0023;
-        public static final int pref_btc_format_default=0x7f0b002d;
-        public static final int pref_btc_format_key=0x7f0b002a;
-        public static final int pref_btc_format_summary=0x7f0b002c;
-        public static final int pref_btc_format_title=0x7f0b002b;
-        public static final int pref_confirmations_default=0x7f0b0039;
-        public static final int pref_confirmations_key=0x7f0b0037;
-        public static final int pref_confirmations_summary=0x7f0b003a;
-        public static final int pref_confirmations_title=0x7f0b0038;
-        public static final int pref_currency_default=0x7f0b0031;
-        public static final int pref_currency_key=0x7f0b002e;
-        public static final int pref_currency_summary=0x7f0b0030;
-        public static final int pref_currency_title=0x7f0b002f;
-        public static final int pref_donate_address=0x7f0b0036;
-        public static final int pref_notification_default=0x7f0b003d;
-        public static final int pref_notification_key=0x7f0b003b;
-        public static final int pref_notification_summary=0x7f0b003e;
-        public static final int pref_notification_title=0x7f0b003c;
-        public static final int pref_theme_default=0x7f0b0029;
-        public static final int pref_theme_key=0x7f0b0026;
-        public static final int pref_theme_summary=0x7f0b0028;
-        public static final int pref_theme_title=0x7f0b0027;
+        public static final int drawer_close=0x7f0b0026;
+        public static final int drawer_open=0x7f0b0025;
+        public static final int pref_btc_format_default=0x7f0b002f;
+        public static final int pref_btc_format_key=0x7f0b002c;
+        public static final int pref_btc_format_summary=0x7f0b002e;
+        public static final int pref_btc_format_title=0x7f0b002d;
+        public static final int pref_confirmations_default=0x7f0b003b;
+        public static final int pref_confirmations_key=0x7f0b0039;
+        public static final int pref_confirmations_summary=0x7f0b003c;
+        public static final int pref_confirmations_title=0x7f0b003a;
+        public static final int pref_currency_default=0x7f0b0033;
+        public static final int pref_currency_key=0x7f0b0030;
+        public static final int pref_currency_summary=0x7f0b0032;
+        public static final int pref_currency_title=0x7f0b0031;
+        public static final int pref_donate_address=0x7f0b0038;
+        public static final int pref_notification_default=0x7f0b003f;
+        public static final int pref_notification_key=0x7f0b003d;
+        public static final int pref_notification_summary=0x7f0b0040;
+        public static final int pref_notification_title=0x7f0b003e;
+        public static final int pref_theme_default=0x7f0b002b;
+        public static final int pref_theme_key=0x7f0b0028;
+        public static final int pref_theme_summary=0x7f0b002a;
+        public static final int pref_theme_title=0x7f0b0029;
         /**  Preferences 
          */
-        public static final int pref_title=0x7f0b0025;
-        public static final int pref_watch_addresses_default=0x7f0b0034;
-        public static final int pref_watch_addresses_key=0x7f0b0032;
-        public static final int pref_watch_addresses_summary=0x7f0b0035;
-        public static final int pref_watch_addresses_title=0x7f0b0033;
-        public static final int rate_confirm_text=0x7f0b0044;
-        public static final int rate_dismiss_text=0x7f0b0042;
+        public static final int pref_title=0x7f0b0027;
+        public static final int pref_watch_addresses_default=0x7f0b0036;
+        public static final int pref_watch_addresses_key=0x7f0b0034;
+        public static final int pref_watch_addresses_summary=0x7f0b0037;
+        public static final int pref_watch_addresses_title=0x7f0b0035;
+        public static final int rate_confirm_text=0x7f0b0046;
+        public static final int rate_dismiss_text=0x7f0b0044;
         /**  Rate prompting 
          */
-        public static final int rate_launches_until_prompt=0x7f0b0040;
-        public static final int rate_prompt_text=0x7f0b0041;
-        public static final int rate_remind_text=0x7f0b0043;
-        public static final int text_address_empty_name=0x7f0b0019;
-        public static final int text_address_name_exists=0x7f0b001a;
-        public static final int text_address_saved=0x7f0b0018;
-        public static final int text_address_unsaved=0x7f0b001b;
-        public static final int text_copied=0x7f0b001f;
-        public static final int text_exception=0x7f0b001c;
-        public static final int text_invalid_input=0x7f0b001d;
-        public static final int text_load_more=0x7f0b0021;
-        public static final int text_loading=0x7f0b0022;
-        public static final int text_no_qrcode=0x7f0b0020;
+        public static final int rate_launches_until_prompt=0x7f0b0042;
+        public static final int rate_prompt_text=0x7f0b0043;
+        public static final int rate_remind_text=0x7f0b0045;
+        public static final int text_address_empty_name=0x7f0b001b;
+        public static final int text_address_name_exists=0x7f0b001c;
+        public static final int text_address_saved=0x7f0b001a;
+        public static final int text_address_unsaved=0x7f0b001d;
+        public static final int text_copied=0x7f0b0021;
+        public static final int text_exception=0x7f0b001e;
+        public static final int text_invalid_input=0x7f0b001f;
+        public static final int text_load_more=0x7f0b0023;
+        public static final int text_loading=0x7f0b0024;
+        public static final int text_no_qrcode=0x7f0b0022;
         /**  Text 
          */
-        public static final int text_refreshing=0x7f0b0017;
-        public static final int text_search_hint=0x7f0b001e;
+        public static final int text_refreshing=0x7f0b0019;
+        public static final int text_search_hint=0x7f0b0020;
     }
     public static final class style {
         /** 

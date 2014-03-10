@@ -39,9 +39,11 @@ public class PersistedAddresses
     
     public void remove(String address)
     {
-        for (Map.Entry<String, String> entry : addresses.entrySet()) {
+        Iterator <Map.Entry<String, String>> iterator = addresses.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
             if (address.equals(entry.getValue())) {
-                addresses.remove(entry.getKey());
+                iterator.remove();
             }
         }
         save();

@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +25,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.AddressActivity;
+import com.jackpf.blockchainsearch.Helpers;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.BtcStats;
@@ -164,7 +167,7 @@ public class MainActionUI extends UIInterface
         }
     }
     
-    protected static class SavedAddressesFragment extends Fragment
+    protected static class SavedAddressesFragment extends SherlockFragment
     {
         public SavedAddressesFragment()
         {
@@ -183,7 +186,7 @@ public class MainActionUI extends UIInterface
             super.onResume();
             
             // Saved addresses
-            ListView addressesList = (ListView) getActivity().findViewById(R.id._main_saved_addresses);
+            final ListView addressesList = (ListView) getActivity().findViewById(R.id._main_saved_addresses);
 
             PersistedAddresses persistedAddresses = new PersistedAddresses(getActivity());
             ArrayList<Map.Entry<String, String>> al = new ArrayList<Map.Entry<String, String>>();
@@ -194,13 +197,40 @@ public class MainActionUI extends UIInterface
             final ArrayAdapter<ArrayList<Map.Entry<String, String>>> adapter = new ArrayAdapter<ArrayList<Map.Entry<String, String>>>(getActivity(), al);
             addressesList.setAdapter(adapter);
             
-            final Activity activity = getActivity();
+            final SherlockFragmentActivity activity = getSherlockActivity();
             addressesList.setOnItemClickListener(new OnItemClickListener() {
                 @SuppressWarnings("unchecked")
+                @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(activity, AddressActivity.class);
                     intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
                     activity.startActivity(intent);
+                }
+            });
+            
+            Helpers.addContextMenu(addressesList, R.menu._main_addresses_context_menu, new Helpers.ContextMenuCallback() {
+                private int position;
+                
+                @Override
+                public ActionMode startActionMode(ActionMode.Callback callback, int position) {
+                    this.position = position;
+                    return activity.startActionMode(callback);
+                }
+                
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    switch (item.getItemId()) {
+                    case R.id.action_edit:
+                        // TODO
+                        return true;
+                    case R.id.action_delete:
+                        Map.Entry<String, String> address = (Map.Entry<String, String>) adapter.getItem(position);
+                        new PersistedAddresses(activity).remove(address.getValue());
+                        onResume(); // Rebuild the list
+                        return true;
+                    }
+                    
+                    return false;
                 }
             });
         }
