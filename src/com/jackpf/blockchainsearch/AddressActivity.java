@@ -125,9 +125,9 @@ public class AddressActivity extends SherlockFragmentActivity
                 return true;
             case R.id.action_save:
                 if (!persistedAddresses.has(searchText)) {
-                    ui.promptPersistAddress(searchText, persistedAddresses, saveMenuItem);
+                    Helpers.promptPersistAddress(this, searchText, persistedAddresses, saveMenuItem, "", null);
                 } else {
-                    ui.promptRemoveAddress(searchText, persistedAddresses, saveMenuItem);
+                    Helpers.promptRemoveAddress(this, searchText, persistedAddresses, saveMenuItem, null);
                 }
                 return true;
             case R.id.action_copy:

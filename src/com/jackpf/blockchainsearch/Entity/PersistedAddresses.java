@@ -70,6 +70,17 @@ public class PersistedAddresses
         return null;
     }
     
+    public Map.Entry<String, String> getByName(String name)
+    {
+        for (Map.Entry<String, String> entry : addresses.entrySet()) {
+            if (name.equals(entry.getKey())) {
+                return entry;
+            }
+        }
+        
+        return null;
+    }
+    
     public TreeMap<String, String> getAll()
     {
         return new TreeMap<String, String>(addresses);

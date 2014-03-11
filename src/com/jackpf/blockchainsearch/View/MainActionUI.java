@@ -221,12 +221,16 @@ public class MainActionUI extends UIInterface
                 
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    Map.Entry<String, String> address = (Map.Entry<String, String>) adapter.getItem(addressesList.getCheckedItemPosition());
                     switch (item.getItemId()) {
                     case R.id.action_edit:
-                        // TODO
+                        Helpers.promptPersistAddress(getActivity(), address.getValue(), new PersistedAddresses(activity), null, address.getKey(), new Helpers.PromptCallback() {
+                            public void callback() {
+                                onResume(); // Rebuild the list
+                            }
+                        });
                         return true;
                     case R.id.action_delete:
-                        Map.Entry<String, String> address = (Map.Entry<String, String>) adapter.getItem(addressesList.getCheckedItemPosition());
                         new PersistedAddresses(activity).remove(address.getValue());
                         onResume(); // Rebuild the list
                         return true;

@@ -30,7 +30,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -42,13 +41,11 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.AddressActivity;
 import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.TransactionActivity;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.BtcStats;
-import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
 import com.jackpf.blockchainsearch.Interface.UIInterface;
 import com.jackpf.blockchainsearch.Service.QRCode;
 import com.jackpf.blockchainsearch.Service.Utils;
@@ -248,50 +245,6 @@ public class AddressActionUI extends UIInterface
             context.getString(R.string.text_exception, e.getMessage()),
             Toast.LENGTH_SHORT
         ).show();
-    }
-    
-    public void promptPersistAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
-    {
-        final EditText input = new EditText(context);
-        input.setSingleLine();
-        
-        new AlertDialog.Builder(context)
-            .setTitle("Enter a name for this address")
-            .setView(input)
-            .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int button)
-                {
-                    String name = input.getText().toString();
-                    
-                    if (name.equals("")) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_empty_name), Toast.LENGTH_SHORT).show();
-                    } else if (addresses.hasName(name)) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_name_exists), Toast.LENGTH_SHORT).show();
-                    } else {
-                        addresses.add(name, address);
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
-                        saveMenuItem.setIcon(R.drawable.ic_action_delete);
-                    }
-                }
-            })
-            .setNegativeButton("Cancel", null)
-            .show();
-    }
-    
-    public void promptRemoveAddress(final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem)
-    {
-        new AlertDialog.Builder(context)
-            .setTitle("Do you want to unsave this address?")
-            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int button)
-                {
-                    addresses.remove(address);
-                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
-                    saveMenuItem.setIcon(R.drawable.ic_menu_save);
-                }
-            })
-            .setNegativeButton("No", null)
-            .show();
     }
     
     /**

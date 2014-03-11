@@ -91,7 +91,7 @@ public class TransactionActionUI extends UIInterface
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
 
-            final String address = prev.get("addr").toString();
+            final String address = prev != null ? prev.get("addr").toString() : "No inputs (new coins)";
             TextView tv = (TextView) inflater.inflate(R.layout._transaction_io, null);
             tv.setText(Html.fromHtml(String.format(f, prev.get("addr").toString(), Utils.btcFormat((Long) prev.get("value"), context))));
             inputView.addView(tv);
