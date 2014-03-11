@@ -6,7 +6,8 @@
 	android:paddingTop="10sp"
 	android:paddingBottom="10sp"
 	android:paddingLeft="10sp"
-	android:paddingRight="10sp">
+	android:paddingRight="10sp"
+    android:background="@drawable/arraylist_selector">
 	
 	<TextView
 	    style="@style/HeaderText"

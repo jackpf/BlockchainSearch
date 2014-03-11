@@ -12,7 +12,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Helpers
 {
-    private static ActionMode mActionMode;
+    public static ActionMode mActionMode;
     
     public static void addContextMenu(final ListView list, final int m, final ContextMenuCallback callback)
     {
@@ -42,6 +42,7 @@ public class Helpers
             @Override
             public void onDestroyActionMode(ActionMode mode) {
                 mActionMode = null;
+                list.setItemChecked(-1, true);
             }
         };
         
@@ -51,8 +52,8 @@ public class Helpers
                     return false;
                 }
 
-                mActionMode = callback.startActionMode(mActionModeCallback, position);
-                view.setSelected(true);
+                mActionMode = callback.startActionMode(mActionModeCallback);
+                list.setItemChecked(position, true);
                 return true;
             }
         });
@@ -60,7 +61,7 @@ public class Helpers
     
     public interface ContextMenuCallback
     {
-        public ActionMode startActionMode(ActionMode.Callback callback, int position);
+        public ActionMode startActionMode(ActionMode.Callback callback);
         public boolean onActionItemClicked(ActionMode mode, MenuItem item);
     }
 }

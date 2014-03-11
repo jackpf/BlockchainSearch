@@ -72,7 +72,7 @@ public class MainActionUI extends UIInterface
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 drawerList.setItemChecked(position, true);
-                fragmentManager.beginTransaction().replace(R.id.content, fragments[position]).commit();
+                fragmentManager.beginTransaction().replace(R.id.content, fragments[position], fragments[position].getClass().getName()).commit();
                 drawerLayout.closeDrawer(drawerList);
             }
         });
@@ -202,6 +202,11 @@ public class MainActionUI extends UIInterface
                 @SuppressWarnings("unchecked")
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Bit dodgy, but don't do anything if we're in select mode
+                    if (Helpers.mActionMode != null) {
+                        return;
+                    }
+                    
                     Intent intent = new Intent(activity, AddressActivity.class);
                     intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
                     activity.startActivity(intent);
@@ -209,11 +214,8 @@ public class MainActionUI extends UIInterface
             });
             
             Helpers.addContextMenu(addressesList, R.menu._main_addresses_context_menu, new Helpers.ContextMenuCallback() {
-                private int position;
-                
                 @Override
-                public ActionMode startActionMode(ActionMode.Callback callback, int position) {
-                    this.position = position;
+                public ActionMode startActionMode(ActionMode.Callback callback) {
                     return activity.startActionMode(callback);
                 }
                 
@@ -224,7 +226,7 @@ public class MainActionUI extends UIInterface
                         // TODO
                         return true;
                     case R.id.action_delete:
-                        Map.Entry<String, String> address = (Map.Entry<String, String>) adapter.getItem(position);
+                        Map.Entry<String, String> address = (Map.Entry<String, String>) adapter.getItem(addressesList.getCheckedItemPosition());
                         new PersistedAddresses(activity).remove(address.getValue());
                         onResume(); // Rebuild the list
                         return true;
