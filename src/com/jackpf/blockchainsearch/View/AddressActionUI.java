@@ -181,13 +181,18 @@ public class AddressActionUI extends UIInterface
         if (transactionsAdapter == null) {
             transactionsAdapter = new ArrayAdapter<JSONArray>(context, transactions);
             txList.setAdapter(transactionsAdapter);
+            
             txList.setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(context, AddressActivity.class);
-                    intent.putExtra(AddressActivity.EXTRA_SEARCH, ((JSONObject) transactionsAdapter.getItem(position)).get("addr").toString());
-                    context.startActivity(intent);
+                    String addr = ((JSONObject) transactionsAdapter.getItem(position)).get("addr").toString();
+                    if (Utils.validAddress(addr)) {
+                        Intent intent = new Intent(context, AddressActivity.class);
+                        intent.putExtra(AddressActivity.EXTRA_SEARCH, addr);
+                        context.startActivity(intent);
+                    }
                 }
             });
+            
             txList.setOnItemLongClickListener(new OnItemLongClickListener() {
                 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -198,11 +203,12 @@ public class AddressActionUI extends UIInterface
                         activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
                         menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                             @Override
-                            public boolean onMenuItemClick(android.view.MenuItem item)
-                            {
-                                Intent intent = new Intent(context, TransactionActivity.class);
-                                intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                                context.startActivity(intent);
+                            public boolean onMenuItemClick(android.view.MenuItem item) {
+                                if (Utils.validTransaction(txHash)) {
+                                    Intent intent = new Intent(context, TransactionActivity.class);
+                                    intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
+                                    context.startActivity(intent);
+                                }
                                 return true;
                             }
                         });

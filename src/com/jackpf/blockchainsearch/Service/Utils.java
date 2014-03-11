@@ -35,10 +35,14 @@ public class Utils
             JSONObject in = (JSONObject) _in;
             JSONObject prev = (JSONObject) in.get("prev_out");
             
-            if (address.equals((String) prev.get("addr"))) {
-                total -= Long.parseLong(prev.get("value").toString());
+            if (prev != null) {
+                if (address.equals((String) prev.get("addr"))) {
+                    total -= Long.parseLong(prev.get("value").toString());
+                } else {
+                    addrOut = prev.get("addr").toString();
+                }
             } else {
-                addrOut = prev.get("addr").toString();
+                addrOut = "No inputs (new coins)";
             }
         }
         
