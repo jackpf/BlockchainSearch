@@ -31,19 +31,27 @@ public class Blockchain
      */
     public String rawRequest(ApiPath path) throws ClientProtocolException, IOException
     {
-        HttpClient client = new DefaultHttpClient();
+        HttpClient client = null;
         
-        HttpUriRequest request = new HttpGet(path.getPath());
-        HttpResponse response = client.execute(request);
-        
-        StringWriter writer = new StringWriter();
-        IOUtils.copy(response.getEntity().getContent(), writer, "UTF-8");
-        
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid request: " + writer.toString());
+        try {
+            client = new DefaultHttpClient();
+            
+            HttpUriRequest request = new HttpGet(path.getPath());
+            HttpResponse response = client.execute(request);
+            
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(response.getEntity().getContent(), writer, "UTF-8");
+            
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new IOException("Invalid request: " + writer.toString());
+            }
+            
+            return writer.toString();
+        } finally {
+            if (client != null) {
+                client.getConnectionManager().shutdown();
+            }
         }
-        
-        return writer.toString();
     }
     
     /**
