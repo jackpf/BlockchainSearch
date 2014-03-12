@@ -43,10 +43,7 @@
 	            android:layout_weight="0.6"
 	            android:singleLine="true"
 	            android:hint="@string/text_search_hint"
-	            android:inputType="text">
-	    
-	            <requestFocus />
-	        </EditText>
+	            android:inputType="text" />
 	    
 	        <ImageButton
 	            android:id="@+id/submit"
