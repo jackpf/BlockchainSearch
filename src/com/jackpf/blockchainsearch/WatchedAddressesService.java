@@ -115,6 +115,7 @@ public class WatchedAddressesService extends Service
             });
         } catch (WebSocketException e) {
             Log.d(TAG, e.toString());
+            updateNotification("Service exception", e.getMessage());
         }
         
         return Service.START_STICKY;

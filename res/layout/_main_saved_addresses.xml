@@ -16,6 +16,6 @@
 	    android:cacheColorHint="@android:color/transparent"
 	    android:scrollbars="none" />
     
-    <include layout="@layout/ads" />
+    <!--<include layout="@layout/ads" />-->
     
 </LinearLayout>
