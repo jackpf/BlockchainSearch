@@ -1,5 +1,6 @@
 package com.jackpf.blockchainsearch;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import android.app.AlertDialog;
@@ -9,15 +10,18 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
+import com.jackpf.blockchainsearch.Entity.Addresses;
+import com.jackpf.blockchainsearch.Entity.Wallets;
 
 public class Helpers
 {
@@ -79,26 +83,26 @@ public class Helpers
         public void callback();
     }
         
-    public static void promptPersistAddress(final Context context, final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem, String name, final PromptCallback callback)
+    public static void promptPersistAddress(final Context context, final String address, final Addresses addresses, final MenuItem saveMenuItem, String name, final PromptCallback callback)
     {
         final EditText input = new EditText(context);
         input.setSingleLine();
         input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         input.setText(name);
         
-        final Map.Entry<String, String> existing = addresses.getByName(name);
+        final Map.Entry<String, String> existing = addresses.getByKey(name);
         
         new AlertDialog.Builder(context)
-            .setTitle("Enter a name for this address")
+            .setTitle(context.getString(R.string.text_address_save))
             .setView(input)
-            .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            .setPositiveButton(context.getString(R.string.action_save), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int button) {
                     String name = input.getText().toString();
                     
                     if (name.equals("")) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_empty_name), Toast.LENGTH_SHORT).show();
-                    } else if (addresses.hasName(name)) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_name_exists), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_empty_name), Toast.LENGTH_SHORT).show();
+                    } else if (addresses.hasKey(name)) {
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_name_exists), Toast.LENGTH_SHORT).show();
                     } else {
                         if (existing != null) {
                             addresses.remove(existing.getValue());
@@ -107,7 +111,7 @@ public class Helpers
                         Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
                         
                         if (saveMenuItem != null) {
-                            saveMenuItem.setIcon(R.drawable.ic_action_delete);
+                            saveMenuItem.setIcon(android.R.drawable.ic_menu_delete);
                         }
                         
                         if (callback != null) {
@@ -116,22 +120,22 @@ public class Helpers
                     }
                 }
             })
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .show();
     }
     
-    public static void promptRemoveAddress(final Context context, final String address, final PersistedAddresses addresses, final MenuItem saveMenuItem, final PromptCallback callback)
+    public static void promptRemoveAddress(final Context context, final String address, final Addresses addresses, final MenuItem saveMenuItem, final PromptCallback callback)
     {
         new AlertDialog.Builder(context)
-            .setTitle("Do you want to unsave this address?")
-            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            .setTitle(context.getString(R.string.text_address_unsave))
+            .setPositiveButton(context.getString(R.string.action_yes), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int button)
                 {
                     addresses.remove(address);
                     Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
                     
                     if (saveMenuItem != null) {
-                        saveMenuItem.setIcon(R.drawable.ic_menu_save);
+                        saveMenuItem.setIcon(android.R.drawable.ic_menu_save);
                     }
                     
                     if (callback != null) {
@@ -139,7 +143,70 @@ public class Helpers
                     }
                 }
             })
-            .setNegativeButton("No", null)
+            .setNegativeButton(context.getString(R.string.action_no), null)
+            .show();
+    }
+    
+    public static void promptCreateWallet(final Context context, final Wallets wallets, final PromptCallback callback)
+    {
+        final EditText input = new EditText(context);
+        input.setSingleLine();
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        
+        new AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.text_wallet_save))
+            .setView(input)
+            .setPositiveButton(context.getString(R.string.action_save), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button) {
+                    String name = input.getText().toString();
+                    
+                    if (name.equals("")) {
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_empty_name), Toast.LENGTH_SHORT).show();
+                    } else if (wallets.hasKey(name)) {
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_name_exists), Toast.LENGTH_SHORT).show();
+                    } else {
+                        wallets.add(name, new ArrayList<String>());
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_wallet_saved), Toast.LENGTH_SHORT).show();
+                        
+                        if (callback != null) {
+                            callback.callback();
+                        }
+                    }
+                }
+            })
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
+            .show();
+    }
+    
+    public static void promptAddToWallet(final Context context, final String address, final Wallets wallets, final PromptCallback callback)
+    {
+        final Spinner input = new Spinner(context);
+        ArrayList<String> walletKeys = new ArrayList<String>();
+        for (Map.Entry<String, ArrayList<String>> entry : wallets.getAll().entrySet()) {
+            walletKeys.add(entry.getKey());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, walletKeys);
+        input.setAdapter(adapter);
+        
+        new AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.text_wallet_add))
+            .setView(input)
+            .setPositiveButton(context.getString(R.string.action_save), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button) {
+                    String name = (String) input.getSelectedItem();
+                    
+                    ArrayList<String> addresses = wallets.getByKey(name).getValue();
+                    addresses.add(address);
+                    wallets.add(name, addresses);
+                    
+                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_wallet_added), Toast.LENGTH_SHORT).show();
+                    
+                    if (callback != null) {
+                        callback.callback();
+                    }
+                }
+            })
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .show();
     }
 }

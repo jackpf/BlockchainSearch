@@ -12,11 +12,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Lib.IntentIntegrator;
 import com.jackpf.blockchainsearch.Lib.IntentResult;
 import com.jackpf.blockchainsearch.Service.Utils;
-import com.jackpf.blockchainsearch.View.MainActionUI;
+import com.jackpf.blockchainsearch.View.MainActivityUI;
 
 public class MainActivity extends SherlockFragmentActivity
 {
-    private /*UIInterface*/ MainActionUI ui;
+    private /*UIInterface*/ MainActivityUI ui;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class MainActivity extends SherlockFragmentActivity
         
         setContentView(R.layout.activity_main);
         
-        ui = new MainActionUI(this);
+        ui = new MainActivityUI(this);
         ui.initialise();
     }
 

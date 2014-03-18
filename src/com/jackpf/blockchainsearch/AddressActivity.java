@@ -11,19 +11,20 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
+import com.jackpf.blockchainsearch.Entity.Addresses;
+import com.jackpf.blockchainsearch.Entity.Wallets;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
-import com.jackpf.blockchainsearch.View.AddressActionUI;
+import com.jackpf.blockchainsearch.View.AddressActivityUI;
 
 @SuppressWarnings("deprecation") // Legacy clipboard manager warnings
 public class AddressActivity extends SherlockFragmentActivity
 {
     public final static String EXTRA_SEARCH = "search";
     
-    private AddressActionUI ui;
+    private AddressActivityUI ui;
     private String searchText;
     private NetworkThread thread;
-    private PersistedAddresses persistedAddresses;
+    private Addresses persistedAddresses;
     MenuItem saveMenuItem;
     
     /**
@@ -43,9 +44,9 @@ public class AddressActivity extends SherlockFragmentActivity
         
         setContentView(R.layout.activity_address);
         
-        persistedAddresses = new PersistedAddresses(this);
+        persistedAddresses = new Addresses(this);
 
-        ui = new AddressActionUI(this);
+        ui = new AddressActivityUI(this);
         
         final Intent intent = getIntent();
         final String action = intent.getAction();
@@ -99,7 +100,7 @@ public class AddressActivity extends SherlockFragmentActivity
         saveMenuItem = menu.findItem(R.id.action_save);
         
         if (persistedAddresses.has(searchText)) {
-            saveMenuItem.setIcon(R.drawable.ic_action_delete);
+            saveMenuItem.setIcon(android.R.drawable.ic_menu_delete);
         }
         
         return true;
@@ -129,6 +130,9 @@ public class AddressActivity extends SherlockFragmentActivity
                 } else {
                     Helpers.promptRemoveAddress(this, searchText, persistedAddresses, saveMenuItem, null);
                 }
+                return true;
+            case R.id.action_add:
+                Helpers.promptAddToWallet(this, searchText, new Wallets(this), null);
                 return true;
             case R.id.action_copy:
                 ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);

@@ -10,9 +10,9 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.jackpf.blockchainsearch.Model.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.TransactionRequest;
-import com.jackpf.blockchainsearch.View.TransactionActionUI;
+import com.jackpf.blockchainsearch.View.TransactionActivityUI;
 
 @SuppressWarnings("deprecation") // Legacy clipboard manager warnings
 public class TransactionActivity extends SherlockActivity
@@ -35,7 +35,7 @@ public class TransactionActivity extends SherlockActivity
         
         setContentView(R.layout.activity_transaction);
 
-        ui = new TransactionActionUI(this);
+        ui = new TransactionActivityUI(this);
         
         ui.initialise();
         

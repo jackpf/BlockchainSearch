@@ -20,7 +20,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.jackpf.blockchainsearch.Data.BlockchainData;
-import com.jackpf.blockchainsearch.Entity.PersistedAddresses;
+import com.jackpf.blockchainsearch.Entity.Addresses;
 import com.jackpf.blockchainsearch.Entity.SocketCmd;
 import com.jackpf.blockchainsearch.Service.Utils;
 
@@ -58,7 +58,7 @@ public class WatchedAddressesService extends Service
     {
         updateNotification("Connecting to service", "Please wait...");
         
-        final String[] addresses = new PersistedAddresses(this).getAll().values().toArray(new String[]{});
+        final String[] addresses = new Addresses(this).getAll().values().toArray(new String[]{});
         
         try {
             socket.connect(BlockchainData.WS_URL, new WebSocketHandler() {

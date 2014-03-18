@@ -5,8 +5,8 @@ import java.util.HashMap;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.jackpf.blockchainsearch.Interface.RequestInterface;
-import com.jackpf.blockchainsearch.Interface.UIInterface;
+import com.jackpf.blockchainsearch.Model.RequestInterface;
+import com.jackpf.blockchainsearch.Model.UIInterface;
 
 /**
  * Network thread

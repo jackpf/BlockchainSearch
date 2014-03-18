@@ -14,15 +14,25 @@
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="action_save">Save</string>
+    <string name="action_add">Add</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
     <string name="action_transaction_view">View transaction</string>
     <string name="action_copy">Copy to clipboard</string>
     
     <!-- Text -->
     <string name="text_refreshing">Refreshing...</string>
+    <string name="text_empty_name">Please enter a valid name</string>
+    <string name="text_name_exists">An item already exists with this name</string>
     <string name="text_address_saved">Address saved</string>
-    <string name="text_address_empty_name">Please enter a valid name</string>
-    <string name="text_address_name_exists">You have already saved an address with this name</string>
     <string name="text_address_unsaved">Address removed</string>
+    <string name="text_address_unsave">Do you want to unsave this address?</string>
+    <string name="text_address_save">Enter a name for this address</string>
+    <string name="text_wallet_save">Enter a name for this wallet</string>
+    <string name="text_wallet_saved">Wallet saved</string>
+    <string name="text_wallet_add">Choose a wallet to add this address to</string>
+    <string name="text_wallet_added">Address added to wallet</string>
     <string name="text_exception">An error has occurred: %s</string>
     <string name="text_invalid_input">Please enter a valid address or tx hash</string>
     <string name="text_search_hint">Enter address...</string>
@@ -35,6 +45,7 @@
     <string-array name="drawer_list_titles">
         <item>Search</item>
         <item>Saved Addresses</item>
+        <item>Wallets</item>
     </string-array>
     <string-array name="drawer_list_values">
         <item>.MainActivity</item>

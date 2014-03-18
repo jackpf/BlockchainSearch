@@ -10,8 +10,14 @@
         android:id="@+id/action_save"
         android:orderInCategory="2"
         android:showAsAction="always"
-        android:icon="@drawable/ic_menu_save"
+        android:icon="@android:drawable/ic_menu_save"
         android:title="@string/action_save" />
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/action_add" />
     
     <item
         android:id="@+id/action_copy"

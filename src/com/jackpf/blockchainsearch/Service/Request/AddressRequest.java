@@ -10,7 +10,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
-import com.jackpf.blockchainsearch.Interface.RequestInterface;
+import com.jackpf.blockchainsearch.Model.RequestInterface;
 import com.jackpf.blockchainsearch.Service.Utils;
 
 public class AddressRequest extends RequestInterface

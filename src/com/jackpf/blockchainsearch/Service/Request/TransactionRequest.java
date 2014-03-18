@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
-import com.jackpf.blockchainsearch.Interface.RequestInterface;
+import com.jackpf.blockchainsearch.Model.RequestInterface;
 
 public class TransactionRequest extends RequestInterface
 {

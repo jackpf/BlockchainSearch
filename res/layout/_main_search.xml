@@ -51,7 +51,7 @@
 	            android:layout_height="fill_parent"
 	            android:layout_weight="0.2"
 	            android:onClick="onSubmit"
-	            android:src="@drawable/ic_menu_search" />
+	            android:src="@android:drawable/ic_menu_search" />
 	        
 	    </LinearLayout>
 	    
