@@ -7,6 +7,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import android.preference.PreferenceManager;
+
+import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
@@ -40,13 +43,13 @@ public class AddressRequest extends RequestInterface
         JSONObject response = this.blockchain.request(path);
         requestResponse.put("response", response);
         
-        // Work out the transactions results
-        requestResponse.put("transactions", processTransactions(address, (JSONArray) response.get("txs")));
-
         // Also get the current block count
         path = new ApiPath(BlockchainData.Q_BLOCKCOUNT_URL);
         requestResponse.put("block_count", this.blockchain.rawRequest(path));
         
+        // Work out the transactions results
+        requestResponse.put("transactions", processTransactions(address, (JSONArray) response.get("txs"), Float.parseFloat(requestResponse.get("block_count").toString())));
+
         // Let the ui know about the current page
         requestResponse.put("page", page);
         
@@ -54,7 +57,7 @@ public class AddressRequest extends RequestInterface
     }
     
     @SuppressWarnings("unchecked")
-    private JSONArray processTransactions(String address, JSONArray txs)
+    private JSONArray processTransactions(String address, JSONArray txs, Float blockCount)
     {
         for (Object _tx : txs) {
             JSONObject tx = (JSONObject) _tx;
@@ -73,6 +76,15 @@ public class AddressRequest extends RequestInterface
                 prettyTime = "";
             }
             tx.put("prettytime", prettyTime);
+            
+            // Calculate confirmations
+            Object bh = tx.get("block_height");
+            int confirmations = 0;
+            if (bh != null) {
+                float blockHeight = Float.parseFloat(bh.toString());
+                confirmations = (int) (blockCount - blockHeight + 1);
+            }
+            tx.put("confirmations", confirmations);
         }
         
         return txs;
