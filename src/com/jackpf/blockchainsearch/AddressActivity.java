@@ -57,10 +57,8 @@ public class AddressActivity extends SherlockFragmentActivity
     
     protected String getSearchText(Intent intent)
     {
-        String action = intent.getAction();
-        
-        if (Intent.ACTION_VIEW.equals(action)) {
-            final List<String> segments = intent.getData().getPathSegments();
+        if (Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getData() != null) {
+            List<String> segments = intent.getData().getPathSegments();
             if (segments.size() > 1) {
                 return segments.get(1);
             }
