@@ -124,22 +124,18 @@ public class AddressActivityUI extends UIInterface
      * Fragment adapter
      * Provides a fragment for a given index
      */
-    protected class TabsPagerAdapter extends FragmentPagerAdapter
-    {
-        public TabsPagerAdapter(FragmentManager fm)
-        {
+    protected class TabsPagerAdapter extends FragmentPagerAdapter {
+        public TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int index)
-        {
+        public Fragment getItem(int index) {
             return tabs[index];
         }
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return tabs.length;
         }
     }
