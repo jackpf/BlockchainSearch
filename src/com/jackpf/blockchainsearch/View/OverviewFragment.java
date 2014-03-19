@@ -1,8 +1,10 @@
 package com.jackpf.blockchainsearch.View;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 
@@ -34,14 +36,35 @@ public class OverviewFragment extends UpdatableFragment
     {
         final JSONObject json = (JSONObject) vars.get("response");
         
-        ((TextView) getActivity().findViewById(R.id._address_address)).setText(json.get("address").toString());
+        // Get address/wallet depending on what we're displaying
+        String address = vars.get("address") != null ? vars.get("address").toString() : null;
+        Map.Entry<String, ArrayList<String>> wallet = null;
+        if (address == null) {
+            wallet = (Map.Entry<String, ArrayList<String>>) vars.get("wallet");
+        }
+        
+        // Get the display address(s)
+        String displayAddress = "";
+        if (address != null) {
+            displayAddress = address;
+        } else {
+            displayAddress = wallet.getValue().get(0);
+            for (int i = 1; i < wallet.getValue().size(); i++) {
+                displayAddress += "\n" + wallet.getValue().get(i);
+            }
+        }
+        ((TextView) getActivity().findViewById(R.id._address_address)).setText(displayAddress);
+        
         ((TextView) getActivity().findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance"), getActivity()));
         ((TextView) getActivity().findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received"), getActivity()));
         ((TextView) getActivity().findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent"), getActivity()));
         ((TextView) getActivity().findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
         
-        ImageView qrCode = (ImageView) getActivity().findViewById(R.id._address_qr_code);
-        qrCode.setImageDrawable(new BitmapDrawable(getActivity().getResources(), QRCode.create(json.get("address").toString(), 256)));
+        // Only show qr code if we're on a single address
+        if (address != null) {
+            ImageView qrCode = (ImageView) getActivity().findViewById(R.id._address_qr_code);
+            qrCode.setImageDrawable(new BitmapDrawable(getActivity().getResources(), QRCode.create(address, 256)));
+        }
         
         // Currency conversion
         BtcStats stats = BtcStats.getInstance();

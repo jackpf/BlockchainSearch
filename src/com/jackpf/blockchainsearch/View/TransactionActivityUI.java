@@ -1,8 +1,5 @@
 package com.jackpf.blockchainsearch.View;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

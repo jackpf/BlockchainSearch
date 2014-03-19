@@ -2,8 +2,6 @@ package com.jackpf.blockchainsearch.View;
 
 import java.util.HashMap;
 
-import org.json.simple.JSONObject;
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,15 +22,15 @@ import com.jackpf.blockchainsearch.Model.UIInterface;
 
 public class AddressActivityUI extends UIInterface
 {
-    private SherlockFragmentActivity activity;
+    protected SherlockFragmentActivity activity;
     
-    private View loadingView;
+    protected View loadingView;
     
-    private ViewPager viewPager;
-    private TabsPagerAdapter tabAdapter;
-    private ActionBar actionBar;
-    UpdatableFragment[] tabs = {new OverviewFragment(), new TransactionsFragment()};
-    private final String[] tabTitles = {"Overview", "Transactions"};
+    protected ViewPager viewPager;
+    protected TabsPagerAdapter tabAdapter;
+    protected ActionBar actionBar;
+    protected UpdatableFragment[] tabs = {new OverviewFragment(), new TransactionsFragment()};
+    protected final String[] tabTitles = {"Overview", "Transactions"};
     
     public AddressActivityUI(Context context)
     {
@@ -62,7 +60,7 @@ public class AddressActivityUI extends UIInterface
         }
     }
     
-    private void setLoading(boolean loading)
+    protected void setLoading(boolean loading)
     {
         Button nextPageButton = (Button) activity.findViewById(R.id._address_transactions_next_page);
         if (nextPageButton != null) {
@@ -86,9 +84,7 @@ public class AddressActivityUI extends UIInterface
         setLoading(false);
         loadingView.setVisibility(View.GONE);
         
-        final JSONObject json = (JSONObject) vars.get("response");
-        
-        actionBar.setSubtitle(json.get("address").toString());
+        actionBar.setSubtitle(vars.get("address").toString());
         
         // Update fragments
         for (UpdatableFragment tab : tabs) {

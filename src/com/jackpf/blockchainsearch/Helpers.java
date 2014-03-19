@@ -1,6 +1,7 @@
 package com.jackpf.blockchainsearch;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.app.AlertDialog;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,8 +28,18 @@ import com.jackpf.blockchainsearch.Entity.Wallets;
 
 public class Helpers
 {
+    /**
+     * Context menu action mode
+     */
     public static ActionMode mActionMode;
     
+    /**
+     * Add a long click triggered context menu to a listview
+     * 
+     * @param list
+     * @param m
+     * @param callback
+     */
     public static void addContextMenu(final ListView list, final int m, final ContextMenuCallback callback)
     {
         final ActionMode.Callback mActionModeCallback = new ActionMode.Callback()
@@ -72,17 +85,34 @@ public class Helpers
         });
     }
     
+    /**
+     * Context menu callback interface
+     */
     public interface ContextMenuCallback
     {
         public ActionMode startActionMode(ActionMode.Callback callback);
         public boolean onActionItemClicked(ActionMode mode, MenuItem item);
     }
     
+    /**
+     * Prompt callback interface
+     */
     public interface PromptCallback
     {
         public void callback();
     }
-        
+    
+    /**
+     * Prompt to save an address
+     * Edits an address if passed name exists
+     * 
+     * @param context
+     * @param address
+     * @param addresses
+     * @param saveMenuItem
+     * @param name
+     * @param callback
+     */
     public static void promptPersistAddress(final Context context, final String address, final Addresses addresses, final MenuItem saveMenuItem, String name, final PromptCallback callback)
     {
         final EditText input = new EditText(context);
@@ -90,7 +120,7 @@ public class Helpers
         input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         input.setText(name);
         
-        final Map.Entry<String, String> existing = addresses.getByKey(name);
+        final Map.Entry<String, String> existing = addresses.get(name);
         
         new AlertDialog.Builder(context)
             .setTitle(context.getString(R.string.text_address_save))
@@ -99,24 +129,26 @@ public class Helpers
                 public void onClick(DialogInterface dialog, int button) {
                     String name = input.getText().toString();
                     
-                    if (name.equals("")) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_empty_name), Toast.LENGTH_SHORT).show();
-                    } else if (addresses.hasKey(name)) {
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_name_exists), Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (existing != null) {
-                            addresses.remove(existing.getValue());
+                    if (!address.equals(name)) {
+                        if (name.equals("")) {
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_empty_name), Toast.LENGTH_SHORT).show();
+                        } else if (addresses.hasKey(name)) {
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_name_exists), Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (existing != null) {
+                                addresses.removeByValue(existing.getValue());
+                            }
+                            addresses.add(name, address);
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
+                            
+                            if (saveMenuItem != null) {
+                                saveMenuItem.setIcon(android.R.drawable.ic_menu_delete);
+                            }
                         }
-                        addresses.add(name, address);
-                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_saved), Toast.LENGTH_SHORT).show();
-                        
-                        if (saveMenuItem != null) {
-                            saveMenuItem.setIcon(android.R.drawable.ic_menu_delete);
-                        }
-                        
-                        if (callback != null) {
-                            callback.callback();
-                        }
+                    }
+                    
+                    if (callback != null) {
+                        callback.callback();
                     }
                 }
             })
@@ -124,6 +156,15 @@ public class Helpers
             .show();
     }
     
+    /**
+     * Prompts confirm dialog to remove an address
+     * 
+     * @param context
+     * @param address
+     * @param addresses
+     * @param saveMenuItem
+     * @param callback
+     */
     public static void promptRemoveAddress(final Context context, final String address, final Addresses addresses, final MenuItem saveMenuItem, final PromptCallback callback)
     {
         new AlertDialog.Builder(context)
@@ -131,7 +172,7 @@ public class Helpers
             .setPositiveButton(context.getString(R.string.action_yes), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int button)
                 {
-                    addresses.remove(address);
+                    addresses.removeByValue(address);
                     Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_address_unsaved), Toast.LENGTH_SHORT).show();
                     
                     if (saveMenuItem != null) {
@@ -147,6 +188,13 @@ public class Helpers
             .show();
     }
     
+    /**
+     * Prompt to create a wallet
+     * 
+     * @param context
+     * @param wallets
+     * @param callback
+     */
     public static void promptCreateWallet(final Context context, final Wallets wallets, final PromptCallback callback)
     {
         final EditText input = new EditText(context);
@@ -178,6 +226,14 @@ public class Helpers
             .show();
     }
     
+    /**
+     * Prompt to add an address to a wallet
+     * 
+     * @param context
+     * @param address
+     * @param wallets
+     * @param callback
+     */
     public static void promptAddToWallet(final Context context, final String address, final Wallets wallets, final PromptCallback callback)
     {
         final Spinner input = new Spinner(context);
@@ -195,11 +251,80 @@ public class Helpers
                 public void onClick(DialogInterface dialog, int button) {
                     String name = (String) input.getSelectedItem();
                     
-                    ArrayList<String> addresses = wallets.getByKey(name).getValue();
+                    ArrayList<String> addresses = wallets.get(name).getValue();
                     addresses.add(address);
                     wallets.add(name, addresses);
                     
                     Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_wallet_added), Toast.LENGTH_SHORT).show();
+                    
+                    if (callback != null) {
+                        callback.callback();
+                    }
+                }
+            })
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
+            .show();
+    }
+    
+    /**
+     * Prompt to edit a wallet
+     * 
+     * @param context
+     * @param wallet
+     * @param wallets
+     * @param callback
+     */
+    public static void promptEditWallet(final Context context, final String wallet, final Wallets wallets, final PromptCallback callback)
+    {
+        LinearLayout view = new LinearLayout(context);
+        view.setOrientation(LinearLayout.VERTICAL);
+        
+        final EditText input = new EditText(context);
+        input.setSingleLine();
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        input.setText(wallet);
+        
+        view.addView(input);
+        
+        final Map.Entry<String, ArrayList<String>> existing = wallets.get(wallet);
+        
+        // Add all addresses as checkboxes
+        final HashMap<String, CheckBox> checkboxes = new HashMap<String, CheckBox>();
+        for (String address : existing.getValue()) {
+            CheckBox checkbox = new CheckBox(context);
+            checkbox.setText(address);
+            checkboxes.put(address, checkbox);
+            view.addView(checkbox);
+        }
+        
+        new AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.text_wallet_edit))
+            .setView(view)
+            .setPositiveButton(context.getString(R.string.action_save), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int button) {
+                    String name = input.getText().toString();
+                    // Edit wallet name
+                    if (!wallet.equals(name)) {
+                        if (name.equals("")) {
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_empty_name), Toast.LENGTH_SHORT).show();
+                        } else if (wallets.hasKey(name)) {
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_name_exists), Toast.LENGTH_SHORT).show();
+                        } else {
+                            wallets.add(name, existing.getValue());
+                            wallets.remove(existing.getKey());
+                            
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.text_wallet_saved), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    
+                    // Check for any checked addresses and remove
+                    for (Map.Entry<String, CheckBox> entry : checkboxes.entrySet()) {
+                        if (entry.getValue().isChecked()) {
+                            ArrayList<String> addresses = existing.getValue();
+                            addresses.remove(addresses.indexOf(entry.getKey()));
+                            wallets.add(existing.getKey(), addresses);
+                        }
+                    }
                     
                     if (callback != null) {
                         callback.callback();

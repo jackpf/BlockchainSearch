@@ -13,6 +13,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Entity.Addresses;
 import com.jackpf.blockchainsearch.Entity.Wallets;
+import com.jackpf.blockchainsearch.Model.UIInterface;
 import com.jackpf.blockchainsearch.Service.Request.AddressRequest;
 import com.jackpf.blockchainsearch.View.AddressActivityUI;
 
@@ -21,16 +22,16 @@ public class AddressActivity extends SherlockFragmentActivity
 {
     public final static String EXTRA_SEARCH = "search";
     
-    private AddressActivityUI ui;
-    private String searchText;
-    private NetworkThread thread;
-    private Addresses persistedAddresses;
-    MenuItem saveMenuItem;
+    protected UIInterface ui;
+    protected String searchText;
+    protected NetworkThread thread;
+    protected Addresses persistedAddresses;
+    protected MenuItem saveMenuItem;
     
     /**
      * Current page of transactions we're on
      */
-    private int page = 1;
+    protected int page = 1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,22 +48,25 @@ public class AddressActivity extends SherlockFragmentActivity
         persistedAddresses = new Addresses(this);
 
         ui = new AddressActivityUI(this);
-        
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
-
-        if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
-            final List<String> segments = intent.getData().getPathSegments();
-            if (segments.size() > 1) {
-                searchText = segments.get(1);
-            }
-        } else {
-            searchText = getIntent().getStringExtra(EXTRA_SEARCH);
-        }
-        
         ui.initialise();
         
+        searchText = getSearchText(getIntent());
+        
         refresh();
+    }
+    
+    protected String getSearchText(Intent intent)
+    {
+        String action = intent.getAction();
+        
+        if (Intent.ACTION_VIEW.equals(action)) {
+            final List<String> segments = intent.getData().getPathSegments();
+            if (segments.size() > 1) {
+                return segments.get(1);
+            }
+        }
+        
+        return getIntent().getStringExtra(EXTRA_SEARCH);
     }
     
     @Override
@@ -77,7 +81,7 @@ public class AddressActivity extends SherlockFragmentActivity
      * Runs the network thread and updates the UI
      * Sectioned off since it's called from onCreate and from the refresh button
      */
-    private void refresh()
+    protected void refresh()
     {
         if (thread instanceof NetworkThread) {
             thread.cancel(true);

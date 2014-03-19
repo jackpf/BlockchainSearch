@@ -65,7 +65,7 @@ public class MainActivity extends SherlockFragmentActivity
      * 
      * @param searchText
      */
-    private void processSearchText(String searchText)
+    protected void processSearchText(String searchText)
     {
         if (Utils.validAddress(searchText)) {
             Intent intent = new Intent(this, AddressActivity.class);

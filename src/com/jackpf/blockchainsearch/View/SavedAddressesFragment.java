@@ -60,7 +60,7 @@ public class SavedAddressesFragment extends SherlockFragment
                 }
                 
                 Intent intent = new Intent(activity, AddressActivity.class);
-                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue().toString());
+                intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, String>) adapter.getItem(position)).getValue());
                 activity.startActivity(intent);
             }
         });
@@ -83,7 +83,7 @@ public class SavedAddressesFragment extends SherlockFragment
                     });
                     return true;
                 case R.id.action_delete:
-                    new Addresses(activity).remove(address.getValue());
+                    new Addresses(activity).removeByValue(address.getValue());
                     onResume(); // Rebuild the list
                     return true;
                 }

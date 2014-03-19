@@ -1,6 +1,8 @@
 package com.jackpf.blockchainsearch;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,6 +14,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
@@ -22,6 +25,7 @@ import android.util.Log;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.Addresses;
 import com.jackpf.blockchainsearch.Entity.SocketCmd;
+import com.jackpf.blockchainsearch.Entity.Wallets;
 import com.jackpf.blockchainsearch.Service.Utils;
 
 import de.tavendo.autobahn.WebSocketConnection;
@@ -44,6 +48,12 @@ public class WatchedAddressesService extends Service
      * Log tag
      */
     private final String TAG = this.getClass().getName();
+    
+    private final static int
+        WATCH_SAVED     = 1,
+        WATCH_WALLET    = 2,
+        WATCH_ALL       = 3
+    ;
 
     /**
      * Start service
@@ -58,18 +68,30 @@ public class WatchedAddressesService extends Service
     {
         updateNotification("Connecting to service", "Please wait...");
         
-        final String[] addresses = new Addresses(this).getAll().values().toArray(new String[]{});
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int watchPref = Integer.parseInt(prefs.getString(getString(R.string.pref_watch_type_key), getString(R.string.pref_watch_type_default)));
+
+        final HashSet<String> addresses = new HashSet<String>();
+
+        if ((WATCH_SAVED & watchPref) > 0) {
+            addresses.addAll(new Addresses(this).getAll().values());
+        }
+        if ((WATCH_WALLET & watchPref) > 0) {
+            for (Map.Entry<String, ArrayList<String>> entry : new Wallets(this).getAll().entrySet()) {
+                addresses.addAll(entry.getValue());
+            }
+        }
         
         try {
             socket.connect(BlockchainData.WS_URL, new WebSocketHandler() {
                 @Override
                 public void onOpen() {
-                   WatchedAddressesService.this.updateNotification("Watching addresses!", "Monitoring " + addresses.length + " address" + (addresses.length > 1 ? "es" : ""));
+                   WatchedAddressesService.this.updateNotification("Watching addresses!", "Monitoring " + addresses.size() + " address" + (addresses.size() > 1 ? "es" : ""));
                    
                    // Subscribe to addresses
-                   for (int i = 0; i < addresses.length; i++) {
+                   for (String address : addresses) {
                        SocketCmd cmd = new SocketCmd(SocketCmd.ADDR_SUB);
-                       cmd.setParam("addr", addresses[i]);
+                       cmd.setParam("addr", address);
                        
                        socket.sendTextMessage(cmd.toString());
                    }
@@ -84,8 +106,8 @@ public class WatchedAddressesService extends Service
                        JSONObject tx = (JSONObject) obj.get("x");
                        if (tx != null) {
                            // Check which of our watched addresses the transaction involves
-                           for (int i = 0; i < addresses.length; i++) {
-                               Utils.ProcessedTransaction processed = Utils.processTransaction(addresses[i], tx);
+                           for (String address : addresses) {
+                               Utils.ProcessedTransaction processed = Utils.processTransaction(address, tx);
                                // If the transaction amount for this address is not 0, this address was involved
                                if (processed.getAmount() != 0) {
                                    String text = String.format(
@@ -97,9 +119,9 @@ public class WatchedAddressesService extends Service
                                    );
                                    
                                    Intent intent = new Intent(WatchedAddressesService.this, AddressActivity.class);
-                                   intent.putExtra(AddressActivity.EXTRA_SEARCH, addresses[i]);
+                                   intent.putExtra(AddressActivity.EXTRA_SEARCH, address);
                                    
-                                   WatchedAddressesService.this.newNotification(addresses[i], text, intent);
+                                   WatchedAddressesService.this.newNotification(address, text, intent);
                                }
                            }
                        }

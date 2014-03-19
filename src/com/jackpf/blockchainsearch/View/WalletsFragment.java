@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jackpf.blockchainsearch.Helpers;
 import com.jackpf.blockchainsearch.R;
+import com.jackpf.blockchainsearch.WalletActivity;
 import com.jackpf.blockchainsearch.Entity.Wallets;
 
 public class WalletsFragment extends SherlockFragment
@@ -62,10 +64,9 @@ public class WalletsFragment extends SherlockFragment
                     return;
                 }
                 
-                // TODO
-                //Intent intent = new Intent(activity, AddressActivity.class);
-                //intent.putExtra(AddressActivity.EXTRA_SEARCH, ((Map.Entry<String, ArrayList<String>>) adapter.getItem(position)).getValue().toString());
-                //activity.startActivity(intent);
+                Intent intent = new Intent(activity, WalletActivity.class);
+                intent.putExtra(WalletActivity.EXTRA_WALLET, ((Map.Entry<String, ArrayList<String>>) adapter.getItem(position)).getKey());
+                activity.startActivity(intent);
             }
         });
         
@@ -80,16 +81,14 @@ public class WalletsFragment extends SherlockFragment
                 Map.Entry<String, ArrayList<String>> wallet = (Map.Entry<String, ArrayList<String>>) adapter.getItem(walletsList.getCheckedItemPosition());
                 switch (item.getItemId()) {
                     case R.id.action_edit:
-                        // TODO
-                        //Helpers.promptPersistAddress(getActivity(), address.getValue(), new Addresses(activity), null, address.getKey(), new Helpers.PromptCallback() {
-                        //    public void callback() {
-                        //        onResume(); // Rebuild the list
-                        //    }
-                        //});
+                        Helpers.promptEditWallet(getActivity(), wallet.getKey(), new Wallets(activity), new Helpers.PromptCallback() {
+                            public void callback() {
+                                onResume(); // Rebuild the list
+                            }
+                        });
                         return true;
                     case R.id.action_delete:
-                        // TODO
-                        new Wallets(activity).removeByKey(wallet.getKey());
+                        new Wallets(activity).remove(wallet.getKey());
                         onResume(); // Rebuild the list
                         return true;
                 }

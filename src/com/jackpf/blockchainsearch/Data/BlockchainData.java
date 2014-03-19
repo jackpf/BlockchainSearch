@@ -5,6 +5,7 @@ public class BlockchainData
     public static final String
         BLOCKCHAIN_URL          = "https://blockchain.info",
         ADDRESS_URL             = "address/%s?format=json&offset=%d",
+        WALLET_URL              = "multiaddr?format=json&active=%s&offset=%d",
         TRANSACTION_URL         = "tx/%s?format=json",
         WS_URL                  = "ws://ws.blockchain.info/inv",
         Q_BLOCKCOUNT_URL        = "q/getblockcount",

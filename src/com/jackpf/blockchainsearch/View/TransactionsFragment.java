@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class TransactionsFragment extends UpdatableFragment
         if ((Integer) vars.get("page") == 1) {
             transactions.clear();
         }
-        transactions.addAll((JSONArray) vars.get("transactions"));
+        transactions.addAll((JSONArray) vars.get("txs"));
         
         ListView txList = (ListView) getActivity().findViewById(R.id.content_transactions);
         
@@ -193,6 +194,10 @@ public class TransactionsFragment extends UpdatableFragment
             long result = Long.parseLong(r.toString());
             TextView resultTextView = (TextView) row.findViewById(R.id.amount);
             resultTextView.setTextColor(context.getResources().getColor(result > 0 ? R.color.value_positive : R.color.value_negative));
+            // Bit of a dirty hack
+            if (tx.get("addr").toString().equals("Internal")) {
+                resultTextView.setTextColor(Color.BLACK);
+            }
             resultTextView.setText(Utils.btcFormat(result, context).replace("-", ""));
 
             return row;

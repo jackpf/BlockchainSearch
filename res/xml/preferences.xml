@@ -47,6 +47,14 @@
     <PreferenceCategory 
         android:title="Beta">
         
+        <ListPreference 
+            android:key="@string/pref_watch_type_key"
+            android:title="@string/pref_watch_type_title"
+            android:summary="@string/pref_watch_type_summary"
+            android:defaultValue="@string/pref_watch_type_default"
+            android:entries="@array/pref_watch_type_entries"
+            android:entryValues="@array/pref_watch_type_values" />
+        
         <CheckBoxPreference
 	        android:key="@string/pref_watch_addresses_key"
 	        android:title="@string/pref_watch_addresses_title"

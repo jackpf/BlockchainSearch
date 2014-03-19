@@ -19,9 +19,9 @@ public class TransactionActivity extends SherlockActivity
 {
     public final static String EXTRA_SEARCH = "search";
     
-    private UIInterface ui;
-    private String searchText;
-    private NetworkThread thread;
+    protected UIInterface ui;
+    protected String searchText;
+    protected NetworkThread thread;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,29 +36,32 @@ public class TransactionActivity extends SherlockActivity
         setContentView(R.layout.activity_transaction);
 
         ui = new TransactionActivityUI(this);
-        
         ui.initialise();
-        
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
 
+        searchText = getSearchText(getIntent());
+        
+        refresh();
+    }
+    
+    protected String getSearchText(Intent intent)
+    {
+        String action = intent.getAction();
+        
         if (Intent.ACTION_VIEW.equals(action)) {
             final List<String> segments = intent.getData().getPathSegments();
             if (segments.size() > 1) {
-                searchText = segments.get(1);
+                return segments.get(1);
             }
-        } else {
-            searchText = getIntent().getStringExtra(EXTRA_SEARCH);
         }
         
-        refresh();
+        return getIntent().getStringExtra(EXTRA_SEARCH);
     }
     
     /**
      * Runs the network thread and updates the UI
      * Sectioned off since it's called from onCreate and from the refresh button
      */
-    private void refresh()
+    protected void refresh()
     {
         if (thread instanceof NetworkThread) {
             thread.cancel(true);

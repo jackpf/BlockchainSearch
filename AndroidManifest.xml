@@ -37,6 +37,10 @@
 	        </intent-filter>
         </activity>
         <activity
+            android:name=".WalletActivity"
+            android:label="@string/activity_wallet_title" >
+        </activity>
+        <activity
             android:name=".TransactionActivity"
             android:label="@string/activity_transaction_title" >
             <intent-filter>

@@ -1,15 +1,14 @@
 package com.jackpf.blockchainsearch.Service.Request;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import android.preference.PreferenceManager;
-
-import com.jackpf.blockchainsearch.R;
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
@@ -23,7 +22,7 @@ public class AddressRequest extends RequestInterface
         super(params);
     }
     
-    public RequestResponse call() throws Exception
+    public RequestResponse call() throws ParseException, IOException
     {
         if (this.params.length < 1) {
             throw new InvalidParameterException("No address specified");
@@ -39,6 +38,7 @@ public class AddressRequest extends RequestInterface
         
         RequestResponse requestResponse = new RequestResponse();
         
+        // Get address
         ApiPath path = new ApiPath(BlockchainData.ADDRESS_URL, address, offset);
         JSONObject response = this.blockchain.request(path);
         requestResponse.put("response", response);
@@ -48,9 +48,10 @@ public class AddressRequest extends RequestInterface
         requestResponse.put("block_count", this.blockchain.rawRequest(path));
         
         // Work out the transactions results
-        requestResponse.put("transactions", processTransactions(address, (JSONArray) response.get("txs"), Float.parseFloat(requestResponse.get("block_count").toString())));
+        requestResponse.put("txs", processTransactions(address, (JSONArray) response.get("txs"), Float.parseFloat(requestResponse.get("block_count").toString())));
 
-        // Let the ui know about the current page
+        // Let the ui know about stuff
+        requestResponse.put("address", address);
         requestResponse.put("page", page);
         
         return requestResponse;
@@ -62,7 +63,7 @@ public class AddressRequest extends RequestInterface
         for (Object _tx : txs) {
             JSONObject tx = (JSONObject) _tx;
 
-            Utils.ProcessedTransaction processed = Utils.processTransaction(address, (JSONObject) _tx);
+            Utils.ProcessedTransaction processed = Utils.processTransaction(address, tx);
 
             tx.put("result", processed.getAmount());
             tx.put("addr", processed.getAddress());

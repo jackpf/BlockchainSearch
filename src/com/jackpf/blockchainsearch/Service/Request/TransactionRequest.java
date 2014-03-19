@@ -1,8 +1,10 @@
 package com.jackpf.blockchainsearch.Service.Request;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import com.jackpf.blockchainsearch.Data.BlockchainData;
 import com.jackpf.blockchainsearch.Entity.ApiPath;
@@ -16,7 +18,7 @@ public class TransactionRequest extends RequestInterface
         super(params);
     }
     
-    public RequestResponse call() throws Exception
+    public RequestResponse call() throws ParseException, IOException
     {
         if (this.params.length < 1) {
             throw new InvalidParameterException("No transaction specified");

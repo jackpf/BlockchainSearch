@@ -1,5 +1,9 @@
 package com.jackpf.blockchainsearch.Model;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.jackpf.blockchainsearch.Entity.RequestResponse;
 import com.jackpf.blockchainsearch.Service.Blockchain;
 
@@ -34,5 +38,5 @@ public abstract class RequestInterface
      * @return
      * @throws Exception
      */
-    public abstract RequestResponse call() throws Exception;
+    public abstract RequestResponse call() throws ParseException, IOException;
 }
