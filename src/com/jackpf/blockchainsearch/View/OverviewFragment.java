@@ -26,10 +26,13 @@ import com.jackpf.blockchainsearch.View.AddressActivityUI.UpdatableFragment;
 
 public class OverviewFragment extends UpdatableFragment
 {
+    private static View rootView;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout._address_overview, container, false);
+        rootView = inflater.inflate(R.layout._address_overview, container, false);
+        return rootView;
     }
     
     public void update(HashMap<String, Object> vars)
@@ -53,16 +56,16 @@ public class OverviewFragment extends UpdatableFragment
                 displayAddress += "\n" + wallet.getValue().get(i);
             }
         }
-        ((TextView) getActivity().findViewById(R.id._address_address)).setText(displayAddress);
+        ((TextView) rootView.findViewById(R.id._address_address)).setText(displayAddress);
         
-        ((TextView) getActivity().findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance"), getActivity()));
-        ((TextView) getActivity().findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received"), getActivity()));
-        ((TextView) getActivity().findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent"), getActivity()));
-        ((TextView) getActivity().findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
+        ((TextView) rootView.findViewById(R.id._address_final_balance)).setText(Utils.btcFormat((Long) json.get("final_balance"), getActivity()));
+        ((TextView) rootView.findViewById(R.id._address_total_received)).setText(Utils.btcFormat((Long) json.get("total_received"), getActivity()));
+        ((TextView) rootView.findViewById(R.id._address_total_sent)).setText(Utils.btcFormat((Long) json.get("total_sent"), getActivity()));
+        ((TextView) rootView.findViewById(R.id._address_no_transactions)).setText(json.get("n_tx").toString());
         
         // Only show qr code if we're on a single address
         if (address != null) {
-            ImageView qrCode = (ImageView) getActivity().findViewById(R.id._address_qr_code);
+            ImageView qrCode = (ImageView) rootView.findViewById(R.id._address_qr_code);
             qrCode.setImageDrawable(new BitmapDrawable(getActivity().getResources(), QRCode.create(address, 256)));
         }
         
@@ -82,7 +85,7 @@ public class OverviewFragment extends UpdatableFragment
                        stats.getExchangeValues().get(currencyChoice).get("symbol").toString(),
                        converted
                    );
-                   ((TextView) getActivity().findViewById(R.id._address_final_balance)).setText(text);
+                   ((TextView) rootView.findViewById(R.id._address_final_balance)).setText(text);
                }
            }
         });

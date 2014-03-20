@@ -38,13 +38,15 @@ import com.jackpf.blockchainsearch.View.AddressActivityUI.UpdatableFragment;
 
 public class TransactionsFragment extends UpdatableFragment
 {
+    private static View rootView;
     private JSONArray transactions = new JSONArray();
     private ArrayAdapter<JSONArray> transactionsAdapter;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout._address_transactions, container, false);
+        rootView = inflater.inflate(R.layout._address_transactions, container, false);
+        return rootView;
     }
     
     public void update(HashMap<String, Object> vars)
@@ -55,7 +57,7 @@ public class TransactionsFragment extends UpdatableFragment
         }
         transactions.addAll((JSONArray) vars.get("txs"));
         
-        ListView txList = (ListView) getActivity().findViewById(R.id.content_transactions);
+        ListView txList = (ListView) rootView.findViewById(R.id.content_transactions);
         
         // Display the load more footer view?
         View footerView = ((LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout._address_transactions_footer, null, false);
