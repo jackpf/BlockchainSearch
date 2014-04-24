@@ -31,6 +31,8 @@ public class OverviewFragment extends UpdatableFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        setRetainInstance(true); // Keep references to context - might fix resume crash?
+        
         rootView = inflater.inflate(R.layout._address_overview, container, false);
         return rootView;
     }

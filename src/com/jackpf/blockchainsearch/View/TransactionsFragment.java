@@ -45,6 +45,8 @@ public class TransactionsFragment extends UpdatableFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        setRetainInstance(true); // Keep references to context - might fix resume crash?
+        
         rootView = inflater.inflate(R.layout._address_transactions, container, false);
         return rootView;
     }

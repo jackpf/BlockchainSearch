@@ -3,13 +3,16 @@ package com.jackpf.blockchainsearch.View;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -114,8 +117,7 @@ public class AddressActivityUI extends UIInterface
         public void onTabReselected(Tab arg0, FragmentTransaction tx) { }
         public void onTabUnselected(Tab arg0, FragmentTransaction tx) { }
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction arg1)
-        {
+        public void onTabSelected(Tab tab, FragmentTransaction arg1) {
             viewPager.setCurrentItem(tab.getPosition());
         }
     }
@@ -124,7 +126,8 @@ public class AddressActivityUI extends UIInterface
      * Fragment adapter
      * Provides a fragment for a given index
      */
-    protected class TabsPagerAdapter extends FragmentPagerAdapter {
+    protected class TabsPagerAdapter extends FragmentPagerAdapter
+    {
         public TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
