@@ -3,16 +3,15 @@ package com.jackpf.blockchainsearch.View;
 import java.util.HashMap;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,8 +25,6 @@ import com.jackpf.blockchainsearch.Model.UIInterface;
 public class AddressActivityUI extends UIInterface
 {
     protected SherlockFragmentActivity activity;
-    
-    protected View loadingView;
     
     protected ViewPager viewPager;
     protected TabsPagerAdapter tabAdapter;
@@ -65,6 +62,7 @@ public class AddressActivityUI extends UIInterface
     
     protected void setLoading(boolean loading)
     {
+        // Load more button
         Button nextPageButton = (Button) activity.findViewById(R.id._address_transactions_next_page);
         if (nextPageButton != null) {
             nextPageButton.setEnabled(!loading);
@@ -74,18 +72,33 @@ public class AddressActivityUI extends UIInterface
                 nextPageButton.setText(context.getString(R.string.text_load_more));
             }
         }
+        
+        // Hide loading spinner
+        if (!loading) {
+            activity.findViewById(R.id.loading).setVisibility(View.GONE);
+        }
+        
+        // Refresh spinner
+        View refreshView = activity.findViewById(R.id.action_refresh);
+        if (refreshView != null) { // Options menu not created yet on the initial load, so this will only trigger on refresh
+            if (loading) {
+                Animation rotation = AnimationUtils.loadAnimation(context, R.anim.rotate);
+                rotation.setRepeatCount(Animation.INFINITE);
+                refreshView.startAnimation(rotation);
+            } else {
+                refreshView.clearAnimation();
+            }
+        }
     }
     
     public void preUpdate()
     {
-        loadingView = activity.findViewById(R.id.loading);
         setLoading(true);
     }
     
     public void update()
     {
         setLoading(false);
-        loadingView.setVisibility(View.GONE);
         
         actionBar.setSubtitle(vars.get("address").toString());
         

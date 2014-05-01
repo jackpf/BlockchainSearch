@@ -19,7 +19,6 @@ public class WalletActivityUI extends AddressActivityUI
     public void update()
     {
         setLoading(false);
-        loadingView.setVisibility(View.GONE);
         
         Map.Entry<String, ArrayList<String>> wallet = (Map.Entry<String, ArrayList<String>>) vars.get("wallet");
         actionBar.setSubtitle(wallet.getKey());
