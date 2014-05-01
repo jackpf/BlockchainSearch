@@ -18,6 +18,8 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -45,6 +47,11 @@ public class WatchedAddressesService extends Service
     private final WebSocketConnection socket = new WebSocketConnection();
     
     /**
+     * Wakelock
+     */
+    private WakeLock wakelock;
+    
+    /**
      * Log tag
      */
     private final String TAG = this.getClass().getName();
@@ -69,8 +76,16 @@ public class WatchedAddressesService extends Service
         updateNotification("Connecting to service", "Please wait...");
         
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        // Acquire wakelock
+        boolean acquireWakelock = prefs.getBoolean(getString(R.string.pref_watch_wakelock_key), Boolean.valueOf(getString(R.string.pref_watch_wakelock_default)));
+        if (acquireWakelock) {
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            wakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+            wakelock.acquire();
+        }
+        
         int watchPref = Integer.parseInt(prefs.getString(getString(R.string.pref_watch_type_key), getString(R.string.pref_watch_type_default)));
-
         final HashSet<String> addresses = new HashSet<String>();
 
         if ((WATCH_SAVED & watchPref) > 0) {
@@ -170,6 +185,11 @@ public class WatchedAddressesService extends Service
         
         // Disconnect the web socket
         socket.disconnect();
+        
+        // Release wakelock
+        if (wakelock != null) {
+            wakelock.release();
+        }
     }
     
     /**

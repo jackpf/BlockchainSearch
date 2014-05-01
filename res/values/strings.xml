@@ -126,6 +126,10 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="pref_watch_wakelock_key">watch_wakelock</string>
+    <string name="pref_watch_wakelock_title">Acquire wakelock when watching addresses</string>
+    <string name="pref_watch_wakelock_default">false</string>
+    <string name="pref_watch_wakelock_summary">May fix notifications when the device has been asleep for a while. Warning: uses battery</string>
     <string name="pref_watch_addresses_key">watch_addresses</string>
     <string name="pref_watch_addresses_title">Watch saved addresses</string>
     <string name="pref_watch_addresses_default">false</string>

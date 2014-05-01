@@ -1164,7 +1164,7 @@ containing a value of this type.
         public static final int activity_preferences_title=0x7f0b0012;
         public static final int activity_transaction_title=0x7f0b0011;
         public static final int activity_wallet_title=0x7f0b0010;
-        public static final int admob_id=0x7f0b0051;
+        public static final int admob_id=0x7f0b0055;
         /**  Titles 
          */
         public static final int app_name=0x7f0b000d;
@@ -1174,19 +1174,19 @@ containing a value of this type.
         public static final int pref_btc_format_key=0x7f0b0038;
         public static final int pref_btc_format_summary=0x7f0b003a;
         public static final int pref_btc_format_title=0x7f0b0039;
-        public static final int pref_confirmations_default=0x7f0b004b;
-        public static final int pref_confirmations_key=0x7f0b0049;
-        public static final int pref_confirmations_summary=0x7f0b004c;
-        public static final int pref_confirmations_title=0x7f0b004a;
+        public static final int pref_confirmations_default=0x7f0b004f;
+        public static final int pref_confirmations_key=0x7f0b004d;
+        public static final int pref_confirmations_summary=0x7f0b0050;
+        public static final int pref_confirmations_title=0x7f0b004e;
         public static final int pref_currency_default=0x7f0b003f;
         public static final int pref_currency_key=0x7f0b003c;
         public static final int pref_currency_summary=0x7f0b003e;
         public static final int pref_currency_title=0x7f0b003d;
-        public static final int pref_donate_address=0x7f0b0048;
-        public static final int pref_notification_default=0x7f0b004f;
-        public static final int pref_notification_key=0x7f0b004d;
-        public static final int pref_notification_summary=0x7f0b0050;
-        public static final int pref_notification_title=0x7f0b004e;
+        public static final int pref_donate_address=0x7f0b004c;
+        public static final int pref_notification_default=0x7f0b0053;
+        public static final int pref_notification_key=0x7f0b0051;
+        public static final int pref_notification_summary=0x7f0b0054;
+        public static final int pref_notification_title=0x7f0b0052;
         public static final int pref_theme_default=0x7f0b0037;
         public static final int pref_theme_key=0x7f0b0034;
         public static final int pref_theme_summary=0x7f0b0036;
@@ -1194,21 +1194,25 @@ containing a value of this type.
         /**  Preferences 
          */
         public static final int pref_title=0x7f0b0033;
-        public static final int pref_watch_addresses_default=0x7f0b0046;
-        public static final int pref_watch_addresses_key=0x7f0b0044;
-        public static final int pref_watch_addresses_summary=0x7f0b0047;
-        public static final int pref_watch_addresses_title=0x7f0b0045;
+        public static final int pref_watch_addresses_default=0x7f0b004a;
+        public static final int pref_watch_addresses_key=0x7f0b0048;
+        public static final int pref_watch_addresses_summary=0x7f0b004b;
+        public static final int pref_watch_addresses_title=0x7f0b0049;
         public static final int pref_watch_type_default=0x7f0b0043;
         public static final int pref_watch_type_key=0x7f0b0040;
         public static final int pref_watch_type_summary=0x7f0b0042;
         public static final int pref_watch_type_title=0x7f0b0041;
-        public static final int rate_confirm_text=0x7f0b0056;
-        public static final int rate_dismiss_text=0x7f0b0054;
+        public static final int pref_watch_wakelock_default=0x7f0b0046;
+        public static final int pref_watch_wakelock_key=0x7f0b0044;
+        public static final int pref_watch_wakelock_summary=0x7f0b0047;
+        public static final int pref_watch_wakelock_title=0x7f0b0045;
+        public static final int rate_confirm_text=0x7f0b005a;
+        public static final int rate_dismiss_text=0x7f0b0058;
         /**  Rate prompting 
          */
-        public static final int rate_launches_until_prompt=0x7f0b0052;
-        public static final int rate_prompt_text=0x7f0b0053;
-        public static final int rate_remind_text=0x7f0b0055;
+        public static final int rate_launches_until_prompt=0x7f0b0056;
+        public static final int rate_prompt_text=0x7f0b0057;
+        public static final int rate_remind_text=0x7f0b0059;
         public static final int text_address_save=0x7f0b0024;
         public static final int text_address_saved=0x7f0b0021;
         public static final int text_address_unsave=0x7f0b0023;
