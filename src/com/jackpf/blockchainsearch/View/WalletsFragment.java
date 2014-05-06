@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,11 +30,15 @@ import com.jackpf.blockchainsearch.Entity.Wallets;
 
 public class WalletsFragment extends SherlockFragment
 {
+    private static Activity activity;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // For our action bar menu icon
         setHasOptionsMenu(true);
+        
+        activity = getActivity();
         
         return inflater.inflate(R.layout._main_wallets, container, false);
     }
@@ -44,15 +49,15 @@ public class WalletsFragment extends SherlockFragment
         super.onResume();
         
         // Wallets
-        final ListView walletsList = (ListView) getActivity().findViewById(R.id._main_wallets);
+        final ListView walletsList = (ListView) activity.findViewById(R.id._main_wallets);
 
-        Wallets wallets = new Wallets(getActivity());
+        Wallets wallets = new Wallets(activity);
         ArrayList<Map.Entry<String, ArrayList<String>>> al = new ArrayList<Map.Entry<String, ArrayList<String>>>();
         for (Map.Entry<String, ArrayList<String>> entry : wallets.getAll().entrySet()) {
             al.add(entry);
         }
         
-        final ArrayAdapter<ArrayList<Map.Entry<String, ArrayList<String>>>> adapter = new ArrayAdapter<ArrayList<Map.Entry<String, ArrayList<String>>>>(getActivity(), al);
+        final ArrayAdapter<ArrayList<Map.Entry<String, ArrayList<String>>>> adapter = new ArrayAdapter<ArrayList<Map.Entry<String, ArrayList<String>>>>(activity, al);
         walletsList.setAdapter(adapter);
         
         final SherlockFragmentActivity activity = getSherlockActivity();
@@ -81,7 +86,7 @@ public class WalletsFragment extends SherlockFragment
                 Map.Entry<String, ArrayList<String>> wallet = (Map.Entry<String, ArrayList<String>>) adapter.getItem(walletsList.getCheckedItemPosition());
                 switch (item.getItemId()) {
                     case R.id.action_edit:
-                        Helpers.promptEditWallet(getActivity(), wallet.getKey(), new Wallets(activity), new Helpers.PromptCallback() {
+                        Helpers.promptEditWallet(activity, wallet.getKey(), new Wallets(activity), new Helpers.PromptCallback() {
                             public void callback() {
                                 onResume(); // Rebuild the list
                             }
@@ -109,7 +114,7 @@ public class WalletsFragment extends SherlockFragment
     {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Helpers.promptCreateWallet(getActivity(), new Wallets(getActivity()), new Helpers.PromptCallback() {
+                Helpers.promptCreateWallet(activity, new Wallets(activity), new Helpers.PromptCallback() {
                     public void callback() {
                         onResume(); // Rebuild the list
                     }

@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +39,7 @@ import com.jackpf.blockchainsearch.View.AddressActivityUI.UpdatableFragment;
 
 public class TransactionsFragment extends UpdatableFragment
 {
+    private static Activity activity;
     private static View rootView;
     private JSONArray transactions = new JSONArray();
     private ArrayAdapter<JSONArray> transactionsAdapter;
@@ -45,9 +47,9 @@ public class TransactionsFragment extends UpdatableFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setRetainInstance(true); // Keep references to context - might fix resume crash?
-        
+        activity = getActivity();
         rootView = inflater.inflate(R.layout._address_transactions, container, false);
+        
         return rootView;
     }
     
@@ -62,7 +64,7 @@ public class TransactionsFragment extends UpdatableFragment
         ListView txList = (ListView) rootView.findViewById(R.id.content_transactions);
         
         // Display the load more footer view?
-        View footerView = ((LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE)).inflate(R.layout._address_transactions_footer, null, false);
+        View footerView = ((LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE)).inflate(R.layout._address_transactions_footer, null, false);
         if ((Integer) vars.get("page") < Math.ceil(Double.valueOf(json.get("n_tx").toString()) / BlockchainData.TX_PER_PAGE) && txList.getFooterViewsCount() == 0) {
             txList.addFooterView(footerView);
         } else {
@@ -70,16 +72,16 @@ public class TransactionsFragment extends UpdatableFragment
         }
         
         if (transactionsAdapter == null) {
-            transactionsAdapter = new ArrayAdapter<JSONArray>(getActivity(), transactions);
+            transactionsAdapter = new ArrayAdapter<JSONArray>(activity, transactions);
             txList.setAdapter(transactionsAdapter);
             
             txList.setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String addr = ((JSONObject) transactionsAdapter.getItem(position)).get("addr").toString();
                     if (Utils.validAddress(addr)) {
-                        Intent intent = new Intent(getActivity(), AddressActivity.class);
+                        Intent intent = new Intent(activity, AddressActivity.class);
                         intent.putExtra(AddressActivity.EXTRA_SEARCH, addr);
-                        getActivity().startActivity(intent);
+                        activity.startActivity(intent);
                     }
                 }
             });
@@ -90,28 +92,28 @@ public class TransactionsFragment extends UpdatableFragment
                     final String txHash = ((JSONObject) transactionsAdapter.getItem(position)).get("hash").toString();
                     
                     if (android.os.Build.VERSION.SDK_INT >= 11) {
-                        PopupMenu menu = new PopupMenu(getActivity(), view);
-                        getActivity().getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
+                        PopupMenu menu = new PopupMenu(activity, view);
+                        activity.getMenuInflater().inflate(R.menu._address_transaction, menu.getMenu());
                         menu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(android.view.MenuItem item) {
                                 if (Utils.validTransaction(txHash)) {
-                                    Intent intent = new Intent(getActivity(), TransactionActivity.class);
+                                    Intent intent = new Intent(activity, TransactionActivity.class);
                                     intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                                    getActivity().startActivity(intent);
+                                    activity.startActivity(intent);
                                 }
                                 return true;
                             }
                         });
                         menu.show();
                     } else {
-                        AlertDialog menu = new AlertDialog.Builder(getActivity())
+                        AlertDialog menu = new AlertDialog.Builder(activity)
                         .setTitle("Menu")
-                        .setSingleChoiceItems(new String[]{getActivity().getString(R.string.action_transaction_view)}, 0, new android.content.DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(new String[]{activity.getString(R.string.action_transaction_view)}, 0, new android.content.DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
-                                Intent intent = new Intent(getActivity(), TransactionActivity.class);
+                                Intent intent = new Intent(activity, TransactionActivity.class);
                                 intent.putExtra(TransactionActivity.EXTRA_SEARCH, txHash);
-                                getActivity().startActivity(intent);
+                                activity.startActivity(intent);
                                 dialog.dismiss();
                             }
                         })
