@@ -32,6 +32,12 @@ public class MainActivity extends SherlockFragmentActivity
         setContentView(R.layout.activity_main);
         
         ui = new MainActivityUI(this);
+    }
+    
+    @Override
+    protected void onResume()
+    {
+        // Initialise on resume to keep the side tabs in sync
         ui.initialise();
     }
 
