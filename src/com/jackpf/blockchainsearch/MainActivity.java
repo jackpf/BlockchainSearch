@@ -37,6 +37,8 @@ public class MainActivity extends SherlockFragmentActivity
     @Override
     protected void onResume()
     {
+        super.onResume();
+        
         // Initialise on resume to keep the side tabs in sync
         ui.initialise();
     }

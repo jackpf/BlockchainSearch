@@ -1,5 +1,7 @@
 package com.jackpf.blockchainsearch.View;
 
+import java.util.Arrays;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,7 +19,10 @@ import com.sherlock.navigationdrawer.compat.SherlockActionBarDrawerToggle;
 public class MainActivityUI extends UIInterface
 {
     private SherlockFragmentActivity activity;
+    private FragmentManager fragmentManager;
     public SherlockActionBarDrawerToggle drawerToggle;
+    private ListView drawerList;
+    private static int lastFragment = 0;
     Fragment[] fragments = {new SearchFragment(), new SavedAddressesFragment(), new WalletsFragment()};
     
     public MainActivityUI(Context context)
@@ -33,56 +38,58 @@ public class MainActivityUI extends UIInterface
     
     public void initialise()
     {
-        final DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        final ListView drawerList = (ListView) activity.findViewById(R.id.drawer);
-        final FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+        if (fragmentManager == null) {
+            fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            drawerList = (ListView) activity.findViewById(R.id.drawer);
+            final DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+    
+            drawerList.setAdapter(new android.widget.ArrayAdapter<String>(
+                context,
+                R.layout._drawer_list_item,
+                context.getResources().getStringArray(R.array.drawer_list_titles)
+            ));
+            
+            drawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    drawerList.setItemChecked(position, true);
+                    fragmentManager.beginTransaction().replace(R.id.content, fragments[position], fragments[position].getClass().getName()).commit();
+                    lastFragment = position;
+                    drawerLayout.closeDrawer(drawerList);
+                }
+            });
+            
+            drawerToggle = new SherlockActionBarDrawerToggle(
+                activity,                   /* Host Activity */
+                drawerLayout,          /* DrawerLayout object */
+                R.drawable.ic_navigation_drawer, /* Nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,   /* "Open drawer" description */
+                R.string.drawer_close   /* "Close drawer" description */
+            ) {
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                }
+    
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                }
+            };
+    
+            // Defer code dependent on restoration of previous instance state.
+            // NB: required for the drawer indicator to show up!
+            drawerLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    drawerToggle.syncState();
+                }
+            });
+    
+            drawerLayout.setDrawerListener(drawerToggle);
+        }
 
-        drawerList.setAdapter(new android.widget.ArrayAdapter<String>(
-            context,
-            R.layout._drawer_list_item,
-            context.getResources().getStringArray(R.array.drawer_list_titles)
-        ));
-        
-        drawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                drawerList.setItemChecked(position, true);
-                fragmentManager.beginTransaction().replace(R.id.content, fragments[position], fragments[position].getClass().getName()).commit();
-                drawerLayout.closeDrawer(drawerList);
-            }
-        });
-        
-        drawerToggle = new SherlockActionBarDrawerToggle(
-            activity,                   /* Host Activity */
-            drawerLayout,          /* DrawerLayout object */
-            R.drawable.ic_navigation_drawer, /* Nav drawer icon to replace 'Up' caret */
-            R.string.drawer_open,   /* "Open drawer" description */
-            R.string.drawer_close   /* "Close drawer" description */
-        ) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                activity.supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-            }
-        };
-
-        // Defer code dependent on restoration of previous instance state.
-        // NB: required for the drawer indicator to show up!
-        drawerLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                drawerToggle.syncState();
-            }
-        });
-
-        drawerLayout.setDrawerListener(drawerToggle);
-        
-        fragmentManager.beginTransaction().replace(R.id.content, fragments[0]).commit();
-        drawerList.setItemChecked(0, true);
+        fragmentManager.beginTransaction().replace(R.id.content, fragments[lastFragment]).commit();
+        drawerList.setItemChecked(lastFragment, true);
     }
 }
